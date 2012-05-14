@@ -1,0 +1,6 @@
+{
+"systemCheck": "Chequeo del sistema",
+"confWizzard": "Asistente de configuracion",
+"teleop": "Teleoperacion",
+"settings": "Ajustes"
+}

@@ -1,0 +1,6 @@
+{
+"systemCheck": "System Check",
+"confWizzard": "Config Wizzard",
+"teleop": "Teleoperation",
+"settings": "Settings"
+}
