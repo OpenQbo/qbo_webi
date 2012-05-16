@@ -8,12 +8,21 @@ import os
 pathh = '/'.join(os.path.abspath( __file__ ).split('/')[:-1])
 os.chdir(pathh)
 
+print pathh
+
+
+
+
+
 class Root:
     def __init__(self):
         self.indexHtmlTemplate = Template(filename='templates/indexTemplate.html')
         self.confWizardHtmlTemplate = Template(filename='templates/confWizzardTemplate.html')
         self.teleoperationHtmlTemplate = Template(filename='templates/teleoperationTemplate.html')
         self.settingsHtmlTemplate = Template(filename='templates/settingsTemplate.html')
+        self.trainingHtmlTemplate = Template(filename='templates/trainingTemplate.html')
+
+
 
         self.lang='en'
         #Load default dict
@@ -32,7 +41,7 @@ class Root:
     index.exposed = True
 
     def confWizzard(self):
-        return self.confWizardHtmlTemplate.render(language=self.language)
+        return self.confWizardHtmlTemplate.render(language=self.language, var1=cherrypy.request.remote.ip)
     confWizzard.exposed = True
 
     def teleoperation(self):
@@ -43,6 +52,12 @@ class Root:
         return self.settingsHtmlTemplate.render(language=self.language)
     settings.exposed = True
 
+    def training(self):
+        return self.trainingHtmlTemplate.render(language=self.language)
+    training.exposed = True
+
+
+
 
 cherrypy.root = Root()
 cherrypy.root.checkers = sysChecksManager(cherrypy.root.lang)
@@ -52,6 +67,18 @@ conf = {
         'server.socket_host': '0.0.0.0',
         'server.socket_port': 8080,
     },
+
+	'/img': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/static/img'},
+
+        '/js': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/static/js'},
+
+        '/css': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/static/css'},
+
+
+
 }
 
 cherrypy.quickstart(cherrypy.root, '/', conf)
