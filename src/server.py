@@ -2,7 +2,11 @@ import cherrypy
 from mako.template import Template
 import json
 from sysChecks.sysChecks import sysChecksManager
+import os
 #incluir dependencias de ROS
+
+pathh = '/'.join(os.path.abspath( __file__ ).split('/')[:-1])
+os.chdir(pathh)
 
 class Root:
     def __init__(self):
