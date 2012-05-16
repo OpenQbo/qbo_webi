@@ -41,7 +41,12 @@ class Root:
     index.exposed = True
 
     def confWizzard(self):
-        return self.confWizardHtmlTemplate.render(language=self.language, var1=cherrypy.request.remote.ip)
+        client=cherrypy.request.remote.ip
+	if (client=="127.0.0.1" or client=="localhost" or cherrypy.request.headers['Host'].find(client)!=-1):
+		islocal=True
+	else:
+		islocal=False
+        return self.confWizardHtmlTemplate.render(language=self.language, var1="testing", localClient=islocal)
     confWizzard.exposed = True
 
     def teleoperation(self):
@@ -65,7 +70,7 @@ cherrypy.root.checkers = sysChecksManager(cherrypy.root.lang)
 conf = {
     'global': {
         'server.socket_host': '0.0.0.0',
-        'server.socket_port': 8080,
+        'server.socket_port': 7070,
     },
 
 	'/img': {'tools.staticdir.on': True,
