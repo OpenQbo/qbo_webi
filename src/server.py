@@ -40,13 +40,16 @@ class Root:
         return self.indexHtmlTemplate.render(language=self.language)
     index.exposed = True
 
-    def confWizzard(self):
+    def localclient(self):
         client=cherrypy.request.remote.ip
-	if (client=="127.0.0.1" or client=="localhost" or cherrypy.request.headers['Host'].find(client)!=-1):
-		islocal=True
-	else:
-		islocal=False
-        return self.confWizardHtmlTemplate.render(language=self.language, var1="testing", localClient=islocal)
+        if (client=="127.0.0.1" or client=="localhost" or cherrypy.request.headers['Host'].find(client)!=-1):
+                islocal=True
+        else:
+                islocal=False
+	return islocal;
+
+    def confWizzard(self):
+        return self.confWizardHtmlTemplate.render(language=self.language, var1="testing", localClient=self.localclient())
     confWizzard.exposed = True
 
     def teleoperation(self):
