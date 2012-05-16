@@ -1,0 +1,15 @@
+<package>
+  <description brief="qbo_webi">
+
+     qbo_webi
+
+  </description>
+  <author>qboblue</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/qbo_webi</url>
+  <depend package="rospy"/>
+
+</package>
+
+
