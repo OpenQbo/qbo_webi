@@ -1,0 +1,9 @@
+Packages to be installed:
+
+CherryPy:
+ apt-get install python-cherrypy3
+
+Mako: 
+ apt-get install python-mako
+
+
