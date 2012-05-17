@@ -1,3 +1,35 @@
+qbo_system_info v1.0
+2632012
+
+=== Copyright ===
+
+Copyright (C) 2012 Thecorpora S.L.
+
+
+=== Description  ===
+
+This node runs the Web GUI
+
+
+=== Run ===
+
+rosrun rosrun qbo_brainchat_pro qbo_brainchat_pro.py
+
+
+=== Homepage ===
+
+http://openqbo.org/wiki/doku.php?id=qbo_apps:ros_pack:qbo_webi
+
+
+=== Contact ===
+
+Daniel Cuadrado <daniel.cuadrado@openqbo.org>
+
+
+
+
+
+
 Packages to be installed:
 
 CherryPy:
