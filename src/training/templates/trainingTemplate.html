@@ -1,0 +1,99 @@
+
+
+<!--<script src="/static/js/generalVariables.js" type="text/javascript"></script>-->
+
+
+<script>
+
+
+	//variables
+	  	      jQuery.ajax({
+                        success: function(data) {
+                                      if(data==false)
+                                      {
+                                          alert("failure!!");
+                                          history.go(0);
+                                          return;
+                                      }
+
+                                      var etiquetaScript=document.createElement("script");
+                                      document.getElementsByTagName("head")[0].appendChild(etiquetaScript);
+                                      etiquetaScript.text=data;
+
+
+
+
+
+
+				      // Obtengo el XML y separo sus nodos
+		                      jQuery.ajax({
+		                        success: function(data) {
+                	                      if(data==false)
+	                                      {
+        	                                  alert("failure!!");
+                	                          history.go(0);
+                        	                  return;
+                                	      }
+
+	                                      var etiquetaScript=document.createElement("script");
+        	                              document.getElementsByTagName("head")[0].appendChild(etiquetaScript);
+                	                      etiquetaScript.text=data;
+	
+						startEverything();
+						      	
+
+	                              	},
+	                        	url: "/training/trainingJs",
+        	        	        dataType: "text",
+                		        type: "GET",
+		                      });
+
+
+                              },
+                        url: "/training/trainingVariables",
+                        dataType: "text",
+                        type: "GET",
+                      });
+
+
+
+
+
+</script>
+
+
+
+hola!
+
+${language['test']}
+
+<div id="video">
+ <canvas  id="canvasWebcam" width="260" height="220" > ${language['error_html5']}  </canvas>
+</div>
+
+<div id="options">
+
+	<div id="radio">
+		<input type="radio" id="radioFace" name="radio" /><label for="radio1"> ${language['face_recognition']}</label>
+		<input type="radio" id="radioObject" name="radio" checked="checked" /><label for="radio2"> ${language['object_recognition']}</label>
+	</div>
+
+</div>
+
+<div id="botones">
+	<button id="training">${language['training_botton']}</button>
+	<button id="guessing">${language['guessing_botton']}</button>
+</div>
+
+<div id="input">
+ Insert the name of the <span id="personORobject">object</span> <input id="face_object_name" /></input>
+</div>
+
+
+<div id="answer">
+
+	hehey!
+	
+</div>
+
+
