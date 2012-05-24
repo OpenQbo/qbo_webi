@@ -1,0 +1,105 @@
+
+
+<!--<script src="/training/trainingJs" type="text/javascript"></script>-->
+
+
+<script>
+
+
+	        //variables
+                      jQuery.ajax({
+                        success: function(data) {
+                                      if(data==false)
+                                      {
+                                          alert("failure!!");
+                                          history.go(0);
+                                          return;
+                                      }
+
+                                      var etiquetaScript=document.createElement("script");
+                                      document.getElementsByTagName("head")[0].appendChild(etiquetaScript);
+                                      etiquetaScript.text=data;
+
+
+                              },
+                        url: "/teleoperation/teleoperationVariables",
+                        dataType: "text",
+                        type: "GET",
+                      });
+
+
+
+
+	// Obtengo el XML y separo sus nodos
+                      jQuery.ajax({
+                        success: function(data) {
+                                      if(data==false)
+                                      {
+                                          alert("failure!!");
+                                          history.go(0);
+                                          return;
+                                      }
+
+                                      var etiquetaScript=document.createElement("script");
+                                      document.getElementsByTagName("head")[0].appendChild(etiquetaScript);
+                                      etiquetaScript.text=data;
+
+					startEverything();
+				      	
+
+                              },
+                        url: "/teleoperation/teleoperationJs",
+                        dataType: "text",
+                        type: "GET",
+                      });
+
+</script>
+
+
+<table>
+
+<tr>
+	<td>
+		<div id="output">
+		</div>
+	</td>
+</tr>
+
+<tr>
+	<td>
+
+		<div id="parentVideos">
+			<div id="video" style="width:250px;height:250px;position:absolute;z-index:1; ">
+				<img id="iframeTeleoperation" src="" width="250px" height="250px"></img>
+			</div>
+		</div>
+	</tr>
+</tr>
+
+
+<tr>
+	<td>
+		<div id="options" style="margin-top: 250px;">
+
+			<div id="radio">
+				<input type="radio" id="radioFace" name="radio" /><label for="radio1"> ${language['left_eye']}</label>
+				<input type="radio" id="radioObject" name="radio" checked="checked" /><label for="radio2"> ${language['right_eye']}</label>
+        		        <input type="radio" id="radioObject" name="radio" checked="checked" /><label for="radio2"> ${language['3d']}</label>
+			</div>	
+	
+		</div>
+	</td>
+</tr>
+<tr>
+	<td>
+		<div id="botones">
+			<button id="foward">${language['foward']}</button>
+			<button id="back">${language['back']}</button>
+		        <button id="left">${language['left']}</button>
+		        <button id="right">${language['right']}</button>
+		</div>
+	</td>
+</tr>
+
+
+</table>
