@@ -5,6 +5,9 @@
 
 <script>
 
+    tabUnload = function(){
+           clearInterval(loop); 
+    };
 
 	//variables
 	  	      jQuery.ajax({
@@ -19,10 +22,6 @@
                                       var etiquetaScript=document.createElement("script");
                                       document.getElementsByTagName("head")[0].appendChild(etiquetaScript);
                                       etiquetaScript.text=data;
-
-
-
-
 
 
 				      // Obtengo el XML y separo sus nodos
@@ -55,22 +54,12 @@
                         type: "GET",
                       });
 
-
-
-
-
 </script>
 
-
-
-hola!
-
-${language['test']}
-
 <div id="video">
- <canvas  id="canvasWebcam" width="260" height="220" > ${language['error_html5']}  </canvas>
+ <canvas  id="canvasWebcam" width="320" height="240" > ${language['error_html5']}  </canvas>
 </div>
-
+</br>
 <div id="options">
 
 	<div id="radio">

@@ -1,0 +1,54 @@
+#def A_PLAY($i)
+<a class='title' href='$root/playlist/$playlist/play/$i'>#slurp ##</a>
+#end def
+<h2>$playlist#echo $playlist_is_active and " [active]" or "" #</h2>
+<div class="actions">
+	Playlist:
+	#if not $playlist_is_active
+	<a class="action" href="$root/playlist/$playlist/load">Activate</a>
+	#end if
+	<a class="action" href="$root/playlist/$playlist/shuffle">Shuffle</a>
+	<a class="action" href="$root/playlist/$playlist/clear">Clear</a>
+	#if not $playlist_is_active
+	<a class="action" href="$root/playlist/$playlist/delete">Delete</a>
+	#end if
+</div>
+<table><thead><tr><td>action</td><td>artist</td><td>title</td><td>album</td><td>medialib</td></tr></thead>
+#for $I in $playlist_items
+	#if $playlist_is_active and $status_id != $STOP and $I.n == $playlist_pos
+	<tr class='active'>
+	#else
+	<tr class='#echo $I.n%2 and "odd" or "even" #'>
+	#end if
+		<td class='item_action'>
+			#if $I.n > 0
+			<a href="$root/playlist/$playlist/move?src=$I.n;dst=#echo $I.n-1 #">U</a>
+			#else
+			U
+			#end if
+			#if $I.n < $len($playlist_items)-1
+			<a href="$root/playlist/$playlist/move?src=$I.n;dst=#echo $I.n+1 #">D</a>
+			#else
+			D
+			#end if
+			<a href="$root/playlist/$playlist/remove/$I.n">R</a>
+		</td>
+		#if not $I.title
+			<td colspan='3'>$A_PLAY($I.n) #echo $I.url.split("/")[-1] #</a></td>
+		#else
+			#if $I.artist
+			<td><a class='artist' href='/search?artist=$I.artist'>$I.artist</a>:</td>
+			#else
+			<td>&nbsp;</td>
+			#end if
+			<td>$A_PLAY($I.n)$I.title</a></td>
+			#if $I.album
+			<td>on <a class='album' href='/search?album=$I.album'>$I.album</a></td>
+			#else
+			<td>&nbsp;</td>
+			#end if
+		#end if
+		<td><a class='item_action' href='$root/info/$I.id'>[info]</a></td>
+	</tr>
+#end for
+</table>

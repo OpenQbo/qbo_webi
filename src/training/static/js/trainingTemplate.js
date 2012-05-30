@@ -217,21 +217,19 @@ function startLearning(){
                                         training=true;
                                         $.post('/training/startTraining' , function(data) {
 
-                                                training=false;
-                                                bool_drawing=false;
-						alert(data);
-                                                if(data){
-							$("#answer").html("texto de se ha reconocido bien "+name2Learn);
-                                                }else{//error
-							$("#answer").html("texto de errorno se ha podido reoconcer  "+name2Learn);
- 
-                                                }
-
-                                                cameraURL=defaultImg;
-                                                $.post('/rosRecognizeObject/stopNode',function(data) {
-                                                });
+                                        training=false;
+                                        bool_drawing=false;
+				                        alert(data);
+                                        if(data){
+					                        $("#answer").html("texto de se ha reconocido bien "+name2Learn);
+                                        }else{//error
+					                        $("#answer").html("texto de errorno se ha podido reoconcer  "+name2Learn);
+                                        }
+                                        cameraURL=defaultImg;
+                                        $.post('/training/stopNode',function(data) {
                                         });
                                 });
+                        });
 }
 
 
@@ -249,6 +247,7 @@ function startRecognition(){
 
                                         //paramos nodo
                                         $.post('/training/stopNode',function(data) {
+                                                    alert("Hemos matado los nodos");
                                         });
 
 

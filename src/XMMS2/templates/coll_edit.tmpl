@@ -1,0 +1,15 @@
+<h2>$name</h2>
+<div class="actions">
+	Collection:
+	<a class="action" href="$root/coll/add/$urlreplace($name)">Add to playlist</a>
+	<a class="action" href="$root/coll/edit/$urlreplace($name)">Edit</a>
+	<a class="action" href="$root/coll/delete/$urlreplace($name)">Delete</a>
+</div>
+$repr($collection)<br>
+$repr($dir($collection))
+<dl>
+#for $K in $dir($collection)
+<dt>$K</dt>
+<dd>$repr($getattr($collection,$K)).replace('<','&lt;').replace('>','&gt;')</dd>
+#end for
+</dl>

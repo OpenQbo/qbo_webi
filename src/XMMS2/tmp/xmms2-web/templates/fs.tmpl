@@ -1,0 +1,34 @@
+#set $ICONS = { "pcm":"sound.png", "syn":"midi.png", "pls":"binary.png" }
+#def $ACTION($TYPE,$FILE)
+$root/fs/$TYPE/$urlreplace($path)/$urlreplace($FILE)#slurp
+#end def
+<div class='actions'>
+Directory: <a href='$root/fs/list/'>/</a>
+#set $P = ''
+#for $A in $path_arguments
+#set $P += $A + '/'
+<a href='$root/fs/list/$P'>$A</a> /
+#end for
+</div>
+
+<table>
+#for $N,$D in $enumerate($dirs)
+<tr class='#echo $N%2 and "even" or "odd" #'>
+<td><a href='$ACTION("list",$D)'><img src='$root/static/folder_yellow.png' alt='[dir]'> $D</a></td>
+<td><a href='$ACTION("radd",$D)'>[add]</a></td>
+<td><a href='$ACTION("rimport",$D)'>[mlib]</a></td></tr>
+#end for
+#set $X = $len( $dirs ) %2
+#for $N, ($F, $T) in $enumerate($files)
+<tr class='#echo ($N+$X) %2 and "even" or "odd" #'><td>
+#if $T == 'pls'
+<a href='$ACTION("add",$F)'>
+#else
+<a href='$ACTION("addpls",$F)'>
+#end if
+<img src='$root/static/#echo $ICONS[$T] #' alt='[$T]'> $F</a></td>
+<td><a href='$ACTION("info",$F)'>[info]</a></td>
+<td><a href='$ACTION("libimport",$F)'>[mlib]</a></td>
+</tr>
+#end for
+</table>

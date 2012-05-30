@@ -60,31 +60,34 @@
 
 <tr>
 	<td>
+                <div id="output3">
+                </div>
 		<div id="output">
 		</div>
+		<div id="output2">
+                </div>
 	</td>
 </tr>
 
 <tr>
 	<td>
 
-		<div id="parentVideos">
-			<div id="video" style="width:250px;height:250px;position:absolute;z-index:1; ">
-				<img id="iframeTeleoperation" src="" width="250px" height="250px"></img>
+		<div id="parentVideos" style="width:640px;">
+			<div id="video" style="width:640px;height:480px;position:absolute;z-index:1; ">
+				<img id="iframeTeleoperation" src="/teleoperation/static/img/cross.png" width="640px" height="480px"></img>
 			</div>
+			<div id="video2" style="width:640px;height:480px;position:absolute;z-index:22;">
+				<img id="imgInvisible" src="/teleoperation/static/img/cross.png" width="640px" height="480px"></img>
+            </div>
 		</div>
-	</tr>
-</tr>
-
-
-<tr>
+	</td>
 	<td>
-		<div id="options" style="margin-top: 250px;">
+		<div id="options" style="">
 
 			<div id="radio">
-				<input type="radio" id="radioFace" name="radio" /><label for="radio1"> ${language['left_eye']}</label>
-				<input type="radio" id="radioObject" name="radio" checked="checked" /><label for="radio2"> ${language['right_eye']}</label>
-        		        <input type="radio" id="radioObject" name="radio" checked="checked" /><label for="radio2"> ${language['3d']}</label>
+				<input type="radio" id="radioLeft" name="radio" checked="checked"/><label for="radio1"> ${language['left_eye']}</label>
+				<input type="radio" id="radioRight" name="radio" /><label for="radio2"> ${language['right_eye']}</label>
+        		<input type="radio" id="radio3d" name="radio" /><label for="radio2"> ${language['3d']}</label>
 			</div>	
 	
 		</div>

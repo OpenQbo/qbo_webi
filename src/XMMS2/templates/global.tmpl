@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+#set $CONTROLS=( ("play",$PLAY), ("pause",$PAUSE), ("stop",$STOP), ("previous",$STOP), ("next",$STOP) )
+#def TITLE()
+#if $status_id == $STOP
+[$status]
+#else
+[$status] #slurp
+#if $current.title
+$current.title #slurp
+#if $current.artist
+by $current.artist #slurp
+#if $current.album
+on $current.album #slurp
+#end if
+#end if
+#else
+#echo $current.url.split('/')[-1] #
+#end if
+#end if
+#end def
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">	
+		<title>$TITLE()</title>
+		<link type="text/css" rel="StyleSheet" class="stylesheet" href="$root/static/style.css">
+	</head>
+<body>
+	<div class="header">
+		<h1>
+		<img class="logo" alt="[XMMS2]" src="$root/static/Logo-red-128.png">
+		XMMS2 Web interface</h1>
+			$TITLE()<br>
+			#for $C,$I in $CONTROLS
+			#if $I != $status_id
+			<a class='control' href="/control/$C">$C</a>
+			#end if
+			#end for
+		</div>
+		<div class="content">
+		#include $content
+		</div>
+		<div class="playlists">
+			<ul>
+				<li><a class='playlist' href="$root/">Playlist( $active_playlist.replace('_',' ') )</a></li>
+				<li><a class='playlist' href="$root/fs/list/">Browse files</a></li>
+				<li>Playlists: <a class='new' href="$root/forms/new_playlist">[new]</a></li>
+				<ul>
+				#for $L in $playlists
+					<li><a class='playlist' href="$root/playlist/$urlreplace($L)">$L.replace('_',' ')</a></li>
+				#end for
+				</ul>
+				<li>Collections: <a class='new' href="$root/forms/new_collection">[new]</a></li>
+				#if $collections
+				<ul>
+					#for $C in $collections
+					<li><a class='collection' href="$root/coll/browse/$urlreplace($C)">$C.replace('_',' ')</a></li>
+					#end for
+				</ul>
+				#end if
+			</ul>
+		</div>
+</body></html>

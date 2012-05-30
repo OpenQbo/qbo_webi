@@ -1,7 +1,16 @@
 <div id="sysCheckAccordion">
 
 % for cheker in availableChekers.keys():
-    <h3 id="${availableChekers[cheker].name}"><a href="#">${language[availableChekers[cheker].name]} mas icono</a></h3>
+<%
+    resultSrc="/img/loading.gif"
+    if availableChekers[cheker].result=='ok':
+        resultSrc="img/ok.png"
+    elif availableChekers[cheker].result=='fail':
+        resultSrc="/img/wrong.png"
+    else:
+        resultSrc="/img/loading.gif"
+%>
+    <h3 id="${availableChekers[cheker].name}"><a href="#">${language[availableChekers[cheker].name]} <img id="${availableChekers[cheker].name}Img" src="${resultSrc}" align="right"></img></a></h3>
     <div id="${availableChekers[cheker].name}_content" style="height:400px"><p>Loading...</p></div>
 % endfor
 
@@ -12,12 +21,24 @@
 if(navigator.userAgent.indexOf("MSIE")>=0) navegador=0; // IE
 else navegador=1; // Demas
 
+% for cheker in availableChekers.keys():
+    if(!(window.${availableChekers[cheker].name}ImgSrc))
+    {
+        window.${availableChekers[cheker].name}ImgSrc=jQuery("#${availableChekers[cheker].name}Img").attr("src");
+    }
+    jQuery("#${availableChekers[cheker].name}Img").attr("src",window.${availableChekers[cheker].name}ImgSrc)
+% endfor
 
 jQuery('#sysCheckAccordion').accordion({ 
         change: function(event, ui){
 
-                var clicked = jQuery(this).find('.ui-state-active').attr('id');
-                //jQuery('#'+clicked).load('/chekers/'+clicked); //Cambiar por funcion AJAX que llama a '/chekers/'+clicked
+                var clicked = jQuery(this).children('.ui-state-active').attr('id');
+                if(!(window.lastAcordeonCliked)) {
+                    window.lastAcordeonCliked=clicked;
+                } else {
+                    jQuery("#"+window.lastAcordeonCliked+"_content").html("");
+                    window.lastAcordeonCliked=clicked;
+                }
 
                 // Obtengo el XML y separo sus nodos
 	              jQuery.ajax({
@@ -83,7 +104,7 @@ jQuery('#sysCheckAccordion').accordion({
                     }
                     //no funciona
                     //jQuery("#sysCheckAccordion").accordion( "resize" );
-                    jQuery('#'+clicked+'_content').height(100)
+                    jQuery('#'+clicked+'_content').height("70%")
 
 		              },
 	                url: "/checkers/index/"+clicked,

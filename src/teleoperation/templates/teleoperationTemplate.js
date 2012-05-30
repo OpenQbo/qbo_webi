@@ -1,59 +1,148 @@
 var keys = {};
+var leftButtonDown = false;
+var imgPort="8081";
+
+
+var loop;
+
+var quality=50;
+var widthCamera=640;
+var heightCamera=480;
+
+
+
+var fps=24;
+
+var ctx;
+var img = new Image();
+var canvas;
+
+var action;
+var countdown;
+var bool_drawing=false;
+var recording = false;
+var watching = false;
+var training = false;
+var auxTime4Coundown;
+
+var name2Learn;
+
+var objectORface="object";
+
+
+var msgWebCamWatching = "Watching";
+var msgWebCamTraining = "Training...";
+var msgWebCam = "";
+var msgWebCamRec = "Rec";
+
+var cameraURL=""
+
 
 function startEverything(){
-    jQuery("#iframeTeleoperation").mousemove(function(e){
 
 
-        x = jQuery("#iframeTeleoperation").offset().left;
-        y = jQuery("#iframeTeleoperation").offset().top;
+    output = {image:"live_leftEye", quality: quality, width: widthCamera, height: heightCamera};
+    jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
+        defaultImg = "http://"+ipLocal+":"+imgPort+data;
+        cameraURL=defaultImg;
+        setTimeout('jQuery("#iframeTeleoperation").attr("src",cameraURL);',2000);
+    });
+    
 
 
-        finalX=e.pageX-x;
-        finalY=e.pageY-y;
 
-      var pageCoords = "( " + finalX + ", " + finalY + " )";
-      var clientCoords = "( " + e.clientX + ", " + e.clientY + " )";
+    originX=jQuery("#video2").offset().left;
+    originY=jQuery("#video2").offset().top;
 
-      jQuery("#output").html("( e.pageX, e.pageY ) : " + pageCoords+ "   " + clientCoords+ "        "+x+" "+y);
 
+    jQuery(document).mousemove(function(e){
+		 jQuery("#output3").html(e.pageX+" "+e.pageY);
+// originX=jQuery("#video").offset().left;
+// originY=jQuery("#video").offset().top;
+//		 jQuery("#output").html(originX+" "+originY);
 
     });
 
+    jQuery("#video2").draggable({
+	    drag: function() {
 
-    jQuery.post('/mjpegServer/start', function(data){
-                        //Getting images
-                        output = {image:"live_leftEye", quality: quality, width: widthCamera, height: heightCamera};
-                        jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
-                                defaultImg = "http://"+ipLocal+":"+imgPort+data;
-                                cameraURL=defaultImg;
 
-				setTimeout('jQuery("#iframeTeleoperation").attr("src",cameraURL);',2000);
+   			originX=jQuery("#video").offset().left+(jQuery("#video").width()/2);
+    			originY=jQuery("#video").offset().top+(jQuery("#video").height()/2);
 
-				loop=setInterval("checkTab()",100);
-                        });
+			x = jQuery("#video2").offset().left+(jQuery("#video2").width()/2);
+                        y = jQuery("#video2").offset().top+(jQuery("#video2").height()/2);
+
+			trueX = x-originX;
+			trueY = y-originY;			
+
+			jQuery("#output").html("centro de video = "+originX+" "+originY);
+			jQuery("#output2").html("centro de video2 "+x+" "+y+"                       "+trueX*-1+" "+trueY);
+
+			input = {"yaw":trueX*-1,"pitch":trueY};
+            jQuery.post('/teleoperation/head',input, function(data){
+            });
+
+
+                      
+	    },
+            stop: function() {
+		jQuery("#video2").offset({"top":jQuery("#video").offset().top,"left":jQuery("#video").offset().left});		
+ 		input = {"yaw":0,"pitch":0};
+                jQuery.post('/teleoperation/head',input, function(data){
+                });
+
+
+
+            }
     });
 
-
-
-
+	//Buttons detection
 	jQuery("#foward").click(function(){
 		jQuery.post('/teleoperation/foward',function(data){
 		});
 	});
 
 
+	//Keys detector
+	jQuery(document).keydown(function (e) {
+		keys[e.which] = true;
+		printKeys();
+	});
+
+	jQuery(document).keyup(function (e) {
+		delete keys[e.which];
+		printKeys();
+	});
 
 
 
-jQuery(document).keydown(function (e) {
-	keys[e.which] = true;
-	printKeys();
-});
+    //Change view events
+    jQuery("#radioLeft").click(function(){
+        output = {image:"live_leftEye", quality: quality, width: widthCamera, height: heightCamera};
+        jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
+            cameraURL = "http://"+ipLocal+":"+imgPort+data;
+            jQuery("#iframeTeleoperation").attr("src","");
+            jQuery("#iframeTeleoperation").attr("src",cameraURL);
+        });
+    });
+    jQuery("#radioRight").click(function(){
+        output = {image:"live_rightEye", quality: quality, width: widthCamera, height: heightCamera};
+        jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
+            cameraURL = "http://"+ipLocal+":"+imgPort+data;
+            jQuery("#iframeTeleoperation").attr("src","");
+            jQuery("#iframeTeleoperation").attr("src",cameraURL);
+        });
+    });
+    jQuery("#radio3d").click(function(){
+            output = {image:"live_3d", quality: quality, width: widthCamera, height: heightCamera};
+            jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
+                cameraURL = "http://"+ipLocal+":"+imgPort+data;
+                jQuery("#iframeTeleoperation").attr("src","");
+                jQuery("#iframeTeleoperation").attr("src",cameraURL);
+           });
+    });
 
-jQuery(document).keyup(function (e) {
-	delete keys[e.which];
-	printKeys();
-});
 
 
 }
@@ -117,18 +206,3 @@ function printKeys() {
 
 
 
-//We need one way to know whether we are in this tab or not in order to stop mjpeg_server
-
-function checkTab(){
-        //We check wether we are in the tab that is showing the canvas y we just left, so we have to stop everthing
-        if( $("#ui-tabs-3").hasClass('ui-tabs-hide') ){
-                clearInterval(loop);
-
-                //stop mjpeg server
-                $.post('/mjpegServer/stop', function(data) {
-                       if(data=="ERROR"){
-                       }
-                });
-        }
-
-}

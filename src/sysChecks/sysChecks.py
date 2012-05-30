@@ -1,5 +1,6 @@
 import cherrypy
 from mako.template import Template
+from tabsClass import TabClass
 import json
 import os
 import glob
@@ -11,9 +12,9 @@ def my_import(name):
         mod = getattr(mod, comp)
     return mod
 
-class sysChecksManager:
+class sysChecksManager(TabClass):
     def __init__(self,lang):
-        self.lang=lang
+        self.lang=lang['current_language']#lang
         self.htmlTemplate = Template(filename='sysChecks/templates/sysChecksTemplate.html')
 
         #creo la lista de chekers
@@ -32,25 +33,41 @@ class sysChecksManager:
             self.availableChekers[meth]=code(self.lang)
 
         #Actualizo los lenguajes
+        self.set_language(lang)
+#        self.language={}
+#        for checkerKey in self.availableChekers.keys():
+#          self.language.update(self.availableChekers[checkerKey].language)
+
+
+    def set_language(self,lang):
+        self.lang=lang['current_language']
+        for checker in self.availableChekers.values():
+            checker.load_language(self.lang)
         self.language={}
         for checkerKey in self.availableChekers.keys():
           self.language.update(self.availableChekers[checkerKey].language)
 
+
+    @cherrypy.expose
     def index(self, *cheker):
+        print cheker,' len: ',len(cheker)
         if not cheker:
             return self.htmlTemplate.render(language=self.language, availableChekers=self.availableChekers)
-        cheker=cheker[0]
-        if cheker in self.availableChekers.keys():
+        if cheker[0] in self.availableChekers.keys():
             returnDataDic={}
-            returnDataDic['htmlElement']=self.availableChekers[cheker].get_html()
-            js=self.availableChekers[cheker].get_js()
-            css=self.availableChekers[cheker].get_css()
+            returnDataDic['htmlElement']=self.availableChekers[cheker[0]].get_html(cheker[1:])
+            js=self.availableChekers[cheker[0]].get_js()
+            css=self.availableChekers[cheker[0]].get_css()
             if js:
                 returnDataDic['jsElement']=js
             if css:
                 returnDataDic['cssElement']=css
             return json.dumps(returnDataDic)
+        if cheker[0]=='undefined':
+            returnDataDic={}
+            returnDataDic['htmlElement']=''
+            return json.dumps(returnDataDic)
         else:
-            json.dumps(False)
+            print 'No check available',self.availableChekers.keys()
+            return json.dumps(False)
 
-    index.exposed=True

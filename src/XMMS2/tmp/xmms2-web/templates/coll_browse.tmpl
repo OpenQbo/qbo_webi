@@ -1,0 +1,32 @@
+<h2>$collection</h2>
+<div class="actions">
+	Collection:
+	<a class="action" href="$root/coll/add/$urlreplace($collection)">Add to playlist</a>
+	<a class="action" href="$root/coll/edit/$urlreplace($collection)">Edit</a>
+	<a class="action" href="$root/coll/delete/$urlreplace($collection)">Delete</a>
+</div>
+<table><thead><tr><td>artist</td><td>title</td><td>album</td><td>action</td></tr></thead>
+#for $N,$I in $enumerate($coll_items)
+<tr class='#echo $N%2 and "odd" or "even" #'>
+#if "title" not in $I
+	<td colspan='3'>$A_PLAY($I.n) #echo $I.url.split("/")[-1] #</a></td>
+#else
+	#if "artist" in $I and $I.artist
+	<td><a class='artist' href='$root/search?artist=$urlreplace($I.artist)'>$I.artist</a>:</td>
+	#else
+	<td>&nbsp;</td>
+	#end if
+	<td><a class='title' href='$root/search?title=$urlreplace($I.title)'>$I.title</a></td>
+	#if "album" in $I and $I.album
+	<td>on <a class='album' href='$root/search?album=$urlreplace($I.album)'>$I.album</a></td>
+	#else
+	<td>&nbsp;</td>
+	#end if
+#end if
+	<td>
+		<a class='item_action' href='$root/info/$I.id'>[info]</a>
+		<a class='item_action' href='$root/control/add/$I.id'>[add]</a>
+	</td>
+</tr>
+#end for
+</table>

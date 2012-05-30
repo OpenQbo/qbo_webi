@@ -18,4 +18,6 @@ class checkTemplate(chekers):
         #self.jsTmpl = Template(filename='sysChecks/chekers/checkTemplate/templates/checkTemplateTemplate.js')
         #self.cssTmpl = Template(filename='sysChecks/chekers/checkTemplate/templates/checkTemplateTemplate.css')
 
-
+    #redefine in is necesary
+    #def get_html_content(self):
+        #return self.htmlTmpl.render(language=self.language)

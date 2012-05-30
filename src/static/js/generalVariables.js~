@@ -1,0 +1,37 @@
+var ipLocal="192.168.4.104";
+var quality=50;
+var widthCamera=640;
+var heightCamera=480;
+
+
+var defaultImg;//="http://"+ipLocal+":"+imgPort+"/snapshot?topic=/stereo/right/image_raw?quality="+quality+"?width="+widthCamera+"?height="+heightCamera;
+
+var recognizeObjImg;// = "http://"+ipLocal+":"+imgPort+"/snapshot?topic=/qbo_stereo_selector/viewer?quality="+quality+"?width="+widthCamera+"?height="+heightCamera;
+
+var recognizeFaceImg;// = "http://"+ipLocal+":"+imgPort+"/snapshot?topic=/qbo_face_tracking/viewer?quality="+quality+"?width="+widthCamera+"?height="+heightCamera;
+
+
+var fps=24;
+
+var ctx;
+var img = new Image();
+var canvas;
+
+var action;
+var countdown;
+var bool_drawing=false;
+var recording = false;
+var watching = false;
+var training = false;
+var auxTime4Coundown;
+
+var name2Learn;
+
+var objectORface="object";
+
+
+var msgWebCamWatching = "Watching";
+var msgWebCamTraining = "Training...";
+var msgWebCam = ""; 
+var msgWebCamRec = "Rec";
+

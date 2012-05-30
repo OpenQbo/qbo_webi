@@ -9,6 +9,20 @@
   <review status="unreviewed" notes=""/>
   <url>http://ros.org/wiki/qbo_webi</url>
   <depend package="rospy"/>
+  <depend package="rospy"/>
+  <depend package="std_msgs"/>
+  <depend package="qbo_arduqbo"/>
+  <depend package="qbo_talk"/>
+  <depend package="qbo_object_recognition"/>
+  <depend package="qbo_face_msgs"/>
+  <depend package="std_msgs"/>
+  <depend package="sensor_msgs"/>
+  <depend package="geometry_msgs"/>
+  <depend package="nav_msgs"/>
+  <depend package="std_srvs"/>
+
+
+
 
 </package>
 

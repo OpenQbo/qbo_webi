@@ -1,0 +1,154 @@
+
+<div id="checker"> 
+    <table style="border-collapse: separate;">
+        <tr>
+            <td>
+                <div class="mainProperty"> Q.bo Board no1 </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="subProperty"> SRF </div>
+            </td>				
+        </tr>
+
+        <tr id="filaRsf1">
+            <td>
+                <div class="subsubProperty" id="rsf1"> dada </div>
+            </td>
+            <td>
+                <img id="rsf1_icon" src="img/loading.gif">
+            </td>
+        </tr>								
+        <tr id="filaRsf2">
+            <td>
+                <div class="subsubProperty" id="rsf2">  </div>
+            </td>
+            <td>
+                <img id="rsf2_icon" src="/img/loading.gif">
+            </td>
+        </tr>	
+        <tr id="filaRsf3">
+            <td>
+                <div class="subsubProperty" id="rsf3">  </div>
+            </td>
+            <td>
+                <img id="rsf3_icon" src="img/loading.gif">
+            </td>
+        </tr>	
+        <tr id="filaRsf4">
+            <td>
+                <div class="subsubProperty" id="rsf4">  </div>
+            </td>
+            <td>
+                <img id="rsf4_icon" src="img/loading.gif">
+            </td>
+        </tr>								
+
+
+        <tr>
+            <td>
+                <div class="subProperty"> Gyroscope </div>
+            </td>
+
+
+            <td>
+                <img id="gyroscope_check" name="dddd" src="img/loading.gif">
+            </td>
+        </tr>	
+        <tr>
+            <td>
+                <div class="subProperty"> Accelerometer </div>
+            </td>
+
+
+            <td>
+                <img id="accelerometer_check" src="img/loading.gif">
+            </td>
+        </tr>	
+
+        <tr>
+            <td>
+                <div class="subProperty"> LCD </div>
+            </td>
+
+
+            <td>
+                <img id="lcd_check" src="img/loading.gif">
+            </td>
+        </tr>	
+
+        <tr>
+            <td>
+                <div class="subProperty"> Q.bo Board no3 </div>
+            </td>
+
+
+            <td>
+                <img id="board3_check" src="img/loading.gif">
+            </td>
+        </tr>	
+
+
+
+        <tr>
+            <td>
+                <div class="mainProperty">Q.bo Board no2 </div>
+            </td>
+
+
+            <td>
+                <img id="board2_check" src="img/loading.gif">
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <div class="mainProperty">Web Cam 1</div>
+            </td>
+
+
+            <td>
+                <img id="webcam1_check" src=" img/loading.gif">
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <div class="mainProperty">Web Cam 2</div>
+            </td>
+
+
+            <td>
+                <img id="webcam2_check" src=" img/loading.gif">
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <div class="mainProperty">Left Wheel</div>
+            </td>
+
+
+            <td>
+                <img id="leftwheel_check" src=" img/loading.gif">
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <div class="mainProperty">Right Wheel</div>
+            </td>
+
+
+            <td>
+                <img id="rightwheel_check" src=" img/loading.gif">
+            </td>
+        </tr>
+    </table>
+</div>

@@ -1,0 +1,16 @@
+#if not $id
+Medialib entry not found
+#stop
+#end if
+#set $I = [ ($S,$K,$V) for ($S,$K),$V in $info.iteritems()]
+#silent $I.sort()
+<h2>Medialib entry #$id</h2>
+<div class='actions'>
+Medialib entry: <a class='action' href='$root/control/add/$id'>add to playlist</a>
+</div>
+<table>
+<tr><td>source</td><td>key</td><td>value</td></tr>
+#for $N,($S,$K,$V) in $enumerate($I)
+<tr class='#echo $N%2 and "even" or "odd" #'><td>$S</td><td>$K</td><td>$V</td></tr>
+#end for
+</table>
