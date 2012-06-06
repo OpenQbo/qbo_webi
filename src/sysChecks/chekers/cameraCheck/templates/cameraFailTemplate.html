@@ -7,7 +7,7 @@ Detected cameras: ${camerasCount}<p>
 <script>
     window.cameraCheckImgSrc="${resultImgSrc}";
     jQuery("#cameraCheckImg").attr("src",window.cameraCheckImgSrc);
-    jQuery("#cameraCheckRestartBut").click(function() {
+    jQuery("#cameraCheckRestartBut").button().click(function() {
         jQuery.ajax({
             type: "GET",
             url: "/checkers/index/cameraCheck/restart",

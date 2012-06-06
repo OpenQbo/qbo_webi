@@ -48,26 +48,27 @@ def runCmd(cmd, timeout=None):
 class MjpegServerFunctions(object):
 
 
-    def __init__(self,port=8081,ip='192.168.4.104'):
+    def __init__(self):
 
         self.threeDOn = False
 
-        self.urls = {'leftEye':'/snapshot?topic=/stereo/left/image_raw?quality=',
-	            'rightEye':'/snapshot?topic=/stereo/right/image_raw?quality=',
-	            'objects':'/snapshot?topic=/qbo_stereo_selector/viewer?quality=',
-    	        'faces':'/snapshot?topic=/qbo_face_tracking/viewer?quality=',
-    	        'live_leftEye':'/stream?topic=/stereo/left/image_raw?quality=',
-                'live_rightEye':'/stream?topic=/stereo/right/image_raw?quality=',
-                'live_3d':'/stream?topic=/stereo_anaglyph?quality=',
+        self.urls = {'leftEye':'/image/snapshot?topic=/stereo/left/image_raw&quality=',
+	            'rightEye':'/image/snapshot?topic=/stereo/right/image_raw&quality=',
+	            'objects':'/image/snapshot?topic=/qbo_stereo_selector/viewer&quality=',
+    	        'faces':'/image/snapshot?topic=/qbo_face_tracking/viewer&quality=',
+    	        'live_leftEye':'/image/stream?topic=/stereo/left/image_raw&quality=',
+                'live_rightEye':'/image/stream?topic=/stereo/right/image_raw&quality=',
+                'live_3d':'/image/stream?topic=/stereo_anaglyph&quality=',
+                'live_objects':'/image/stream?topic=/qbo_stereo_selector/viewer&quality=',
+                'live_faces':'/image/stream?topic=/qbo_face_tracking/viewer&quality=',
+
         }
 
-        self.port=port
-        self.ip=ip
 
-
-
+    '''
     @cherrypy.expose
     def start(self,port=8081):            
+               return 
                rospy.loginfo("Launching MJPEG Server")
                
                if self.isServerRunning():
@@ -80,9 +81,9 @@ class MjpegServerFunctions(object):
                    self.processMjpegServer8081 = subprocess.Popen(cmd.split())
                elif(self.port==8082):
                    self.processMjpegServer8082 = subprocess.Popen(cmd.split())
+    '''
 
-
-
+    '''
     @cherrypy.expose
     def stop(self,port):
         rospy.loginfo("MJPEG Server does not stop")
@@ -102,14 +103,15 @@ class MjpegServerFunctions(object):
         except Exception as e:
             rospy.loginfo("ERROR when trying to kill process MJPEG Server. "+str(e))
             return "ERROR"
-
+    '''
+    '''
     def isServerRunning(self):
         ou=runCmd('rosnode list | grep mjpeg_server')[0].strip().split()
         if len(ou)>0:
             return True
         else:
             return False
-
+    '''
 
 
     # input params:
@@ -125,13 +127,12 @@ class MjpegServerFunctions(object):
     def getUrlFrom(self,image,quality,width,height):
         print "DAME "+image
         if("3d" in image):
-            print "333333333333DDDDDDDDDDDDD"
             self.threeDOn = True
             cmd="rosrun stereo_anaglyph red_cyan_anaglyph.py __name:=stereo_anaglyph -c /stereo -d 20 -s"
             self.processthreeD = subprocess.Popen(cmd.split())
             
             url = self.urls[image]
-            finalUrl = url+quality+'?width='+width+'?height='+height,
+            finalUrl = url+quality+'&width='+width+'&height='+height,
 
             return finalUrl
 
@@ -149,16 +150,17 @@ class MjpegServerFunctions(object):
                 print "Error al pedir imagen "+image
                 return -1
 
-            finalUrl = url+quality+'?width='+width+'?height='+height,
+            finalUrl = url+quality+'&width='+width+'&height='+height
             
             return finalUrl
 
+    '''
     def getStreamSrc(self,image,quality,width,height):
         sourc=self.getUrlFrom(image,quality,width,height)[0]
         sourc='http://'+self.ip+':'+str(self.port)+sourc.replace('snapshot','stream')
         print 'source: ',sourc
         return sourc
-
+    '''
 
 		
     def stopAnaglyph(self):

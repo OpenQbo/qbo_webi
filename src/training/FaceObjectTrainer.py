@@ -25,7 +25,7 @@ class FaceObjectTrainer(TabClass):
 
     def __init__(self,language):
         self.language = language
-        self.mjpegServer = MjpegServerFunctions()
+        #self.mjpegServer = MjpegServerFunctions()
         self.htmlTemplate = Template(filename='training/templates/trainingTemplate.html')
         self.jsTemplate = Template(filename='training/templates/trainingTemplate.js')
         self.variablesTemplate = Template(filename='static/js/generalVariables.js')
@@ -34,12 +34,12 @@ class FaceObjectTrainer(TabClass):
 
     @cherrypy.expose
     def unload(self):
-        self.mjpegServer.stop("8081")
+        #self.mjpegServer.stop("8081")
         return "ok"
 
     @cherrypy.expose
     def index(self):
-        self.mjpegServer.start("8081")
+        #self.mjpegServer.start("8081")
         return self.htmlTemplate.render(language=self.language)
 
     @cherrypy.expose

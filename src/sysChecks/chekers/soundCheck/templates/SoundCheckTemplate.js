@@ -121,8 +121,10 @@ function finalCheck(){
 
         if (check == true){
            jQuery("#soundCheckImg").attr("src","sysChecks/static/img/ok.png");
+           window.soundCheckImgSrc="sysChecks/static/img/ok.png";
         }else if(check == false){ //the other option was undefined
            jQuery("#soundCheckImg").attr("src","sysChecks/static/img/wrong.png");  
+           window.soundCheckImgSrc="sysChecks/static/img/wrong.png";
         }
     }catch(e){
         check = false;        

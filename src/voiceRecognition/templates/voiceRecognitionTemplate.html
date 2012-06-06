@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 
-<link type="text/css" rel="stylesheet" href="js/rte-light-read-only/rte.css" />
+<link type="text/css" rel="stylesheet" href="js/rte-light-read-only/rte2.css" />
 
 <script type="text/javascript" src="js/rte-light-read-only/jquery.rte.js"></script>
 
@@ -47,25 +47,29 @@
 
 <br/>
 
-<table border="1">
+
+<div style="width:510px; margin:0 auto;">
+<table >
     <tr>
     <td>
-        <select id="new_lang" name="new_lang">
-            <option value="" selected="selected">${language['first_language']}</option>
-            % for row in alllanguage:
-            <option value="${row}">${lannames[row].decode('utf-8')}</option>
-            % endfor
-        </select>
-        <select id="languageModel">
-            <option value="">${language['first_language']}</option>
-        </select>
+        <div style="text-align: center;">
+            <select id="new_lang" name="new_lang">
+                <option value="" selected="selected">${language['first_language']}</option>
+                % for row in alllanguage:
+                <option value="${row}">${lannames[row].decode('utf-8')}</option>
+                % endfor
+            </select>
+            <select id="languageModel">
+                <option value="">${language['first_language']}</option>
+            </select>
+        </div>
     </td>
     <td>
     </td>
     </tr>
     <tr>
     <td colspan="2">
-        <div id="divTextArea">
+        <div id="divTextArea" style="blueborder">
             <textarea id="textArea" class="rte-zone" ></textarea>
         </div>
     </td>
@@ -74,7 +78,7 @@
     <tr>
         <td>
             <div id="buttons" style="display:none;">
-                <button id="test1">${language['test1']}</button> <button id="test2" disabled="disabled">${language['test2']}</button> <button id="save" disabled="disabled">${language['save']}</button>
+                <button id="test1">${language['test1']}</button> <button id="test2" disabled="disabled">${language['test2']}</button> <button id="save" disabled="disabled">${language['save']}</button> <span id="outputConsole"></span>
             </div>
         </td>
     </tr>
@@ -82,6 +86,8 @@
 
 
 </table>
+
+</div>
 
 
 <div id="aux" style="display:none">

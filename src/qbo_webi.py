@@ -14,11 +14,13 @@ import json
 from sysChecks.sysChecks import sysChecksManager
 from training.FaceObjectTrainer import FaceObjectTrainer
 from settings.settings import SettingsManager
+#CHANGED
 from teleoperation.teleoperation import TeleoperationManager
 from confWizard.confWizard import ConfWizardManager
 from otherFunctionalities.mjpegServerFuntions.MjpegServerFunctions  import MjpegServerFunctions
 from voiceRecognition.voiceRecognition import VoiceRecognitionManager
-import XMMS2.xmms2web 
+from xmms2.xmms2 import XMMS2Manager
+from mjpeg.mjpeg import MjpegGrabber
 import os
 import sys
 
@@ -110,7 +112,7 @@ class Root(object):
         cherrypy.root.teleoperation.set_language(self.language)
         cherrypy.root.confWizard.set_language(self.language)
         cherrypy.root.voiceRecognition.set_language(self.language)
-#        cherrypy.root.voiceRecognition.set_language(self.language)
+        cherrypy.root.xmms2.set_language(self.language)
         #Reload the checkers dictionary
 #        return "HOLA"+new_lang
 
@@ -122,8 +124,9 @@ cherrypy.root.settings = SettingsManager(cherrypy.root.language)
 cherrypy.root.teleoperation = TeleoperationManager(cherrypy.root.language)
 cherrypy.root.confWizard = ConfWizardManager(cherrypy.root.language)
 cherrypy.root.voiceRecognition = VoiceRecognitionManager(cherrypy.root.language)
-#cherrypy.root.XMMS2 = (cherrypy.root.language)
+cherrypy.root.xmms2 = XMMS2Manager(cherrypy.root.language)
 cherrypy.root.mjpegServer = MjpegServerFunctions() 
+cherrypy.root.image = MjpegGrabber()
 
 #Initialize ROS node associated with Q.bo Webi
 rospy.init_node(name="qbo_webi", argv=sys.argv)
@@ -197,7 +200,18 @@ conf = {
 
         '/sysChecks/static/wav': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/sysChecks/static/wav'},
+
+        '/xmms2/static/img': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/xmms2/static/img'},
         
+        '/xmms2/static/css': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/xmms2/static/css'},
+        '/xmms2/songs': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/xmms2/songs'},
+
+
+
+
 
 }
 

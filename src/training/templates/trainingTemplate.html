@@ -6,7 +6,9 @@
 <script>
 
     tabUnload = function(){
-           clearInterval(loop); 
+        clearInterval(loop); 
+        stopCmd = img.src.replace("snapshot","stop");
+        jQuery.get(stopCmd);
     };
 
 	//variables
@@ -56,33 +58,96 @@
 
 </script>
 
-<div id="video">
- <canvas  id="canvasWebcam" width="320" height="240" > ${language['error_html5']}  </canvas>
-</div>
-</br>
-<div id="options">
+
+<div id="options" style="margin: 0 auto;width: 620px;">
 
 	<div id="radio">
-		<input type="radio" id="radioFace" name="radio" /><label for="radio1"> ${language['face_recognition']}</label>
-		<input type="radio" id="radioObject" name="radio" checked="checked" /><label for="radio2"> ${language['object_recognition']}</label>
+
+
+        <table>
+            <tr>
+                <td>
+                    ${language['face_recognition']}
+                </td>
+                <td>
+                    <img src="/training/static/img/faceRecog.png"></img>
+                </td>
+                <td>
+                    <input type="radio" id="radioFace" name="radio" />
+                </td>
+                <td>
+                    <input type="radio" id="radioObject" name="radio" checked="checked" />
+                </td>
+                <td>
+                    <img src="/training/static/img/objRecog.png"></img>
+                </td>
+                <td>
+                    ${language['object_recognition']}
+                </td>
+
+            </tr>
+        </table>
+
+
+        
 	</div>
 
 </div>
 
-<div id="botones">
-	<button id="training">${language['training_botton']}</button>
-	<button id="guessing">${language['guessing_botton']}</button>
+
+
+
+
+<div id="video" style="width: 320px; height:240px; margin: 0 auto;">
+    <div id="divCanvas">
+        <div id="divQboVision" style="float:left;">
+            <img id="qboVision"  width="320" height="240" ></img>
+        </div>
+        <div style="position:absolute;">
+            <canvas  id="canvasWebcam" width="320" height="240" > ${language['error_html5']}  </canvas>
+        </div>
+    </div>
 </div>
 
-<div id="input">
- Insert the name of the <span id="personORobject">object</span> <input id="face_object_name" /></input>
+
+<div id="divQboMessage" style="position:absolute;display:none;">
+    
+        <div id="divQboAvatar">
+            <img id="qboAvatar"  src="/training/static/img/QboAvatar2.png"></img>
+        </div>
+
+
+        <div id="errorText" style="margin-top: -100px;margin-left: 60px;width: 400px;"></div>
+
 </div>
 
 
-<div id="answer">
 
-	hehey!
-	
+
+
+
+<div id="botones" style="width: 345px; margin: 0 auto; margin-top:10px;">
+	<button id="training" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"> 
+        <span class="ui-button-text">
+            ${language['training_botton']}
+        </span>
+    </button>
+
+    <button id="guessing" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+        <span class="ui-button-text">
+            ${language['guessing_botton']}
+        </span>
+    </button>
+
+</div>
+
+<div id="input" style="width: 250px;margin: 0 auto;display:none" >
+ Insert the name of the <span id="personORobject">object</span> <input id="face_object_name" /></input>  <button id="ok_start_training" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+        <span class="ui-button-text" style="padding: 0.1em 0.5em;">
+            ${language['ok_botton']}
+        </span>
+    </button>
+
 </div>
 
 

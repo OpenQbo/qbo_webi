@@ -119,13 +119,13 @@ def verrors(configfile, phonemfile):
                 separated=line.split()
                 if len(separated)==1:
                         word=separated[0]
-                        if word[0]<>"<":
+                        if word[0]<>"{":
                             error=getlinephonem(word,phonemfile)
                             if error==-1:
                                 result.append(word)
                 else:
                     for word in separated:
-                        if word[0]<>"<":
+                        if word[0]<>"{":
                             error=getlinephonem(word,phonemfile)
                             if error==-1:
                                 result.append(word)
@@ -200,7 +200,7 @@ def createvoca(configfile, phonemfile, dstfile):
             separated=line.split()
             if len(separated)==1:
                 word=separated[0]
-                if word[0]<>"<":
+                if word[0]<>"{":
                     try:
                         pos=wordlist.index(word)
                         gram=gram+section+": W"+str(pos)+"\n"
@@ -216,14 +216,14 @@ def createvoca(configfile, phonemfile, dstfile):
                         gram=gram+section+": W"+str(pos)+"\n"
                         f3.write(section+": W"+str(pos)+"\n")
                 else:
-                    word=re.sub("[<>]","",word)
+                    word=re.sub("[{}]","",word)
                     gram=gram+section+": "+str(word)+"\n"
                     f3.write(section+": "+str(word)+"\n")
             elif len(separated)>1:
                 gram=gram+section+":"
                 f3.write(section+":")
                 for word in separated:
-                    if word[0]<>"<":
+                    if word[0]<>"{":
                         try:
                             pos=wordlist.index(word)
                             gram=gram+" W"+str(pos)
@@ -239,7 +239,7 @@ def createvoca(configfile, phonemfile, dstfile):
                             gram=gram+" W"+str(pos)
                             f3.write(" W"+str(pos))
                     else:
-                        word=re.sub("[<>]","",word)
+                        word=re.sub("[{}]","",word)
                         gram=gram +" "+ word
                         f3.write(" "+ word)
                 gram=gram+"\n"
@@ -264,7 +264,7 @@ def helpmessage():
     print ("\tdestfilename: Name of the gramar, voca, dict to be created")
     print ("Config gile format:")
     print ("\tUse \[\] to create labels.")
-    print ("\tUse \<\> to reference labels.")
+    print ("\tUse \{\} to reference labels.")
     print ("\tLabel 'sentences' is always needed.")
     print ("\tIn a label you can referer another label.")
     print ("\tDo not make loops.")
@@ -274,13 +274,13 @@ def helpmessage():
     print ("\t\tJohn")
     print ("\t\tRambo")
     print ("\t\t[objects]")
-    print ("\t\t<desktop_objects>")
-    print ("\t\t<other_objects>")
+    print ("\t\t{desktop_objects}")
+    print ("\t\t{other_objects}")
     print ("\t\tnewspaper")
     print ("\t\t[sentences]")
     print ("\t\twhat is this")
-    print ("\t\tthis is a <object>")
-    print ("\t\tmy name is <name>")
+    print ("\t\tthis is a {object}")
+    print ("\t\tmy name is {name}")
     print ("\t\t[desktop_objects]")
     print ("\t\tpen")
     print ("\t\tscreen")

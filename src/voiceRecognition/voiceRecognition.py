@@ -78,6 +78,7 @@ class VoiceRecognitionManager(TabClass):
 
     @cherrypy.expose
     def test1(self,lang,text):
+        text=text.encode("utf-8")
         f = open(self.tmpdir+'LModel', 'w')
         f.write(text)
         f.close()
@@ -94,6 +95,7 @@ class VoiceRecognitionManager(TabClass):
     @cherrypy.expose
     def test2(self,lang,text):
         errorlist=""
+        text=text.encode("utf-8")
         print text
         wordlist=text.split()
         print wordlist
@@ -110,12 +112,13 @@ class VoiceRecognitionManager(TabClass):
                 if gen_grammar.perrors(self.tmpdir+'word.voca',self.juliusPath+self.AMPaths+lang+"/"+self.TiedlistFileName)!=0:
                     errorlist=errorlist+word+"::"
         errorlist=errorlist[:-2]
-        return errorlist
+        return errorlist.upper()
     
     @cherrypy.expose
     def saveToFile(self,lang,text,model):
         try:
             #print self.juliusPath+self.LMPaths+language+"/"+model+self.LMFileName
+            text=text.encode("utf-8")
             f = open(self.juliusPath+self.LMPaths+lang+"/"+model+self.LMFileName,'w')
             f.write(text)
             f.close()

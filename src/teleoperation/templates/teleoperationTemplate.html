@@ -1,108 +1,105 @@
-
-
 <!--<script src="/training/trainingJs" type="text/javascript"></script>-->
-
-
 <script>
 
+/*	// Cargamos JS
+    jQuery.ajax({
+    success: function(data) {
+                  if(data==false)
+                  {
+                      alert("failure!!");
+                      history.go(0);
+                      return;
+                  }
 
-	        //variables
-                      jQuery.ajax({
-                        success: function(data) {
-                                      if(data==false)
-                                      {
-                                          alert("failure!!");
-                                          history.go(0);
-                                          return;
-                                      }
+                  var etiquetaScript=document.createElement("script");
+                  document.getElementsByTagName("head")[0].appendChild(etiquetaScript);
+                  etiquetaScript.text=data;
 
-                                      var etiquetaScript=document.createElement("script");
-                                      document.getElementsByTagName("head")[0].appendChild(etiquetaScript);
-                                      etiquetaScript.text=data;
-
-
-                              },
-                        url: "/teleoperation/teleoperationVariables",
-                        dataType: "text",
-                        type: "GET",
-                      });
-
-
+                  startEverything();
+          },
+    url: "/teleoperation/teleoperationJs",
+    dataType: "text",
+    type: "GET",
+    });
+*/
 
 
-	// Obtengo el XML y separo sus nodos
-                      jQuery.ajax({
-                        success: function(data) {
-                                      if(data==false)
-                                      {
-                                          alert("failure!!");
-                                          history.go(0);
-                                          return;
-                                      }
+<%include file="teleoperationTemplate.js" />
 
-                                      var etiquetaScript=document.createElement("script");
-                                      document.getElementsByTagName("head")[0].appendChild(etiquetaScript);
-                                      etiquetaScript.text=data;
-
-					startEverything();
-				      	
-
-                              },
-                        url: "/teleoperation/teleoperationJs",
-                        dataType: "text",
-                        type: "GET",
-                      });
+startEverything();
 
 </script>
 
 
-<table>
+<div id="qbo_video" style="width:100%;height:480px" align="center">
+<div id="video" style="position:absolute;margin:0 auto;width:100%;">
+		<img id="iframeTeleoperation" width="640px" height="480px" class="blueBorder"></img>
+	</div>
+    <div id="video2" style="width:100%;position:absolute;z-index:22;" align="center">
+	    <img id="imgInvisible" src="/teleoperation/static/img/cross.png" width="640px" height="480px"></img>
+    </div>
+</div>
 
+
+
+<div style="margin-top:10px;">
+
+<table id="second_table" border="0" style="width:100%;" align="center">
 <tr>
-	<td>
-                <div id="output3">
-                </div>
-		<div id="output">
-		</div>
-		<div id="output2">
-                </div>
-	</td>
+<td style="width:33%;">
+<div id="camera_selection" style="width:20em;">
+<fieldset style="border: 2px solid #4297D7">
+<legend style="font-weight:bold;">${language['camera_selection']}</legend>
+	<div id="radio" title="Camera Selection">
+		<input type="radio" id="radioLeft" name="radio" checked="checked"/><label for="radio1"> ${language['left_eye']}</label></br>
+		<input type="radio" id="radioRight" name="radio" /><label for="radio2"> ${language['right_eye']}</label>
+        </br>
+		<input type="radio" id="radio3d" name="radio" /><label for="radio2"> ${language['3d']}</label></br>
+	</div>	
+   </fieldset>
+</div>
+</br>
+<div id="input" >
+    <textarea id="textarea"name="comments" cols="30" rows="1" class="blueborder" style="border-shadow:1px;"> ${language['enter_message']}</textarea>
+<button id="ok_start_training" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+        <span class="ui-button-text" id="send_button">
+            ${language['send_button']}
+        </span>
+    </button>
+</div>
+
+</td>
+<td style="width:33%;">
+<center> <div id="buttons">
+    <button id="forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">&uarr; W</span></button></br>
+    <button id="left" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">&larr; A</span></button>
+    <button id="right" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text"> D &rarr;</span></button></br>
+    <button id="back" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">&darr; S </span></button>
+</div></td>
+<td style="width:33%;">
+<div id="video_size" title="Video Size" style="width:15em;">
+<fieldset style="border: 2px solid #4297D7">
+<legend style="font-weight:bold;">${language['video_size']}</legend>
+    <select class="ui-widget select" id="video_size_select" >
+        <option value="0.5">${language['small']}</option>
+        <option value="1">${language['normal']}</option>
+        <option value="2" selected="selected">${language['large']}</option>
+        <option value="3">${language['very_large']}</option>
+    </select>    
+</fieldset>
+</div>
+</br>
+<div id="head_movement_type" style="width:15em;">
+<fieldset style="border: 2px solid #4297D7">
+<legend style="font-weight:bold;">${language['head_move_type']}</legend>
+	<div id="radio" title="Camera Selection">
+		<input type="radio" id="head_type1" name="radio_type" checked="checked"/><label for="radio1"> ${language['type1']} </label></br>
+		<input type="radio" id="head_type2" name="radio_type" /><label for="radio2"> ${language['type2']} </label>
+        </br>
+	</div>	
+   </fieldset>
+</div>
+</td>
 </tr>
-
-<tr>
-	<td>
-
-		<div id="parentVideos" style="width:640px;">
-			<div id="video" style="width:640px;height:480px;position:absolute;z-index:1; ">
-				<img id="iframeTeleoperation" src="/teleoperation/static/img/cross.png" width="640px" height="480px"></img>
-			</div>
-			<div id="video2" style="width:640px;height:480px;position:absolute;z-index:22;">
-				<img id="imgInvisible" src="/teleoperation/static/img/cross.png" width="640px" height="480px"></img>
-            </div>
-		</div>
-	</td>
-	<td>
-		<div id="options" style="">
-
-			<div id="radio">
-				<input type="radio" id="radioLeft" name="radio" checked="checked"/><label for="radio1"> ${language['left_eye']}</label>
-				<input type="radio" id="radioRight" name="radio" /><label for="radio2"> ${language['right_eye']}</label>
-        		<input type="radio" id="radio3d" name="radio" /><label for="radio2"> ${language['3d']}</label>
-			</div>	
-	
-		</div>
-	</td>
-</tr>
-<tr>
-	<td>
-		<div id="botones">
-			<button id="foward">${language['foward']}</button>
-			<button id="back">${language['back']}</button>
-		        <button id="left">${language['left']}</button>
-		        <button id="right">${language['right']}</button>
-		</div>
-	</td>
-</tr>
-
-
 </table>
+</div>

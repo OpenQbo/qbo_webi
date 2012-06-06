@@ -7,7 +7,7 @@
 <!--<link type="text/css" rel="stylesheet" media="all" href="/css/blitzer/jquery-ui-1.8.20.custom.css" />-->
 <!--<link type="text/css" rel="stylesheet" media="all" href="/css/cupertino/jquery-ui-1.8.20.custom.css" />-->
 <!--<link type="text/css" rel="stylesheet" media="all" href="/css/excite-bike/jquery-ui-1.8.20.custom.css" />-->
-<!--<link type="text/css" rel="stylesheet" media="all" href="/css/redmond/jquery-ui-1.8.20.custom.css" />-->
+<link type="text/css" rel="stylesheet" media="all" href="/css/redmond/jquery-ui-1.8.20.custom.css" />
 <!--<link type="text/css" rel="stylesheet" media="all" href="/css/dot-luv/jquery-ui-1.8.20.custom.css" />-->
 <!--<link type="text/css" rel="stylesheet" media="all" href="/css/hot-sneaks/jquery-ui-1.8.20.custom.css" />-->
 
@@ -63,17 +63,21 @@ jQuery(document).ready(function() {
 </head>
 <body>
   <!-- add tabs -->
-  <div id="tabs" style="height:100%">
-	  <ul>
-		  <li id="checkersTab"><a href="/checkers/index">${language['systemCheck']}</a></li>
-		  <li id="confWizardTab"><a href="/confWizard">${language['confWizard']}</a></li>
-		  <li id="teleoperationTab"><a href="/teleoperation">${language['teleop']}</a></li>
-          <li id="trainingTab"><a href="/training">${language['training']}</a></li>
-          <li id="voiceRecognitionTab"><a href="/voiceRecognition">${language['Voice_Recognition']}</a></li>
-          <li id="xmms2Tab"><a href="/xmms2">${language['XMMS2']}</a></li>
-		  <li id="settingsTab"><a href="/settings">${language['settings']}</a></li>
-	  </ul>
-  </div>
+  <div id="mainTabs">
+          <div id="tabs"  style="height:100%">
+        	  <ul>
+        		  <li id="checkersTab"><a href="/checkers/index">${language['systemCheck']}</a></li>
+        		  <li id="confWizardTab"><a href="/confWizard">${language['confWizard']}</a></li>
+		          <li id="teleoperationTab"><a href="/teleoperation">${language['teleop']}</a></li>
+                  <li id="trainingTab"><a href="/training">${language['training']}</a></li>
+                  <li id="voiceRecognitionTab"><a href="/voiceRecognition">${language['Voice_Recognition']}</a></li>
+                  <li id="xmms2Tab"><a href="/xmms2">${language['XMMS2']}</a></li>
+        		  <li id="settingsTab"><a href="/settings">${language['settings']}</a></li>
+        	  </ul>
+          </div>
+    </div>
+
+
 </body>
 </html>
 <script>

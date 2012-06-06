@@ -13,11 +13,16 @@
 "works": "Works",
 "wrong": "Image correspond to camera",
 "next": "next",
+"prev": "previous",
 "restart": "Restart check",
 "endOk": "Cameras are working correctly",
 "step0": "Left camera works",
 "step1": "Left camera image correspond to the right camera",
 "step2": "Right camera works",
 "step3": "Right camera image correspond to the right camera",
-"step4": "End"
+"step4": "End",
+"step0Instr": "Check the box below if there is an image on the left",
+"step1Instr": "Check the box below if the image shown corresponds to the left eye of the robot (cover the left eye of the robot with your right hand and check if the image goes dark)",
+"step2Instr": "Check the box below if there is an image on the left",
+"step3Instr": "Check the box below if the image shown corresponds to the right eye of the robot (cover the right eye of the robot with your left hand and check if the image goes dark)"
 }

@@ -6,8 +6,8 @@ var imgPort="8081";
 var loop;
 
 var quality=50;
-var widthCamera=640;
-var heightCamera=480;
+var widthCamera=320;
+var heightCamera=240;
 
 
 
@@ -37,31 +37,29 @@ var msgWebCamRec = "Rec";
 
 var cameraURL=""
 
+var base_move_timer;
+
+
+function move_timer(line, ang)
+{
+    input = {"line":line,"angu":ang};
+    jQuery.post('/teleoperation/move',input,function(data){
+    });
+}
+
 
 function startEverything(){
 
 
     output = {image:"live_leftEye", quality: quality, width: widthCamera, height: heightCamera};
     jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
-        defaultImg = "http://"+ipLocal+":"+imgPort+data;
-        cameraURL=defaultImg;
-        setTimeout('jQuery("#iframeTeleoperation").attr("src",cameraURL);',2000);
+        cameraURL=data+"&t="+new Date().getTime();
+        jQuery("#iframeTeleoperation").attr("src",cameraURL);
     });
     
-
-
-
     originX=jQuery("#video2").offset().left;
     originY=jQuery("#video2").offset().top;
 
-
-    jQuery(document).mousemove(function(e){
-		 jQuery("#output3").html(e.pageX+" "+e.pageY);
-// originX=jQuery("#video").offset().left;
-// originY=jQuery("#video").offset().top;
-//		 jQuery("#output").html(originX+" "+originY);
-
-    });
 
     jQuery("#video2").draggable({
 	    drag: function() {
@@ -76,33 +74,77 @@ function startEverything(){
 			trueX = x-originX;
 			trueY = y-originY;			
 
-			jQuery("#output").html("centro de video = "+originX+" "+originY);
-			jQuery("#output2").html("centro de video2 "+x+" "+y+"                       "+trueX*-1+" "+trueY);
-
 			input = {"yaw":trueX*-1,"pitch":trueY};
             jQuery.post('/teleoperation/head',input, function(data){
             });
-
-
-                      
-	    },
+                     
+	    }
+        
+        ,
             stop: function() {
 		jQuery("#video2").offset({"top":jQuery("#video").offset().top,"left":jQuery("#video").offset().left});		
  		input = {"yaw":0,"pitch":0};
                 jQuery.post('/teleoperation/head',input, function(data){
                 });
-
-
-
             }
     });
 
-	//Buttons detection
-	jQuery("#foward").click(function(){
-		jQuery.post('/teleoperation/foward',function(data){
-		});
-	});
 
+    $('#video2').dblclick(function() {
+        
+        jQuery.post('/teleoperation/head_to_zero_position', function(data){
+                });
+    });
+
+	//Buttons detection
+	jQuery("#forward").mousedown(function(){
+        line=0.2;
+        ang = 0.0;
+        base_move_timer=setInterval("move_timer("+line+","+ang+")", 100);
+	}).mouseup(function(){
+        clearInterval(base_move_timer);
+        input = {"line":0.0,"angu":0.0};
+        jQuery.post('/teleoperation/move',input,function(data){
+        });
+	});  
+    
+
+
+	//Buttons detection
+	jQuery("#back").mousedown(function(){
+        line=-0.2;
+        ang = 0.0;
+        base_move_timer=setInterval("move_timer("+line+","+ang+")", 100);
+	}).mouseup(function(){
+        clearInterval(base_move_timer);
+        input = {"line":0.0,"angu":0.0};
+        jQuery.post('/teleoperation/move',input,function(data){
+        });
+	}); 
+
+	//Buttons detection
+	jQuery("#left").mousedown(function(){
+        line=0.0;
+        ang = 1.0;
+        base_move_timer=setInterval("move_timer("+line+","+ang+")", 100);
+	}).mouseup(function(){
+        clearInterval(base_move_timer);
+        input = {"line":0.0,"angu":0.0};
+        jQuery.post('/teleoperation/move',input,function(data){
+        });
+	}); 
+
+	//Buttons detection
+	jQuery("#right").mousedown(function(){
+        line=0.0;
+        ang = -1.0;
+        base_move_timer=setInterval("move_timer("+line+","+ang+")", 100);
+	}).mouseup(function(){
+        clearInterval(base_move_timer);
+        input = {"line":0.0,"angu":0.0};
+        jQuery.post('/teleoperation/move',input,function(data){
+        });
+	}); 
 
 	//Keys detector
 	jQuery(document).keydown(function (e) {
@@ -121,7 +163,13 @@ function startEverything(){
     jQuery("#radioLeft").click(function(){
         output = {image:"live_leftEye", quality: quality, width: widthCamera, height: heightCamera};
         jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
-            cameraURL = "http://"+ipLocal+":"+imgPort+data;
+
+            if( cameraURL.indexOf(data) == -1 ){
+                stopCmd = cameraURL.replace("stream","stop");
+                jQuery.get(stopCmd);
+            }
+
+            cameraURL = data+"&t="+new Date().getTime();;
             jQuery("#iframeTeleoperation").attr("src","");
             jQuery("#iframeTeleoperation").attr("src",cameraURL);
         });
@@ -129,7 +177,12 @@ function startEverything(){
     jQuery("#radioRight").click(function(){
         output = {image:"live_rightEye", quality: quality, width: widthCamera, height: heightCamera};
         jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
-            cameraURL = "http://"+ipLocal+":"+imgPort+data;
+            if( cameraURL.indexOf(data) == -1 ){
+                stopCmd = cameraURL.replace("stream","stop");
+                jQuery.get(stopCmd);
+            } 
+
+            cameraURL = data+"&t="+new Date().getTime();;
             jQuery("#iframeTeleoperation").attr("src","");
             jQuery("#iframeTeleoperation").attr("src",cameraURL);
         });
@@ -137,16 +190,98 @@ function startEverything(){
     jQuery("#radio3d").click(function(){
             output = {image:"live_3d", quality: quality, width: widthCamera, height: heightCamera};
             jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
-                cameraURL = "http://"+ipLocal+":"+imgPort+data;
+
+                if( cameraURL.indexOf(data) == -1 ){
+                    stopCmd = cameraURL.replace("stream","stop");
+                    jQuery.get(stopCmd);
+                } 
+
+                cameraURL = data+"&t="+new Date().getTime();;
                 jQuery("#iframeTeleoperation").attr("src","");
                 jQuery("#iframeTeleoperation").attr("src",cameraURL);
            });
     });
 
 
+/*
+    Event to change head movement types
+*/
+
+    jQuery("#head_type1").click(function(){
+            input = {"head_move_type":"1"};
+            jQuery.post('/teleoperation/changeHeadMoveType',input,function(data) {
+           });
+    });
+
+    jQuery("#head_type2").click(function(){
+            input = {"head_move_type": "2"};
+            jQuery.post('/teleoperation/changeHeadMoveType',input,function(data) {
+           });
+    });
+
+
+/*
+    Event for the camera size change
+*/
+    $("#video_size_select").change(function() {
+       
+        value=$("#video_size_select :selected").val();        
+        $("#iframeTeleoperation").attr("width",value*320);
+        $("#iframeTeleoperation").attr("height",value*240);
+        $("#imgInvisible").attr("width",value*320);
+        $("#imgInvisible").attr("height",value*240);  
+    
+        top_value = value*240+100;
+        
+  //      jQuery("#first_table_first_row").attr("style","height:"+value*240+"px;"); 
+        jQuery("#second_table").attr("style","position:absolute;top:"+top_value+"px;width:100%;");
+        jQuery("#qbo_video").attr("style","width:100%;height:"+value*240+"px;");  
+
+        //Notify the server of the changes in video size
+        input = {"width": value*320, "height":value*240};
+        jQuery.post('/teleoperation/changeVideoSize',input,function(data) {
+       });
+    });
+
+
+    $("#textarea")
+      .focus(function() {
+            if (this.value === this.defaultValue 
+                || this.value === "Message sent!"
+                || this.value === "Error while sending message!") {               
+                jQuery("#textarea").attr("style","color:black");
+                 this.value = '';
+            }
+      })
+      .blur(function() {
+            if (this.value === '') {
+                this.value = this.defaultValue;
+            }
+    });
+
+
+    jQuery("#send_button").click(function(){
+        message=$("#textarea").val();
+        input = {"message": message};
+
+         $("#textarea").val(${language['sending_message']});
+        jQuery.post('/teleoperation/speak',input,function(data) {
+        if(data!="true")
+        {    $("#textarea").val(${language['error_sending_message']});
+
+             jQuery("#textarea").attr("style","color:red");
+        }
+        else
+        {   $("#textarea").val(${language['message_sent']});
+        }
+       });   
+        
+        
+             
+    });
+
 
 }
-
 
 function printKeys() {
 	var keypressed = '';
@@ -194,13 +329,8 @@ function printKeys() {
 		//paramos
 		input = {"line":0,"angu":0};
                 jQuery.post('/teleoperation/move',input,function(data){
-                }); 
-		
-	  }
-
-
-        
-
+                }); 	
+	  }      
 }
 
 

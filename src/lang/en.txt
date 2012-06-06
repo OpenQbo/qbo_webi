@@ -10,6 +10,7 @@
 "object_recognition": "Object Recognition",
 "training_botton": "Train yourself",
 "guessing_botton": "Guess what is this",
+"ok_botton": "Ok",
 "label_face_object_input": "Insert the name of the",
 "object": "object",
 "person": "person",
@@ -42,6 +43,23 @@
 "test1":"test1",
 "test2":"test2",
 "save":"save",
-"XMMS2":"XMMS2"
+"saved_ok":"File was successfully saved",
+"test1_ok":"Test 1 is ok, now you can try Test 2",
+"test2_ok":"Test 2 is ok, now you can save the file",
+"XMMS2":"XMMS2",
+"camera_selection":"camera_selection",
+"enter_message":"Enter your message...",
+"video_size":"Video Size",
+"small":"Small",
+"normal":"Normal",
+"large":"Large",
+"very_large":"Very Large",
+"head_move_type":"Head Movement Type",
+"type1":"Type 1",
+"type2":"Type 2",
+"send_button":"Send",
+"message_sent":"Message Sent!",
+"error_sending_message":"Error while sending message!",
+"sending_message":"Sending message..."
 }
 

@@ -20,11 +20,6 @@ class globalCheck(chekers):
         #print self.cssTmpl
         #print chekers.cssTmpl
         testDic=self.doTest()
-        if testDic['Total']:
-            self.result='ok'
-        else:
-            self.result='fail'
-
 
     def get_html_content(self):
         testDic=self.doTest()
@@ -46,7 +41,7 @@ class globalCheck(chekers):
           testDic['leftMotor']=testResponse.leftMotor
           testDic['rightMotor']=testResponse.rightMotor
           testDic['Total'] = testDic['Gyroscope'] and testDic['Accelerometer'] and testDic['LCD'] and testDic['Qboard3'] and testDic['Qboard2'] and testDic['Qboard1'] and testDic['leftMotor'] and testDic['rightMotor'] and len(testDic['SRFNotFound'])==0
-          #print 'Diccionario:',testDic
+          print 'Diccionario:',testDic
         #return self.htmlTmpl.render(language=self.language)
         except Exception, e:
           testDic={}
@@ -63,4 +58,9 @@ class globalCheck(chekers):
           testDic['rightMotor']=False
           testDic['Total'] = False
           print 'Error: ',e
+        if testDic['Total']:
+            self.result='ok'
+        else:
+            self.result='fail'
         return testDic
+

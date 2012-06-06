@@ -7,7 +7,7 @@
 <script>
     window.cameraCheckImgSrc="/img/ok.png";
     jQuery("#cameraCheckImg").attr("src",window.cameraCheckImgSrc);
-    jQuery("#cameraCheckRestartBut").click(function() {
+    jQuery("#cameraCheckRestartBut").button().click(function() {
         jQuery.ajax({
             type: "GET",
             url: "/checkers/index/cameraCheck/restart",
