@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 
-<link type="text/css" rel="stylesheet" href="js/rte-light-read-only/rte2.css" />
+<link type="text/css" rel="stylesheet" href="js/rte-light-read-only/rte.css" />
+<link type="text/css" rel="stylesheet" href="voiceRecognition/static/css/voiceRecognition.css" />
+
 
 <script type="text/javascript" src="js/rte-light-read-only/jquery.rte.js"></script>
 
@@ -69,7 +71,7 @@
     </tr>
     <tr>
     <td colspan="2">
-        <div id="divTextArea" style="blueborder">
+        <div id="divTextArea" class="blueborder">
             <textarea id="textArea" class="rte-zone" ></textarea>
         </div>
     </td>
@@ -78,7 +80,26 @@
     <tr>
         <td>
             <div id="buttons" style="display:none;">
-                <button id="test1">${language['test1']}</button> <button id="test2" disabled="disabled">${language['test2']}</button> <button id="save" disabled="disabled">${language['save']}</button> <span id="outputConsole"></span>
+
+                <button id="test1" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                    <span class="ui-button-text">
+                        ${language['test1']}
+                    </span>
+                </button>
+
+                <button id="test2" disabled="disabled" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                    <span class="ui-button-text">
+                        ${language['test2']}
+                    </span>
+                </button>
+
+                <button id="save" disabled="disabled" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+                    <span class="ui-button-text">
+                        ${language['save']}
+                    </span>
+                </button>
+
+                <span id="outputConsole"></span>
             </div>
         </td>
     </tr>

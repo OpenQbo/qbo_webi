@@ -72,9 +72,9 @@ function startEverything(){
                         y = jQuery("#video2").offset().top+(jQuery("#video2").height()/2);
 
 			trueX = x-originX;
-			trueY = y-originY;			
-
-			input = {"yaw":trueX*-1,"pitch":trueY};
+			trueY = y-originY;		
+	
+            input = {"yaw":-trueX,"pitch":trueY};
             jQuery.post('/teleoperation/head',input, function(data){
             });
                      
@@ -90,7 +90,7 @@ function startEverything(){
     });
 
 
-    $('#video2').dblclick(function() {
+    jQuery('#video2').dblclick(function() {
         
         jQuery.post('/teleoperation/head_to_zero_position', function(data){
                 });
@@ -223,13 +223,13 @@ function startEverything(){
 /*
     Event for the camera size change
 */
-    $("#video_size_select").change(function() {
+    jQuery("#video_size_select").change(function() {
        
-        value=$("#video_size_select :selected").val();        
-        $("#iframeTeleoperation").attr("width",value*320);
-        $("#iframeTeleoperation").attr("height",value*240);
-        $("#imgInvisible").attr("width",value*320);
-        $("#imgInvisible").attr("height",value*240);  
+        value=jQuery("#video_size_select :selected").val();        
+        jQuery("#iframeTeleoperation").attr("width",value*320);
+        jQuery("#iframeTeleoperation").attr("height",value*240);
+        jQuery("#imgInvisible").attr("width",value*320);
+        jQuery("#imgInvisible").attr("height",value*240);  
     
         top_value = value*240+100;
         
@@ -244,11 +244,11 @@ function startEverything(){
     });
 
 
-    $("#textarea")
+    jQuery("#textarea")
       .focus(function() {
             if (this.value === this.defaultValue 
-                || this.value === "Message sent!"
-                || this.value === "Error while sending message!") {               
+                || this.value === "${language['message_sent']}"
+                || this.value === "${language['error_sending_message']}") {               
                 jQuery("#textarea").attr("style","color:black");
                  this.value = '';
             }
@@ -259,28 +259,29 @@ function startEverything(){
             }
     });
 
-
+/*
+    Send button event
+*/
     jQuery("#send_button").click(function(){
-        message=$("#textarea").val();
+        message=jQuery("#textarea").val();
         input = {"message": message};
 
-         $("#textarea").val(${language['sending_message']});
+        jQuery("#textarea").attr("disabled", "disabled");
+        jQuery("#textarea").val("${language['sending_message']}");
         jQuery.post('/teleoperation/speak',input,function(data) {
-        if(data!="true")
-        {    $("#textarea").val(${language['error_sending_message']});
-
-             jQuery("#textarea").attr("style","color:red");
-        }
-        else
-        {   $("#textarea").val(${language['message_sent']});
-        }
+            if(data!="true")
+            {    
+                jQuery("#textarea").val("${language['error_sending_message']}");
+                jQuery("#textarea").attr("style","color:red");
+            }
+            else
+            {   
+              jQuery("#textarea").val("${language['message_sent']}");
+            }
+            
+            jQuery("#textarea").removeAttr("disabled");
        });   
-        
-        
-             
     });
-
-
 }
 
 function printKeys() {

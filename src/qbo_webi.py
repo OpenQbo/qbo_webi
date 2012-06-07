@@ -209,6 +209,8 @@ conf = {
         '/xmms2/songs': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/xmms2/songs'},
 
+        '/voiceRecognition/static/css': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/voiceRecognition/static/css'},
 
 
 

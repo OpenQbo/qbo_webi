@@ -46,7 +46,19 @@
 "saved_ok":"El archivo se ha guardado correctamene",
 "test1_ok":"Test 1 correcto, ahora puede probar con Test 2",
 "test2_ok":"Test 2 correcto, ahora puede guardar el archivo",
-"XMMS2":"Reproductor de Música"
-
+"XMMS2":"Reproductor de Música",
+"camera_selection":"Selección de la cámara",
+"enter_message":"Escribe aquí tu mensaje...",
+"video_size":"Tamaño del vídeo",
+"small":"Pequeño",
+"normal":"Normal",
+"large":"Grande",
+"very_large":"Muy Grande",
+"head_move_type":"Movimiento de la Cabeza",
+"type1":"Tipo 1",
+"type2":"Tipo 2",
+"send_button":"Enviar",
+"message_sent":"Mensaje enviado!",
+"error_sending_message":"Error al enviar el mensaje",
+"sending_message":"Enviando el mensaje..."
 }
-

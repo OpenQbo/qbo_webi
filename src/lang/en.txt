@@ -47,7 +47,7 @@
 "test1_ok":"Test 1 is ok, now you can try Test 2",
 "test2_ok":"Test 2 is ok, now you can save the file",
 "XMMS2":"XMMS2",
-"camera_selection":"camera_selection",
+"camera_selection":"Camera Selection",
 "enter_message":"Enter your message...",
 "video_size":"Video Size",
 "small":"Small",
