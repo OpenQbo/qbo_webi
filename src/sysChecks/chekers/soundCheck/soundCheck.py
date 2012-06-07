@@ -45,14 +45,14 @@ class soundCheck(chekers):
         print "Playing sound "+path
 
         if (src=="left"):
-            filename="check_sound_left.wav"
+            filename="check_sound_left.mp3"
         elif (src=="right"):
-            filename="check_sound_right.wav"
+            filename="check_sound_right.mp3"
         elif (src=="center"):
-            filename="check_sound_center.wav"
+            filename="check_sound_center.mp3"
 
 
-        os.system('aplay '+path+"/src/sysChecks/static/wav/"+filename)
+        os.system('mpg123 '+path+"/src/sysChecks/static/mp3/"+filename)
         
         return "ok"
 
