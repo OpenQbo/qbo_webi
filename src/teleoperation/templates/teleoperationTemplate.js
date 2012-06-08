@@ -262,7 +262,7 @@ function startEverything(){
 /*
     Send button event
 */
-    jQuery("#send_button").click(function(){
+    jQuery("#ok_start_training").click(function(){
         message=jQuery("#textarea").val();
         input = {"message": message};
 
