@@ -25,3 +25,5 @@ class SettingsManager(TabClass):
     def index(self):
         all_lang=self.get_languages()
         return self.htmlTemplate.render(language=self.language,lannames=self.languages_names,alllanguage=all_lang).encode('utf8')
+
+

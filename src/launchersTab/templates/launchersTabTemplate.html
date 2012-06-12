@@ -1,0 +1,122 @@
+## -*- coding: utf-8 -*-
+   <button id="phone"class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['phone_button']} </span></button> 
+   <button style="display:none" id="stop_phone"class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['stop']} </span></button> 
+   
+</br>
+   <button id="music" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['music_button']} </span></button>
+   <button style="display:none" id="stop_music"class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['stop']} </span></button>
+
+   </br>
+   <button id="face" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['face_button']} </span></button>
+   <button style="display:none" id="stop_face"class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['stop']} </span></button>
+
+
+   </br>
+   <button id="move" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['move_button']} </span></button>
+   <button style="display:none" id="stop_move"class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['stop']} </span></button>
+
+
+
+
+<script>
+
+function startEverything(){
+
+
+jQuery("#phone").click(function(){
+   jQuery.post("/launchersTab/phonelauncher",function(data){
+       if (data=="true")
+        {       
+		jQuery("#stop_phone").show();
+        }
+    });
+});
+
+jQuery("#music").click(function(){
+   jQuery.post("/launchersTab/musicplayer",function(data){
+       if (data=="true")
+        {       
+              jQuery("#stop_music").show();  
+        }
+    });
+});
+
+jQuery("#face").click(function(){
+   jQuery.post("/launchersTab/facetraking",function(data){
+       if (data=="true")
+        {       
+                jQuery("#stop_face").show();  
+        }
+    });
+});
+
+
+jQuery("#move").click(function(){
+   jQuery.post("/launchersTab/randommove",function(data){
+       if (data=="true")
+        {       
+             jQuery("#stop_move").show();  
+   
+        }
+    });
+});
+
+
+
+jQuery("#stop_phone").click(function(){
+   jQuery.post("/launchersTab/stopPhonelauncher",function(data){
+       if (data=="true")
+        {       
+                jQuery("#stop_phone").hide();
+        }
+    });
+});
+
+jQuery("#stop_music").click(function(){
+   jQuery.post("/launchersTab/stopMusicplayer",function(data){
+       if (data=="true")
+        {       
+              jQuery("#stop_music").hide();  
+        }
+    });
+});
+
+jQuery("#stop_face").click(function(){
+   jQuery.post("/launchersTab/stopFacetraking",function(data){
+       if (data=="true")
+        {       
+                jQuery("#stop_face").hide();  
+        }
+    });
+});
+
+
+jQuery("#stop_move").click(function(){
+   jQuery.post("/launchersTab/stopRandommove",function(data){
+       if (data=="true")
+        {       
+             jQuery("#stop_move").hide();  
+   
+        }
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+</script>
+<script>
+   startEverything();
+</script>

@@ -60,6 +60,12 @@
 "send_button":"Send",
 "message_sent":"Message Sent!",
 "error_sending_message":"Error while sending message!",
-"sending_message":"Sending message..."
+"sending_message":"Sending message...",
+"phone_button":"Android Apk",
+"music_button":"Play Music",
+"face_button":"Face recognition",
+"move_button":"Random Move",
+"launchers":"Launchers",
+"stop":"Stop"
 }
 

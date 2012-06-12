@@ -17,6 +17,7 @@ from settings.settings import SettingsManager
 #CHANGED
 from teleoperation.teleoperation import TeleoperationManager
 from confWizard.confWizard import ConfWizardManager
+from launchersTab.launchersTab import LaunchersTabManager
 from otherFunctionalities.mjpegServerFuntions.MjpegServerFunctions  import MjpegServerFunctions
 from voiceRecognition.voiceRecognition import VoiceRecognitionManager
 from xmms2.xmms2 import XMMS2Manager
@@ -125,6 +126,7 @@ cherrypy.root.teleoperation = TeleoperationManager(cherrypy.root.language)
 cherrypy.root.confWizard = ConfWizardManager(cherrypy.root.language)
 cherrypy.root.voiceRecognition = VoiceRecognitionManager(cherrypy.root.language)
 cherrypy.root.xmms2 = XMMS2Manager(cherrypy.root.language)
+cherrypy.root.launchersTab = LaunchersTabManager(cherrypy.root.language)
 cherrypy.root.mjpegServer = MjpegServerFunctions() 
 cherrypy.root.image = MjpegGrabber()
 
@@ -187,6 +189,14 @@ conf = {
         '/teleoperation/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/teleoperation/static/css'},
 
+        '/launchersTab/static/img': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/launchersTab/static/img'},
+
+        '/launchersTab/static/js': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/launchersTab/static/js'},
+
+        '/launchersTab/static/css': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/launchersTab/static/css'},
 
 
         '/sysChecks/static/img': {'tools.staticdir.on': True,
