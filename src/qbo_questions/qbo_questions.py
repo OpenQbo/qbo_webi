@@ -90,27 +90,26 @@ class Qbo_questionsManager(TabClass):
     @cherrypy.expose
     def getActualDialogue(self):
         self.dialogue = {}
-
         f = open(self.dialogue_path+'/config/dialogues')
         for line in f.readlines():
             try:
                 line = line.replace("\n","")
                 parts = line.split(">>>")
 
-                self.dialogue_input = parts[0].upper()
-                self.dialogue_output = parts[1].upper()
+                dialogue_input = parts[0].upper()
+                dialogue_output = parts[1].upper()
 
 
                 # we check wheter the input line alreayd exists, if so, we add to its own list
-                if self.dialogue_input in dialogue:
+                if dialogue_input in self.dialogue:
                     self.dialogue[dialogue_input].append(dialogue_output)
                     self.dialogue[dialogue_input].sort()
                 else:
                     #self.dialogue_input does not exist
                     self.dialogue[dialogue_input] = [dialogue_output]
-            except Exception:
+            except ValueError:
+                print "Error when creating dialog at qbo_questions tab "
                 pass
-
 
         print str(self.dialogue)
         return json.dumps(self.dialogue)
