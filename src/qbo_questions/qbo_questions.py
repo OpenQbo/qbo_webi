@@ -11,6 +11,7 @@ from mako.lookup import TemplateLookup
 
 class Qbo_questionsManager(TabClass):
     def __init__(self,language):
+        self.dialogue = {}
         self.dialogue_path = roslib.packages.get_pkg_dir("qbo_questions")
         self.language = language
         self.templatelookup = TemplateLookup(directories=['./'])
@@ -77,20 +78,18 @@ class Qbo_questionsManager(TabClass):
         f.close()
 
         # we check wheter the input line alreayd exists, if so, we add to its own list
-        global dialogue
-        if question in dialogue:
-           dialogue[question].append(answer.upper())
-           dialogue[question].sort()
+        if question in self.dialogue:
+           self.dialogue[question].append(answer.upper())
+           self.dialogue[question].sort()
         else:
-            #dialogue_input does not exist
-            dialogue[question.upper()] = [answer.upper()]
+            #self.dialogue_input does not exist
+            self.dialogue[question.upper()] = [answer.upper()]
 
-        return json.dumps(dialogue)
+        return json.dumps(self.dialogue)
 
     @cherrypy.expose
     def getActualDialogue(self):
-        global dialogue
-        dialogue = {}
+        self.dialogue = {}
 
         f = open(self.dialogue_path+'/config/dialogues')
         for line in f.readlines():
@@ -98,21 +97,21 @@ class Qbo_questionsManager(TabClass):
                 line = line.replace("\n","")
                 parts = line.split(">>>")
 
-                dialogue_input = parts[0].upper()
-                dialogue_output = parts[1].upper()
+                self.dialogue_input = parts[0].upper()
+                self.dialogue_output = parts[1].upper()
 
 
                 # we check wheter the input line alreayd exists, if so, we add to its own list
-                if dialogue_input in dialogue:
-                    dialogue[dialogue_input].append(dialogue_output)
-                    dialogue[dialogue_input].sort()
+                if self.dialogue_input in dialogue:
+                    self.dialogue[dialogue_input].append(dialogue_output)
+                    self.dialogue[dialogue_input].sort()
                 else:
-                    #dialogue_input does not exist
-                    dialogue[dialogue_input] = [dialogue_output]
+                    #self.dialogue_input does not exist
+                    self.dialogue[dialogue_input] = [dialogue_output]
             except Exception:
                 pass
 
 
-        print str(dialogue)
-        return json.dumps(dialogue)
+        print str(self.dialogue)
+        return json.dumps(self.dialogue)
 
