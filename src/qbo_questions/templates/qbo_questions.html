@@ -11,27 +11,38 @@
 
 <div id="main_div">
 
-    <div id="div_q&a">
+    <div id="div_q&a" style="width: 800px;margin: 0 auto;margin-bottom: 20px;">
 
-        <div id="div_input_question">
-            Question
-            <select id="listQuestions">
-            </select>
+        <div id="div_input_question" style="float:left;" >
+            <div>Question</div>
+            <div>
+                <select style="width: 300px;" id="listQuestions">
+                </select>
+            </div>
         </div>
 
-        <div id="div_input_answer">
-            Answer
-            <input type="text" id="answer" value="aaaaaaaa" /> 
+        <div style="float:left;margin-top: 18px;margin-left: 18px;margin-right: 10px;">
+            <img src="/qbo_questions/static/img/arrow_left.png"></img>
         </div>
 
+        <div id="div_input_answer" style="float:left;">
+            <div>Answer</div>
+            <div>
+                <input style="width: 300px;" type="text" id="answer" value="" /> 
+            </div>
 
-        <button id="addSentence"> ok </button>
+            <div class="ui-state-default ui-corner-all">
+            </div>
+        </div>
 
+        <div>
+            <button style="margin-top: 22px; margin-left:10px" id="addSentence"> add </button>
+        </div>
     </div>
 
 
-    <div id="div_table">
-        <table id="dialogue_table">
+    <div id="div_table" style="width: 800px;margin: 0 auto;">
+        <table id="dialogue_table"  RULES=ROWS FRAME=HSIDES  width="100%" >
     
         </table>
     </div>
