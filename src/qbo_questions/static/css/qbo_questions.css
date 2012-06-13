@@ -1,0 +1,14 @@
+
+
+.delete_sentence{
+    margin-bottom: 10px;
+    margin-left: -5px;
+}
+
+.delete_sentence:hover{
+    margin-bottom: 10px;
+    margin-left: -5px;
+    cursor: pointer;
+}
+
+
