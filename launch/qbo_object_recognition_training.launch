@@ -28,7 +28,9 @@
 	 
 	 <node name="orbit_client" pkg="qbo_object_recognition" type="orbit_client" output="screen">
 	 </node>
-	<param name="/qbo_object_recognition/input_image_topic" value="/qbo_stereo_selector/object"/> 
+	<param name="/qbo_object_recognition/input_image_topic" value="/qbo_stereo_selector/object"/>
+    <param name="/qbo_object_recognition/max_time_to_recognize" value="15"/> 
+
 	 
    	 <node name="qbo_self_recognizer" pkg="qbo_self_recognizer" type="qbo_detector_node" output="screen" >
            </node>

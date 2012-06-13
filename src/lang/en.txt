@@ -5,6 +5,7 @@
 "teleop": "Teleoperation",
 "settings": "Settings",
 "training": "Training",
+"qbo_questions_tab":"Questions&Answers",
 "error_html5": "A web browser able to manage HTML5 is needed",
 "face_recognition": "Face Recognition",
 "object_recognition": "Object Recognition",

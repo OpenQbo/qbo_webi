@@ -61,10 +61,13 @@
 "message_sent":"Mensaje enviado!",
 "error_sending_message":"Error al enviar el mensaje",
 "sending_message":"Enviando el mensaje..."
+<<<<<<< HEAD
 "phone_button":"Android Apk",
 "music_button":"Reproductor de musica",
 "face_button":"Reconoce Caras",
 "move_button":"Date un paseo",
 "launchers":"Lanzadera",
 "stop":"Parar"
+=======
+>>>>>>> qbo_webi update
 }

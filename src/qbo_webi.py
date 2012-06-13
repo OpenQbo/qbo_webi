@@ -20,6 +20,7 @@ from confWizard.confWizard import ConfWizardManager
 from launchersTab.launchersTab import LaunchersTabManager
 from otherFunctionalities.mjpegServerFuntions.MjpegServerFunctions  import MjpegServerFunctions
 from voiceRecognition.voiceRecognition import VoiceRecognitionManager
+from qbo_questions.qbo_questions import Qbo_questionsManager
 from xmms2.xmms2 import XMMS2Manager
 from mjpeg.mjpeg import MjpegGrabber
 import os
@@ -114,6 +115,7 @@ class Root(object):
         cherrypy.root.confWizard.set_language(self.language)
         cherrypy.root.voiceRecognition.set_language(self.language)
         cherrypy.root.xmms2.set_language(self.language)
+        cherrypy.root.qbo_questions.set_language(self.language)
         #Reload the checkers dictionary
 #        return "HOLA"+new_lang
 
@@ -129,6 +131,7 @@ cherrypy.root.xmms2 = XMMS2Manager(cherrypy.root.language)
 cherrypy.root.launchersTab = LaunchersTabManager(cherrypy.root.language)
 cherrypy.root.mjpegServer = MjpegServerFunctions() 
 cherrypy.root.image = MjpegGrabber()
+cherrypy.root.qbo_questions = Qbo_questionsManager(cherrypy.root.language)
 
 #Initialize ROS node associated with Q.bo Webi
 rospy.init_node(name="qbo_webi", argv=sys.argv)
@@ -189,6 +192,7 @@ conf = {
         '/teleoperation/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/teleoperation/static/css'},
 
+<<<<<<< HEAD
         '/launchersTab/static/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/launchersTab/static/img'},
 
@@ -197,6 +201,17 @@ conf = {
 
         '/launchersTab/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/launchersTab/static/css'},
+=======
+        '/qbo_questions/static/img': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/qbo_questions/static/img'},
+
+        '/qbo_questions/static/js': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/qbo_questions/static/js'},
+
+        '/qbo_questions/static/css': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/qbo_questions/static/css'},
+
+>>>>>>> qbo_webi update
 
 
         '/sysChecks/static/img': {'tools.staticdir.on': True,
