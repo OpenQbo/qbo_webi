@@ -17,8 +17,15 @@
 
 
 
-
 <script>
+
+    tabUnload = function(){
+        
+        jQuery.post("/launchersTab/stopAll",function(data){
+        });
+
+    };
+
 
 function startEverything(){
 

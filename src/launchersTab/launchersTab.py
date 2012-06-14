@@ -19,6 +19,30 @@ class LaunchersTabManager(TabClass):
         return self.htmlTemplate.render(language=self.language)
 
     @cherrypy.expose
+    def unload(self):
+        return "ok"
+
+    @cherrypy.expose
+    def stopAll(self):
+        print "parando todo por si acaso"
+        self.stopRandommove()
+        self.stopFacetraking()
+        self.stopPhonelauncher()
+        self.stopRandommove()
+        return "ok"
+    
+    @cherrypy.expose
+    def phonelauncher(self):
+        try:
+            cmd = "rosrun qbo_mjpeg_server mjpeg_server"
+            self.mjpegNode = subprocess.Popen(cmd.split())
+            cmd = "rosrun qbo_http_api_login qbo_http_api_login.py"
+            self.httpapiNode = subprocess.Popen(cmd.split())
+        except:
+            return "false"
+        return "true"
+
+    @cherrypy.expose
     def phonelauncher(self):
         try:
             cmd = "rosrun qbo_mjpeg_server mjpeg_server"
@@ -41,8 +65,9 @@ class LaunchersTabManager(TabClass):
     @cherrypy.expose
     def randommove(self):
         try:
-            cmd = "roslaunch qbo_random_move random_move_face_demo.launch"
+            cmd = "roslaunch qbo_random_move random_move_face_recog.launch"
             self.randommoveNode = subprocess.Popen(cmd.split())
+
         except:
             return "false"
         return "true"
@@ -62,7 +87,7 @@ class LaunchersTabManager(TabClass):
             rospy.loginfo("Qbo Webi: Killing Face Recognizer nodes")
             self.faceNode.send_signal(signal.SIGINT)
         except Exception as e:
-            rospy.loginfo("ERROR when trying to kill Face Recognizer Process"+e)
+            rospy.loginfo("ERROR when trying to kill Face Recognizer Process "+str(e))
         return "true"
 
 
@@ -73,7 +98,7 @@ class LaunchersTabManager(TabClass):
             self.mjpegNode.send_signal(signal.SIGINT)
             self.httpapiNode.send_signal(signal.SIGINT)
         except Exception as e:
-            rospy.loginfo("ERROR when trying to kill Face Recognizer Process"+e)
+            rospy.loginfo("ERROR when trying to kill Face Recognizer Process "+str(e))
         return "true"
 
     @cherrypy.expose
@@ -82,7 +107,7 @@ class LaunchersTabManager(TabClass):
             rospy.loginfo("Qbo Webi: Killing Face Recognizer nodes")
             self.musicNode.send_signal(signal.SIGINT)
         except Exception as e:
-            rospy.loginfo("ERROR when trying to kill Face Recognizer Process"+e)
+            rospy.loginfo("ERROR when trying to kill Face Recognizer Process "+str(e))
         return "true"
 
     @cherrypy.expose
@@ -91,6 +116,6 @@ class LaunchersTabManager(TabClass):
             rospy.loginfo("Qbo Webi: Killing Face Recognizer nodes")
             self.randommoveNode.send_signal(signal.SIGINT)
         except Exception as e:
-            rospy.loginfo("ERROR when trying to kill Face Recognizer Process"+e)
+            rospy.loginfo("ERROR when trying to kill Face Recognizer Process "+str(e))
         return "true"
 

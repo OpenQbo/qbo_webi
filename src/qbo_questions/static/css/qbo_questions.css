@@ -11,15 +11,25 @@
     cursor: pointer;
 }
 
-td{
-    width:118px;
+.td_qbo_questions{
+    width:320px;
 }
 
 
 
-ul{
+.ul_qbo_questions{
     list-style-type: none;
 }
 
 
+.speaker_icon{
+    margin-top: 7px;
+    margin-left: -23px;    
+}
+
+.speaker_icon:hover{
+    margin-top: 7px;
+    margin-left: -23px;
+    cursor: pointer;
+}
 

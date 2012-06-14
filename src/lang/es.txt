@@ -1,7 +1,7 @@
 {
 "current_language": "es",
 "systemCheck": "Chequeo del sistema",
-"confWizard": "Asistente de configuracion",
+"confWizard": "Configuracion",
 "teleop": "Teleoperacion",
 "settings": "Ajustes",
 "training": "Entrenamiento",
@@ -46,7 +46,7 @@
 "saved_ok":"El archivo se ha guardado correctamene",
 "test1_ok":"Test 1 correcto, ahora puede probar con Test 2",
 "test2_ok":"Test 2 correcto, ahora puede guardar el archivo",
-"XMMS2":"Reproductor de Música",
+"XMMS2":"Música",
 "camera_selection":"Selección de la cámara",
 "enter_message":"Escribe aquí tu mensaje...",
 "video_size":"Tamaño del vídeo",
@@ -60,14 +60,11 @@
 "send_button":"Enviar",
 "message_sent":"Mensaje enviado!",
 "error_sending_message":"Error al enviar el mensaje",
-"sending_message":"Enviando el mensaje..."
-<<<<<<< HEAD
+"sending_message":"Enviando el mensaje...",
 "phone_button":"Android Apk",
 "music_button":"Reproductor de musica",
 "face_button":"Reconoce Caras",
 "move_button":"Date un paseo",
 "launchers":"Lanzadera",
 "stop":"Parar"
-=======
->>>>>>> qbo_webi update
 }

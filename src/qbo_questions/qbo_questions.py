@@ -17,6 +17,7 @@ class Qbo_questionsManager(TabClass):
         self.templatelookup = TemplateLookup(directories=['./'])
         self.htmlTemplate = Template(filename='qbo_questions/templates/qbo_questions.html',lookup=self.templatelookup)
         self.jsTemplate = Template(filename='qbo_questions/templates/qbo_questions.js')
+        self.client_speak = rospy.ServiceProxy("/qbo_talk/festival_say", Text2Speach)
 
     @cherrypy.expose
     def unload(self):
@@ -56,11 +57,17 @@ class Qbo_questionsManager(TabClass):
 
             print question.upper() +"=="+ check1.upper() +"and"+ answer +"=="+ check2.upper() +"and"+ str(not alreayDeleted)
 
-
-            if question.upper() == check1.upper() and answer.upper() == check2.upper() and not alreayDeleted  :
-                alreayDeleted = True
+            if check2 != "":
+                #we are deleting an answer
+                if question.upper() == check1.upper() and answer.upper() == check2.upper() and not alreayDeleted  :
+                    alreayDeleted = True
+                else:
+                    finalFileContent = finalFileContent+line
             else:
-                finalFileContent = finalFileContent+line
+                #we are deleting a question
+                if question.upper() != check1.upper() :
+                    finalFileContent = finalFileContent+line
+
         
         f.close()
 
@@ -85,7 +92,7 @@ class Qbo_questionsManager(TabClass):
             #self.dialogue_input does not exist
             self.dialogue[question.upper()] = [answer.upper()]
 
-        return json.dumps(self.dialogue)
+        return self.getActualDialogue()
 
     @cherrypy.expose
     def getActualDialogue(self):
@@ -113,4 +120,11 @@ class Qbo_questionsManager(TabClass):
 
         print str(self.dialogue)
         return json.dumps(self.dialogue)
+
+
+    @cherrypy.expose
+    def playSentence(self, answer):
+        print "Message to speak: "+str(answer)
+        self.client_speak(str(answer))
+        return "true"    
 

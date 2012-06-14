@@ -2,6 +2,7 @@
 import cherrypy
 import os
 import gen_grammar
+import subprocess
 from mako.template import Template
 from tabsClass import TabClass
 
@@ -123,6 +124,7 @@ class VoiceRecognitionManager(TabClass):
             f.write(text)
             f.close()
             gen_grammar.compilegrammar(model,lang)
+            subprocess.Popen("roslaunch qbo_listen voice_recognizer.launch".split())
         except:
             return "ERROR: Cant write the file"
         return ""

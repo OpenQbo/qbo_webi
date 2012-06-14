@@ -120,15 +120,6 @@ function startEverything(){
     });
 
 
-
-    jQuery(".ui-state-default").click(function(data){
-    });
-
-    jQuery(".class_delete_button").click(function(data){
-        alert("W");
-    });
-
-
 }
 
 function deleteSong(id){
@@ -174,7 +165,7 @@ function fillList(data){
 
         jQuery.each(data, function(key, val) {
 
-            jQuery("#music_list").append('<li class="ui-state-default" ondblclick="playSong('+val.id+')" id="'+val.id+'">  <table style="width:100%;"><tr>  <td style="width: 15px;" > <span id="play_icon_'+val.id+'" class="ui-icon ui-icon-play play_icon" ></span> </td> <td style="width: 715px;"> <p style="width:715px; margin:0; word-wrap:break-word; overflow: hidden;height: 20px;line-height: 20px;  ">'+val.title+' ('+val.album+') - '+val.artist+' </p>   </td> <td> <div onclick="deleteSong('+val.id+')" style="float:right;" class="ui-icon ui-icon-trash delete-buttons" ></div>   </td>    </tr>          </table>             </li> ');
+            jQuery("#music_list").append('<li class="ui-state-default" ondblclick="playSong('+val.id+')" id="'+val.id+'">  <table style="width:100%;"><tr>  <td style="width: 15px;" > <img id="play_icon_'+val.id+'" src="/xmms2/static/img/play_icon.png" ></img> </td> <td style="width: 715px;"> <p style="width:715px; margin:0; word-wrap:break-word; overflow: hidden;height: 20px;line-height: 20px;  ">'+val.title+' ('+val.album+') - '+val.artist+' </p>   </td> <td> <div onclick="deleteSong('+val.id+')" style="float:right;" class="ui-icon ui-icon-trash delete-buttons" ></div>   </td>    </tr>          </table>             </li> ');
 
         });
 

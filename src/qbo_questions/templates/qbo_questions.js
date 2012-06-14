@@ -43,6 +43,16 @@ function startEverything(){
     });
 
 
+    jQuery(".speaker_icon").click(function(data){
+
+        answer = jQuery("#answer").val()
+
+        param = {"answer": answer };
+        jQuery.getJSON("/qbo_questions/playSentence",param,function(data){
+        });
+    });
+
+
 }
 
 
@@ -52,7 +62,7 @@ function fillTable(data){
         for (var key in data) {
 
 
-            html = html + ' <tr> <td> '+ key +' <img id="'+key+':::" alt="Delete '+key+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img>  </td> <td> <ul> ';
+            html = html + ' <tr> <td class="td_qbo_questions"> '+ key +' <img id="'+key+':::" alt="Delete '+key+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img>  </td> <td> <ul class="ul_qbo_questions"> ';
 
             for (i=0;i<data[key].length;i++){
 

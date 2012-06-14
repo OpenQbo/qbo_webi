@@ -38,7 +38,7 @@ function startEverything(){
 
             if(jQuery("#languageModel").val() != ""){
                 jQuery("#divTextArea").show();
-                jQuery("#buttons").show();
+                jQuery("#buttons_voiceRecog").show();
                
                 jQuery("iframe").contents().find("body").html("");
  
@@ -56,7 +56,7 @@ function startEverything(){
 
             }else{
                 jQuery("#divTextArea").hide();
-                jQuery("#buttons").hide();
+                jQuery("#buttons_voiceRecog").hide();
             }
         });
     });

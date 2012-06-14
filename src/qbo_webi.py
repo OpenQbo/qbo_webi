@@ -192,7 +192,6 @@ conf = {
         '/teleoperation/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/teleoperation/static/css'},
 
-<<<<<<< HEAD
         '/launchersTab/static/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/launchersTab/static/img'},
 
@@ -201,7 +200,7 @@ conf = {
 
         '/launchersTab/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/launchersTab/static/css'},
-=======
+
         '/qbo_questions/static/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/qbo_questions/static/img'},
 
@@ -211,7 +210,6 @@ conf = {
         '/qbo_questions/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/qbo_questions/static/css'},
 
->>>>>>> qbo_webi update
 
 
         '/sysChecks/static/img': {'tools.staticdir.on': True,

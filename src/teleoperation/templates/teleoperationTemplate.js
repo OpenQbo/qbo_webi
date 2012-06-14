@@ -262,11 +262,7 @@ function startEverything(){
 /*
     Send button event
 */
-<<<<<<< HEAD
     jQuery("#ok_start_training").click(function(){
-=======
-    jQuery("#send_button").click(function(){
->>>>>>> qbo_webi update
         message=jQuery("#textarea").val();
         input = {"message": message};
 

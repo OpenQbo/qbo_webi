@@ -28,8 +28,8 @@ import re
 import random
 
 #This function create the voca file
-LMdirectory="/opt/qbo/ros_stacks/qbo_apps/qbo_listen/config/LM/"
-AMdirectory="/opt/qbo/ros_stacks/qbo_apps/qbo_listen/config/AM/"
+LMdirectory="/opt/ros/electric/stacks/qbo_stack/qbo_listen/config/LM/"
+AMdirectory="/opt/ros/electric/stacks/qbo_stack/qbo_listen/config/AM/"
 def getRandomwords(wFile,num):
     f=open(wFile,"r")
     count=0
@@ -299,6 +299,9 @@ def compilegrammar(grammar,lang):
     sentencefile=LMdirectory+lang+"/"+grammar+"/sentences.conf"
     phonemfile=AMdirectory+lang+"/"+"phonems"
     dstfiles=LMdirectory+lang+"/"+grammar+"/"+grammar
+    print sentencefile
+    print phonemfile
+    print dstfiles
     createvoca(sentencefile,phonemfile,dstfiles)
     subprocess.call(["mkdfa.pl", dstfiles])
     

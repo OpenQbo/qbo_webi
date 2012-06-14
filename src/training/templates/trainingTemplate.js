@@ -77,7 +77,7 @@ function startEverything(){
 
 
         jQuery("#training").click(function(){
-            jQuery("#input").show();
+            jQuery("#inputFaceObjectName").show();
         });
 
 		jQuery("#ok_start_training").click(function(){
@@ -248,7 +248,7 @@ function startLearning(){
                 showMessage("${language['learning_ko']}"+name2Learn); 
             }
 
-            jQuery("#input").hide();
+            jQuery("#inputFaceObjectName").hide();
 
             //We back to normal image
             stopCmd = jQuery("#qboVision").attr("src").replace("stream","stop");
@@ -281,7 +281,7 @@ function startRecognition(){
         jQuery.post('/training/stopNode',function(data) {
         });
 
-        jQuery("#input").hide();
+        jQuery("#inputFaceObjectName").hide();
 
         //We back to normal image
         stopCmd = jQuery("#qboVision").attr("src").replace("stream","stop");
