@@ -1,3 +1,4 @@
+# coding: utf-8
 import cherrypy
 from mako.template import Template
 from tabsClass import TabClass
@@ -97,8 +98,9 @@ class TeleoperationManager(TabClass):
        
     @cherrypy.expose
     def speak(self, message):
-        print "Message to speak: "+str(message)
-        self.client_speak(str(message))
+        message_encoded=message.encode('utf8')
+        print "Message to speak: "+str(message_encoded)
+        self.client_speak(message_encoded)
         return "true"
 
 
