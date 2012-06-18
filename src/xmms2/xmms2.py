@@ -10,7 +10,7 @@ roslib.load_manifest('qbo_webi');
 import rospy
 import time
 from xmmsclient import sync, XMMSError, PLAYBACK_STATUS_PAUSE, PLAYBACK_STATUS_PLAY, PLAYBACK_STATUS_STOP
-
+from types import *
 import cgi
 import tempfile
 
@@ -279,8 +279,14 @@ class XMMS2Manager(TabClass):
 
 #        self.c.medialib_add_entry(self.songsPath+theFile.filename)
 #        print self.c.medialib_get_id(self.songsPath+theFile.filename)
-        self.c.medialib_add_entry("file://"+self.songsPath+theFile.filename)
-        self.c.playlist_add_id(self.c.medialib_get_id("file://"+self.songsPath+theFile.filename)) 
+        print type(theFile)
+        if type(theFile) is ListType:
+            for songFile in theFile:
+                self.c.medialib_add_entry("file://"+self.songsPath+songFile.filename)
+                self.c.playlist_add_id(self.c.medialib_get_id("file://"+self.songsPath+songFile.filename))
+        else:
+            self.c.medialib_add_entry("file://"+self.songsPath+theFile.filename)
+            self.c.playlist_add_id(self.c.medialib_get_id("file://"+self.songsPath+theFile.filename)) 
         
 #        self.c.playlist_add_url("file://"+self.songsPath+theFile.filename,"_active")
         return '<form id="Form" action="/" method="post"><input type="hidden" name="activeTab" value="5" /></form> <script>document.getElementById("Form").submit();</script>'
