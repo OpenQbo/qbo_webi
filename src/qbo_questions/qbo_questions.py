@@ -14,6 +14,7 @@ class Qbo_questionsManager(TabClass):
         self.dialogue = {}
         self.dialogue_path = roslib.packages.get_pkg_dir("qbo_questions")
         self.language = language
+
         self.templatelookup = TemplateLookup(directories=['./'])
         self.htmlTemplate = Template(filename='qbo_questions/templates/qbo_questions.html',lookup=self.templatelookup)
         self.jsTemplate = Template(filename='qbo_questions/templates/qbo_questions.js')
@@ -34,7 +35,7 @@ class Qbo_questionsManager(TabClass):
 
 
     @cherrypy.expose
-    def deleteSentence(self, sentence2delete):
+    def deleteSentence(self, lang, sentence2delete):
 
         print "borrando ."+sentence2delete+"."
 
@@ -43,7 +44,7 @@ class Qbo_questionsManager(TabClass):
         check1 = aux[0]
         check2 = aux[1]
 
-        f = open(self.dialogue_path+'/config/dialogues')
+        f = open(self.dialogue_path+'/config/dialogues_'+lang)
 
         finalFileContent = ""
         alreayDeleted = False
@@ -55,7 +56,7 @@ class Qbo_questionsManager(TabClass):
             question =aux_line[0]
             answer =aux_line[1]
 
-            print question.upper() +"=="+ check1.upper() +"and"+ answer +"=="+ check2.upper() +"and"+ str(not alreayDeleted)
+            #print question.encode('utf8').upper() +"=="+ check1.upper() +"and"+ answer.encode('utf8') +"=="+ check2.upper() +"and"+ str(not alreayDeleted)
 
             if check2 != "":
                 #we are deleting an answer
@@ -72,16 +73,16 @@ class Qbo_questionsManager(TabClass):
         f.close()
 
 
-        f = open(self.dialogue_path+'/config/dialogues','w')
+        f = open(self.dialogue_path+'/config/dialogues_'+lang,'w')
         f.write(finalFileContent)
         f.close()
  
-        return self.getActualDialogue()
+        return self.getActualDialogue(lang)
 
     @cherrypy.expose
-    def addSentence(self, question, answer):
-        f = open(self.dialogue_path+'/config/dialogues',"a") 
-        f.write(question +">>>"+answer+"\n")
+    def addSentence(self, lang, question, answer):
+        f = open(self.dialogue_path+'/config/dialogues_'+lang,"a") 
+        f.write(question.encode('utf8') +">>>"+answer.encode('utf8')+"\n")
         f.close()
 
         # we check wheter the input line alreayd exists, if so, we add to its own list
@@ -92,12 +93,12 @@ class Qbo_questionsManager(TabClass):
             #self.dialogue_input does not exist
             self.dialogue[question.upper()] = [answer.upper()]
 
-        return self.getActualDialogue()
+        return self.getActualDialogue(lang)
 
     @cherrypy.expose
-    def getActualDialogue(self):
+    def getActualDialogue(self,lang):
         self.dialogue = {}
-        f = open(self.dialogue_path+'/config/dialogues')
+        f = open(self.dialogue_path+'/config/dialogues_'+lang)
         for line in f.readlines():
             try:
                 line = line.replace("\n","")
@@ -124,6 +125,7 @@ class Qbo_questionsManager(TabClass):
 
     @cherrypy.expose
     def playSentence(self, answer):
+        answer = answer.encode('utf8')
         print "Message to speak: "+str(answer)
         self.client_speak(str(answer))
         return "true"    

@@ -10,9 +10,8 @@ import shlex
 class LaunchersTabManager(TabClass):
 
     def __init__(self,language):
-          self.language = language
-          self.htmlTemplate = Template(filename='launchersTab/templates/launchersTabTemplate.html')
-
+        self.language = language
+        self.htmlTemplate = Template(filename='launchersTab/templates/launchersTabTemplate.html')
 
     @cherrypy.expose
     def index(self):
@@ -29,6 +28,7 @@ class LaunchersTabManager(TabClass):
         self.stopFacetraking()
         self.stopPhonelauncher()
         self.stopRandommove()
+        self.stopQuestions()
         return "ok"
     
     @cherrypy.expose
@@ -82,6 +82,15 @@ class LaunchersTabManager(TabClass):
         return "true"
 
     @cherrypy.expose
+    def questions(self, lang):
+        try:
+            cmd = "roslaunch qbo_questions qbo_questions_"+lang.upper()+".launch"
+            self.questionsNode = subprocess.Popen(cmd.split())
+        except:
+            return "false"
+        return "true"
+
+    @cherrypy.expose
     def stopFacetraking(self):
         try:
             rospy.loginfo("Qbo Webi: Killing Face Recognizer nodes")
@@ -94,28 +103,38 @@ class LaunchersTabManager(TabClass):
     @cherrypy.expose
     def stopPhonelauncher(self):
         try:
-            rospy.loginfo("Qbo Webi: Killing Face Recognizer nodes")
+            rospy.loginfo("Qbo Webi: Killing Phone Launcher nodes")
             self.mjpegNode.send_signal(signal.SIGINT)
             self.httpapiNode.send_signal(signal.SIGINT)
         except Exception as e:
-            rospy.loginfo("ERROR when trying to kill Face Recognizer Process "+str(e))
+            rospy.loginfo("ERROR when trying to kill Phone Launcher process "+str(e))
         return "true"
 
     @cherrypy.expose
     def stopMusicplayer(self):
         try:
-            rospy.loginfo("Qbo Webi: Killing Face Recognizer nodes")
+            rospy.loginfo("Qbo Webi: Killin Music Player nodes")
             self.musicNode.send_signal(signal.SIGINT)
         except Exception as e:
-            rospy.loginfo("ERROR when trying to kill Face Recognizer Process "+str(e))
+            rospy.loginfo("ERROR when trying to kill Music Player Process "+str(e))
         return "true"
 
     @cherrypy.expose
     def stopRandommove(self):
         try:
-            rospy.loginfo("Qbo Webi: Killing Face Recognizer nodes")
+            rospy.loginfo("Qbo Webi: Killing Random Move nodes")
             self.randommoveNode.send_signal(signal.SIGINT)
         except Exception as e:
-            rospy.loginfo("ERROR when trying to kill Face Recognizer Process "+str(e))
+            rospy.loginfo("ERROR when trying to kill Random Move Process "+str(e))
+        return "true"
+
+    @cherrypy.expose
+    def stopQuestions(self):
+        try:
+            rospy.loginfo("Qbo Webi: Killing Qbo Questions node")
+            self.questionsNode.send_signal(signal.SIGINT)
+        except Exception as e:
+            rospy.loginfo("ERROR when trying to kill Qbo Questions node "+str(e))
+            return "false"
         return "true"
 

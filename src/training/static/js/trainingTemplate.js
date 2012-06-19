@@ -44,7 +44,7 @@ function startEverything(){
 
 		$.post('/mjpegServer/start', function(data){
 			//Getting images
-		 	output = {image:"rightEye", quality: quality, width: widthCamera, height: heightCamera};
+		 	output = {image:"live_rightEye", quality: quality, width: widthCamera, height: heightCamera};
 	                $.post('/mjpegServer/getUrlFrom',output,function(data) {
 				defaultImg = "http://"+ipLocal+":"+imgPort+data;
 				cameraURL=defaultImg;

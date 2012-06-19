@@ -116,6 +116,7 @@ class Root(object):
         cherrypy.root.voiceRecognition.set_language(self.language)
         cherrypy.root.xmms2.set_language(self.language)
         cherrypy.root.qbo_questions.set_language(self.language)
+        cherrypy.root.launchersTab.set_language(self.language)
         #Reload the checkers dictionary
 #        return "HOLA"+new_lang
 
@@ -132,6 +133,7 @@ cherrypy.root.launchersTab = LaunchersTabManager(cherrypy.root.language)
 cherrypy.root.mjpegServer = MjpegServerFunctions() 
 cherrypy.root.image = MjpegGrabber()
 cherrypy.root.qbo_questions = Qbo_questionsManager(cherrypy.root.language)
+
 
 #Initialize ROS node associated with Q.bo Webi
 rospy.init_node(name="qbo_webi", argv=sys.argv)
@@ -221,16 +223,11 @@ conf = {
         '/sysChecks/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/sysChecks/static/css'},
 
-        '/sysChecks/static/wav': {'tools.staticdir.on': True,
-        'tools.staticdir.dir': pathh+'/sysChecks/static/wav'},
-
         '/xmms2/static/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/xmms2/static/img'},
         
         '/xmms2/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/xmms2/static/css'},
-        '/xmms2/songs': {'tools.staticdir.on': True,
-        'tools.staticdir.dir': pathh+'/xmms2/songs'},
 
         '/voiceRecognition/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/voiceRecognition/static/css'},

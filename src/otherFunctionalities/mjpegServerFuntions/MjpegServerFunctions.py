@@ -54,6 +54,7 @@ class MjpegServerFunctions(object):
 
         self.urls = {'leftEye':'/image/snapshot?topic=/stereo/left/image_raw&quality=',
 	            'rightEye':'/image/snapshot?topic=/stereo/right/image_raw&quality=',
+	            #'rightEye':'/image/snapshot?topic=/camera/rgb/image_mono&quality=',
 	            'objects':'/image/snapshot?topic=/qbo_stereo_selector/viewer&quality=',
     	        'faces':'/image/snapshot?topic=/qbo_face_tracking/viewer&quality=',
     	        'live_leftEye':'/image/stream?topic=/stereo/left/image_raw&quality=',

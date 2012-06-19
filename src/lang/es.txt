@@ -65,6 +65,10 @@
 "music_button":"Reproductor de musica",
 "face_button":"Reconoce Caras",
 "move_button":"Date un paseo",
+"questions_button":"Conversar",
 "launchers":"Lanzadera",
-"stop":"Parar"
+"stop":"Parar",
+"answer_label":"Respuesta",
+"question_label":"Pregunta",
+"add_button":"Añadir"
 }

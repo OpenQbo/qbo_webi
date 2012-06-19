@@ -1,11 +1,12 @@
-
-
+var lang = "${language['current_language']}"
 
 function startEverything(){
 
 
+
+
     //We take questions from the grammar 
-    input = {"lang":"en","model":"questions"};
+    input = {"lang":lang,"model":"questions"};
     jQuery.post("/voiceRecognition/getFile",input,function(data){
         questions_list = data.split("\n");
 
@@ -25,7 +26,8 @@ function startEverything(){
     });
 
 
-    jQuery.getJSON("/qbo_questions/getActualDialogue", function(data){
+    input = {"lang":lang};
+    jQuery.getJSON("/qbo_questions/getActualDialogue",input, function(data){
         fillTable(data);
     });
 
@@ -36,7 +38,7 @@ function startEverything(){
 
         answer = jQuery("#answer").val().replace('"','\\"');
 
-        param = {"question": jQuery("#listQuestions").val() , "answer": answer };
+        param = {"lang":lang, "question": jQuery("#listQuestions").val() , "answer": answer };
         jQuery.getJSON("/qbo_questions/addSentence",param,function(data){
            fillTable(data);
         });
@@ -62,7 +64,7 @@ function fillTable(data){
         for (var key in data) {
 
 
-            html = html + ' <tr> <td class="td_qbo_questions"> '+ key +' <img id="'+key+':::" alt="Delete '+key+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img>  </td> <td> <ul class="ul_qbo_questions"> ';
+            html = html + ' <tr> <td class="td_qbo_questions"> '+ key +'<a target="_blank" class="tooltip" title="Remove: '+key+'" > <img id="'+key+':::" alt="Delete '+key+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img></a>  </td> <td> <ul class="ul_qbo_questions"> ';
 
             for (i=0;i<data[key].length;i++){
 
@@ -70,7 +72,7 @@ function fillTable(data){
 
                 
 
-                html = html + '<li>'+data[key][i]+' <img id="'+aux_id+'" alt="Delete '+aux_id+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img>  </li>';
+                html = html + '<li>'+data[key][i]+'<a target="_blank" class="tooltip" title="Remove: '+aux_id+'" > <img id="'+aux_id+'" alt="Delete '+aux_id+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img> </a>  </li>';
             }
 
 
@@ -79,12 +81,14 @@ function fillTable(data){
 
        }
 
+        jQuery(".tooltip").tooltip();
+
         jQuery("#dialogue_table").html(html);
 
 
     //We define the delete sentence button behaviour
     jQuery(".delete_sentence").click(function(data){
-        param = {"sentence2delete": jQuery(this).attr("id") };
+        param = {"lang":lang,"sentence2delete": jQuery(this).attr("id") };
         jQuery.getJSON("/qbo_questions/deleteSentence",param,function(data){
            fillTable(data);
         });

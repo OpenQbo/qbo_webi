@@ -10,3 +10,18 @@
     border-width: 2px;
     border-color: #4297D7;
 }
+
+
+.qbo_button_improved{
+    width: 270px;
+}
+
+.qbo_button_improved[disabled]{
+    color: gray !important;
+}
+
+.qbo_button_improved[disabled]:hover{
+    cursor:auto;
+}
+
+

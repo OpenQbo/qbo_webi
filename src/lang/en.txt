@@ -66,7 +66,11 @@
 "music_button":"Play Music",
 "face_button":"Face recognition",
 "move_button":"Random Move",
+"questions_button":"Start Conversation",
 "launchers":"Launchers",
-"stop":"Stop"
+"stop":"Stop",
+"answer_label":"Answer",
+"question_label":"Question",
+"add_button":"Add"
 }
 
