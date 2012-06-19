@@ -71,6 +71,7 @@
 "stop":"Stop",
 "answer_label":"Answer",
 "question_label":"Question",
-"add_button":"Add"
+"add_button":"Add",
+"recorder":"Recorder"
 }
 

@@ -21,6 +21,7 @@ from launchersTab.launchersTab import LaunchersTabManager
 from otherFunctionalities.mjpegServerFuntions.MjpegServerFunctions  import MjpegServerFunctions
 from voiceRecognition.voiceRecognition import VoiceRecognitionManager
 from qbo_questions.qbo_questions import Qbo_questionsManager
+from recorder.recorder import RecorderManager
 from xmms2.xmms2 import XMMS2Manager
 from mjpeg.mjpeg import MjpegGrabber
 import os
@@ -117,6 +118,7 @@ class Root(object):
         cherrypy.root.xmms2.set_language(self.language)
         cherrypy.root.qbo_questions.set_language(self.language)
         cherrypy.root.launchersTab.set_language(self.language)
+        cherrypy.root.recorder.set_language(self.language)
         #Reload the checkers dictionary
 #        return "HOLA"+new_lang
 
@@ -133,6 +135,7 @@ cherrypy.root.launchersTab = LaunchersTabManager(cherrypy.root.language)
 cherrypy.root.mjpegServer = MjpegServerFunctions() 
 cherrypy.root.image = MjpegGrabber()
 cherrypy.root.qbo_questions = Qbo_questionsManager(cherrypy.root.language)
+cherrypy.root.recorder = RecorderManager(cherrypy.root.language)
 
 
 #Initialize ROS node associated with Q.bo Webi
