@@ -4,30 +4,122 @@
    </br>
    <button id="hand_gesture_calib_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span></button>
 % else:
-    ${language['config_wizard_alert']}
+
+   <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled">  <a target="_blank" class="tooltip" title="${language['config_wizard_alert']}" >  <span class="ui-button-text"> ${language['camera_calib_but']} </span>  </a>  </button> </br>
+   </br>
+   <button id="hand_gesture_calib_button" style="width:400px;color:gray !important;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled"> <a target="_blank" class="tooltip" title="${language['config_wizard_alert']}" >  <span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span> </a>  </button>
+   </br>
+   </br>
+
+
 % endif
 </br>
 <div id="output">
 </div>
+
+
+<fieldset style="width: 600px;border: 2px solid #4297D7" >
+    <legend>${language['config_title_password']}</legend>
+    <table>
+        <tr>
+            <td>
+                ${language['config_user_name']}
+            </td>
+            <td>
+                 <input id="userName" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ${language['config_old_password']}
+            </td>
+            <td>
+                <input id="oldPassword" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ${language['config_password']}
+            </td>
+            <td>
+                <input id="password" type="text" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ${language['config_repeat_password']}
+            </td>
+            <td>
+                <input id="password2" type="text" />
+            </td>
+        </tr>
+    </table>
+
+    <div id="errorMesages4Passwords" style="display:none;" ></div>
+
+
+<button id="save_password" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password']}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
+
+</fieldset>
+
+
+
+
 <script>
 
 function startEverything(){
-$("#camera_calib_button").click(function(){
-   $.post("/confWizard/camera_calib",function(data){
+jQuery("#camera_calib_button").click(function(){
+   jQuery.post("/confWizard/camera_calib",function(data){
        if (data!="true")
         {       
-        $("#output").html('<font color="red"> ${language["camera_calib_err"]} </font>');
+        jQuery("#output").html('<font color="red"> ${language["camera_calib_err"]} </font>');
         }
     });
 });
-$("#hand_gesture_calib_button").click(function(){
-   $.post("/confWizard/hand_gesture_calib",function(data){
+jQuery("#hand_gesture_calib_button").click(function(){
+   jQuery.post("/confWizard/hand_gesture_calib",function(data){
        if (data!="true")
        {       
-       $("#output").html('<font color="red"> ${language["hand_gesture_calib_err"]} </font>');
+       jQuery("#output").html('<font color="red"> ${language["hand_gesture_calib_err"]} </font>');
        } 
    });
 });
+
+
+
+jQuery("#save_password").click(function(data){
+
+
+    userName = jQuery("#userName").val();
+    oldPwd = jQuery("#oldPassword").val();
+    newPwd1 = jQuery("#password").val();
+    newPwd2 = jQuery("#password2").val();
+
+    param = {"userName": userName, "oldPassword": oldPwd , "newPassword1": newPwd1 , "newPassword2": newPwd2};
+
+
+
+    jQuery.post("/confWizard/save_password",param,function(data){
+        if(data==0){
+            alert("todo ok");
+        }else if(data==-1){
+            alert("error en old password");
+        }else if (data==-2){
+            alert("error pwd no iguales");
+        }    
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
 }
 </script>
 <script>
