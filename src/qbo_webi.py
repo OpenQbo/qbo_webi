@@ -215,8 +215,6 @@ conf = {
         '/qbo_questions/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/qbo_questions/static/css'},
 
-
-
         '/sysChecks/static/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/sysChecks/static/img'},
 
@@ -235,7 +233,8 @@ conf = {
         '/voiceRecognition/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/voiceRecognition/static/css'},
 
-
+        '/recorder/static/img': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/recorder/static/img'},
 
 
 }
