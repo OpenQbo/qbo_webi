@@ -90,6 +90,18 @@ class LaunchersTabManager(TabClass):
             return "false"
         return "true"
 
+
+    @cherrypy.expose
+    def calculator(self, lang):
+        try:
+            cmd = "roslaunch qbo_calculator qbo_calculator_"+lang.upper()+".launch"
+            self.calculatorNode = subprocess.Popen(cmd.split())
+        except:
+            return "false"
+        return "true"
+
+
+
     @cherrypy.expose
     def stopFacetraking(self):
         try:
@@ -138,3 +150,13 @@ class LaunchersTabManager(TabClass):
             return "false"
         return "true"
 
+
+    @cherrypy.expose
+    def stopCalculator(self):
+        try:
+            rospy.loginfo("Qbo Webi: Killing Qbo Calculator node")
+            self.calculatorNode.send_signal(signal.SIGINT)
+        except Exception as e:
+            rospy.loginfo("ERROR when trying to kill Qbo Calculator node "+str(e))
+            return "false"
+        return "true"

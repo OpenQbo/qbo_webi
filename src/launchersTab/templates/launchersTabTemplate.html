@@ -97,6 +97,16 @@ jQuery("#questions").click(function(){
     });
 });
 
+jQuery("#calculator").click(function(){
+   param={"lang":"${language['current_language']}"};
+   jQuery.post("/launchersTab/calculator",param,function(data){
+       if (data=="true")
+        {       
+             jQuery("#stop_calculator").show();     
+             jQuery(".qbo_button_improved").attr("disabled", "true");
+        }
+    });
+});
 
 
 jQuery("#stop_phone").click(function(){
@@ -152,6 +162,16 @@ jQuery("#stop_questions").click(function(){
     });
 });
 
+
+jQuery("#stop_calculator").click(function(){
+   jQuery.post("/launchersTab/stopCalculator",function(data){
+       if (data=="true")
+        {    
+             jQuery("#stop_calculator").hide();  
+             jQuery(".qbo_button_improved").removeAttr("disabled");
+        }
+    });
+});
 
 
 
