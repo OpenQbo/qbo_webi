@@ -19,6 +19,15 @@
    <button id="questions" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved"><span class="ui-button-text"> ${language['questions_button']} </span></button>
    <button style="display:none" id="stop_questions"class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['stop']} </span></button>
 
+%  if language['current_language'] == "es":
+
+    <!-- Qbo_calculator is only for spanish language so far -->
+   </br>
+   <button id="calculator" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved"><span class="ui-button-text"> ${language['calculator_button']} </span></button>
+   <button style="display:none" id="stop_calculator" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['stop']} </span></button>
+
+
+% endif
 
 
 <script>
