@@ -5,9 +5,16 @@
    <button id="hand_gesture_calib_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span></button>
 % else:
 
-   <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled">  <a target="_blank" class="tooltip" title="${language['config_wizard_alert']}" >  <span class="ui-button-text"> ${language['camera_calib_but']} </span>  </a>  </button> </br>
+   <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled">  
+
+        <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert']}" >  <span class="ui-button-text"> ${language['camera_calib_but']} </span>  </a>  
+    </button> </br>
    </br>
-   <button id="hand_gesture_calib_button" style="width:400px;color:gray !important;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled"> <a target="_blank" class="tooltip" title="${language['config_wizard_alert']}" >  <span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span> </a>  </button>
+   <button id="hand_gesture_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled"> 
+
+     <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert']}" > <span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span>  </a>
+
+   </button>
    </br>
    </br>
 
@@ -18,7 +25,7 @@
 </div>
 
 
-<fieldset style="width: 600px;border: 2px solid #4297D7" >
+<fieldset style="width: 365px;border: 2px solid #4297D7" >
     <legend>${language['config_title_password']}</legend>
     <table>
         <tr>
