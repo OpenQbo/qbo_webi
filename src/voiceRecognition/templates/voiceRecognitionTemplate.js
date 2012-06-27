@@ -70,16 +70,21 @@ function startEverything(){
     
 
     jQuery("#test1").click(function(data){
+        jQuery("#test2").attr('disabled', 'disabled');
+        jQuery("#save").attr('disabled', 'disabled');
         sendAndCheck(1);
     });
 
     jQuery("#test2").click(function(data){
+        jQuery("#save").attr('disabled', 'disabled');
         sendAndCheck(2);
     });
 
     jQuery("#save").click(function(data){
+        jQuery('*').css('cursor', 'progress');
         input = {"text":text,"lang":jQuery("#new_lang").val(),"model":jQuery("#languageModel").val()};
         jQuery.post("/voiceRecognition/saveToFile",input,function(data){
+           jQuery('*').css('cursor', '');
            jQuery("#outputConsole").html("${language['saved_ok']}"); 
         });
     });
@@ -127,7 +132,7 @@ function sendAndCheck(numTest){
 
         input = {"text":oldText,"lang":jQuery("#new_lang").val()};
         jQuery.post("/voiceRecognition/test"+numTest,input,function(data){
-        jQuery('*').css('cursor', 'auto');
+        jQuery('*').css('cursor', '');
 
             //data will have a list of words not allowed
             if(data == ""){
@@ -149,6 +154,13 @@ function sendAndCheck(numTest){
                 }
 
             }else{
+                if(numTest==1){
+                    jQuery("#outputConsole").html("${language['test1_wrong']}");
+                }else if(numTest==2){
+                    jQuery("#outputConsole").html("${language['test2_wrong']}");
+                }
+
+
                 //fail
                 jQuery("iframe").contents().find("body").html("");
                 arrayContent = oldText.split("\n");
