@@ -40,6 +40,9 @@ var cameraURL=""
 var base_move_timer;
 
 
+var LINEAR_SPEED = 0.3;
+var ANGULAR_SPEED = 1;
+
 function move_timer(line, ang)
 {
     input = {"line":line,"angu":ang};
@@ -293,37 +296,37 @@ function printKeys() {
           textAreaFocused = jQuery("#textarea").is(":focus");
 
           if (keypressed.indexOf("87") != -1  && keypressed.indexOf("65") != -1 && !textAreaFocused  ) {                
-                input = {"line":0.2,"angu":1};
+                input = {"line":LINEAR_SPEED,"angu":ANGULAR_SPEED};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });
           }else if (keypressed.indexOf("87") != -1  && keypressed.indexOf("68") != -1  && !textAreaFocused ) {
-                input = {"line":0.2,"angu":-1};
+                input = {"line":LINEAR_SPEED,"angu":ANGULAR_SPEED*-1};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });
           }else if (keypressed.indexOf("83") != -1  && keypressed.indexOf("65") != -1 && !textAreaFocused ) {
-                input = {"line":-0.2,"angu":1};
+                input = {"line":LINEAR_SPEED*-1,"angu":ANGULAR_SPEED*-1};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });
           }else if (keypressed.indexOf("83") != -1  && keypressed.indexOf("68") != -1 && !textAreaFocused ) {
-                input = {"line":-0.2,"angu":-1};
+                input = {"line":LINEAR_SPEED*-1,"angu":ANGULAR_SPEED};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });
           }else if (keypressed.indexOf("68") != -1 && !textAreaFocused ) {
-                input = {"line":0,"angu":-1};
+                input = {"line":0,"angu":ANGULAR_SPEED*-1};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });
 
           }else if (keypressed.indexOf("65") != -1  && !textAreaFocused) {
-                input = {"line":0,"angu":1};
+                input = {"line":0,"angu":ANGULAR_SPEED};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });
           }else if (keypressed.indexOf("87") != -1 && !textAreaFocused ) {
-                input = {"line":0.2,"angu":0};
+                input = {"line":LINEAR_SPEED,"angu":0};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });
 
           }else if (keypressed.indexOf("83") != -1  && !textAreaFocused) {
-                input = {"line":-0.2,"angu":0};
+                input = {"line":LINEAR_SPEED*-1,"angu":0};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });                    
           }else if (keypressed.indexOf("13") != -1  && textAreaFocused) {
