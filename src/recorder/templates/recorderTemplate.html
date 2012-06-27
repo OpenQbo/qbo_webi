@@ -1,16 +1,42 @@
 # -*- coding: utf-8 -*-
+
+<style>
+    #feedback { font-size: 1.4em; }
+    #selectable .ui-selecting { background: #FECA40; }
+    #selectable .ui-selected { background: #F39814; color: white; }
+    #selectable { list-style-type: none; margin: 0; padding: 0; }
+    #selectable li { margin: 3px; padding: 0.4em; font-size: 1.4em; height: 18px; }
+    </style>
+
 <script src="/recorder/recorderJs"></script>
 <script> startEverything(); </script>
 <br />
-<table border="0">
+<table border="1">
 <tr>
   <td>
     <button id="start_record" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
     <img id="button" src="/recorder/static/img/rec.png" />
-  </td>
-  <td>
+    </button>
     <img id="recording" src="/recorder/static/img/nothing.png" />
   </td>
+  <td>
+  </td>
+</tr>
+<tr>
+<td valign="top">
+<div>
+<ol id="selectable" class="ui-selectable">
+<% num=0 %>
+% for row in videos:
+<li id="element${num}" class="ui-widget-content ui-selectee" name="/recorder/videos/${row}" >${row}</li>
+<% num=num+1 %>
+% endfor
+</ol>
+</div>
+</td>
+<td>
+<div id="video_player" style="height:320px;width:480px">
+</div>
+</td>
 </tr>
 </table>
-</button>

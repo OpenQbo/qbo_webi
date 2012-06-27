@@ -8,6 +8,7 @@ import rospy
 import subprocess
 import os
 import signal
+import roslib; roslib.load_manifest('qbo_webi')
 
 class RecorderManager(TabClass):
     
@@ -16,7 +17,7 @@ class RecorderManager(TabClass):
         self.htmlTemplate = Template(filename='recorder/templates/recorderTemplate.html')
         self.jsTemplate = Template(filename='recorder/templates/recorderTemplate.js')
         self.processname = 'qbo_video_record'
-        self.command="rosrun qbo_video_record qbo_video_record"
+        self.command="rosrun qbo_video_record qbo_video_record recordDir:="+roslib.packages.get_pkg_dir("qbo_webi")+"/src/recorder/videos/";
 
     def runningProcess(self):
         pids=[]
@@ -30,6 +31,14 @@ class RecorderManager(TabClass):
             fields=line.split()
             os.kill(int(fields[0]), signal.SIGINT)
         return True
+
+    def get_videos(self):
+        videoFiles=[]
+        for fname in glob.glob("recorder/videos/*.ogv"):
+            splitdir=fname.split("/")
+            videoFiles.append(splitdir[2])
+        videoFiles.sort()
+        return videoFiles
 
     @cherrypy.expose
     def status(self):
@@ -53,4 +62,4 @@ class RecorderManager(TabClass):
 
     @cherrypy.expose
     def index(self):
-        return self.htmlTemplate.render(language=self.language)
+        return self.htmlTemplate.render(language=self.language,videos=self.get_videos())
