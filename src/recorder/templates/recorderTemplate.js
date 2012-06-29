@@ -9,7 +9,7 @@ function startEverything(){
            jQuery("#button").attr("src","/recorder/static/img/rec.png");
            jQuery("#recording").attr("src","/recorder/static/img/nothing.png");
         }
-        setTimeout("renew_list()",2000);
+        setTimeout("renew_list()",1500);
        });
     });
 
