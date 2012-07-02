@@ -20,12 +20,30 @@ class Qbo_questionsManager(TabClass):
         self.jsTemplate = Template(filename='qbo_questions/templates/qbo_questions.js')
         self.client_speak = rospy.ServiceProxy("/qbo_talk/festival_say", Text2Speach)
 
+        self.changeLang = rospy.ServiceProxy("/qbo_talk/festival_language", Text2Speach)
+
+
+        self.voice_SP = "JuntaDeAndalucia_es_sf_diphone"
+        self.voice_EN = "cmu_us_awb_arctic_clunits"
+
+
+
     @cherrypy.expose
     def unload(self):
+        changeLang(voice_EN)
         return "ok"
         
     @cherrypy.expose
     def index(self):
+        #Set Festival language
+        self.lang = self.language["current_language"]
+        if self.lang=="es":
+            #Festival
+            self.changeLang(self.voice_SP)
+        else:
+            #Festival
+            self.changeLang(self.voice_EN)
+
         return self.htmlTemplate.render(language=self.language)	
 
     @cherrypy.expose
