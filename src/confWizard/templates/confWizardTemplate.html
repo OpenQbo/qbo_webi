@@ -1,4 +1,6 @@
 ## -*- coding: utf-8 -*-
+
+<div style="margin: 0 auto;width: 400px;">
 % if localclient:
    <button id="camera_calib_button"class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['camera_calib_but']} </span></button> </br>
    </br>
@@ -64,12 +66,16 @@
 
     <div id="errorMesages4Passwords" style="display:none;" ></div>
 
+    <div id="saveButton" style="text-align: center;" >
 
 <button id="save_password" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password']}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
 
+
+    </div>
+
 </fieldset>
 
-
+</div>
 
 
 <script>
