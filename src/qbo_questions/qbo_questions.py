@@ -30,7 +30,7 @@ class Qbo_questionsManager(TabClass):
 
     @cherrypy.expose
     def unload(self):
-        changeLang(voice_EN)
+        self.changeLang(voice_EN)
         return "ok"
         
     @cherrypy.expose
