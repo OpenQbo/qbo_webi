@@ -29,13 +29,33 @@ class TeleoperationManager(TabClass):
         self.head_velocity_factor = 2.0
         self.head_move_type = 1
 
+        self.changeLang = rospy.ServiceProxy("/qbo_talk/festival_language", Text2Speach)
+
+        self.voice_SP = "JuntaDeAndalucia_es_sf_diphone"
+        self.voice_EN = "cmu_us_awb_arctic_clunits"
+
+
     @cherrypy.expose
     def unload(self):
         #self.mjpegServer.stop("8081")
+        self.changeLang(voice_EN)
         return "ok"
         
     @cherrypy.expose
     def index(self):
+
+
+        #Set Festival language
+        self.lang = self.language["current_language"]
+        if self.lang=="es":
+            #Festival
+            self.changeLang(self.voice_SP)
+        else:
+            #Festival
+            self.changeLang(self.voice_EN)
+
+
+
         #self.mjpegServer.start("8081")
         return self.htmlTemplate.render(language=self.language)	
 
