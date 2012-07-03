@@ -152,6 +152,9 @@ conf = {
         'server.socket_port': server_port,
     },
 
+    '/favicon.ico': {'tools.staticfile.on': True,
+        'tools.staticfile.filename': pathh+'/img/favicon.ico'},
+
     '/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/static/img'},
 
