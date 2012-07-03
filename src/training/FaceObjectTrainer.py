@@ -35,6 +35,7 @@ class FaceObjectTrainer(TabClass):
     @cherrypy.expose
     def unload(self):
         #self.mjpegServer.stop("8081")
+        self.stopNode()
         return "ok"
 
     @cherrypy.expose
@@ -61,13 +62,21 @@ class FaceObjectTrainer(TabClass):
 
 
     @cherrypy.expose
-    def launchNodes(self):
+    def launchNodes(self, faceOn):
+        if faceOn == "true":
+            self.faceON = True
+            rospy.loginfo("Face Recognition Mode is activated")
+        else:
+            self.faceON = False
+            rospy.loginfo("Object Recognition Mode is activated")
+        
         if self.faceON:
             #call face traningi bellow
             rospy.loginfo("Launching Face Recognition Node")
             self.launchFaceNode()
         else:
-	        self.launchObjectNode()
+            rospy.loginfo("Launching Object Recognition Node")
+            self.launchObjectNode()
 
 
     @cherrypy.expose
@@ -77,7 +86,7 @@ class FaceObjectTrainer(TabClass):
             self.stopFaceNode()
         else:
             self.stopObjectNode()
-
+        return "ok"
 
     @cherrypy.expose
     def startLearning(self,objectName):
@@ -106,7 +115,9 @@ class FaceObjectTrainer(TabClass):
 	        rospy.loginfo("Starting Face Recognition")
 	        return self.startRecognizeFace()
         else:
-		    return self.startRecognizeObject()
+            rospy.loginfo("Starting Object Recognition")
+            returned= self.startRecognizeObject()
+            return returned
 
 ############ Face Training and Recognition ######################################
 
@@ -120,10 +131,17 @@ class FaceObjectTrainer(TabClass):
     def stopFaceNode(self):
         try:
             rospy.loginfo("Qbo Webi: Killing Face Recognizer nodes")
-            self.processFaceNode.send_signal(signal.SIGINT)
+            #self.processFaceNode.send_signal(signal.SIGTERM)
+            cmd="rosnode kill /qbo_face_tracking"
+            subprocess.Popen(cmd.split())
+            cmd="rosnode kill /qbo_face_recognition"
+            subprocess.Popen(cmd.split())
+            cmd="rosnode kill /qbo_face_following"
+            subprocess.Popen(cmd.split())
         except Exception as e:
-            rospy.loginfo("ERROR when trying to kill Face Recognizer Process"+e)
-
+            rospy.loginfo("ERROR when trying to kill Face Recognizer Process. The process may not exist: "+str(e))
+        rospy.loginfo(" END Stopping Face Nodes")
+        return "ok"
     def startRecognizeFace(self):
         rospy.loginfo("Qbo Webi: Started face recognizer mode. Waiting for service...")
         rospy.wait_for_service("/qbo_face_recognition/get_name")
@@ -171,12 +189,20 @@ class FaceObjectTrainer(TabClass):
     def stopObjectNode(self):
         try:
             rospy.loginfo("Qbo Webi: Killing Object Recognizer nodes")
-            self.processObjectNode.send_signal(signal.SIGINT)
+            #self.processObjectNode.send_signal(signal.SIGTERM)
+            cmd="rosnode kill /orbit_client"
+            subprocess.Popen(cmd.split())
+            cmd="rosnode kill /qbo_self_recognizer"
+            subprocess.Popen(cmd.split())
+            cmd="rosnode kill /qbo_stereo_selector"
+            subprocess.Popen(cmd.split())
         except Exception as e:
-                rospy.loginfo("ERROR when trying to kill Object Recognizer Process"+e)
-
+            rospy.loginfo("ERROR when trying to kill Object Recognizer Process. The process may not exist: "+str(e))
+        rospy.loginfo(" END Stopping Object Nodes")
+        return "ok"
 
     def startRecognizeObject(self):
+        
         rospy.loginfo("Qbo Webi: Started object recognizer mode. Waiting for service...")
         rospy.wait_for_service("/qbo_object_recognition/recognize_with_stabilizer")
         rospy.loginfo("Qbo Webi: Recognize service is ready!")

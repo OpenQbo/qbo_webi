@@ -16,7 +16,7 @@
 </style>
 
 
-<div id="controls">
+<div id="controls" style="margin: 0 auto;width: 780px;" >
 <table >
 <tr>
 <td>
@@ -63,10 +63,13 @@
 </table>
 </div>
 
+<div style="margin: 0 auto;width: 780px;">
 
+                <form id="form" action="xmms2/upload" method="post" enctype="multipart/form-data">
+                    <input id="file_selector"  type="file" name="theFile" multiple="multiple" /> <br/>
 
-                <form action="xmms2/upload" method="post" enctype="multipart/form-data">
-                    File: <input type="file" name="theFile" multiple="multiple" /> <br/>
-                    <input type="submit"/>
+                    <div>
+                    <input class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" type="submit" value="${language['xmms2_submit']}" />
+                    </div>
                 </form>
-
+</div>

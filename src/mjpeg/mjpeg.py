@@ -38,6 +38,7 @@ class image_converter:
         i+=1
         time.sleep(0.1)
     image=cv.CreateMat(self.h, self.w, cv.CV_8UC3)
+    cv.SetZero(image)
     if not self.cv_image:
       pass
     else:
@@ -120,7 +121,11 @@ class MjpegGrabber():
         while imageInfoStr in self.subscribedTopics:
             imgData=self.subscribedTopics[imageInfoStr].getImage()
             intermediateheader="Content-Type: image/jpeg\r\nContent-Length: %d\r\nX-Timestamp: %f\r\n\r\n" % (len(imgData),time.time())
+            #print 'wait for rate ok'
             imageRate.sleep()
+            #time.sleep(1./rate)
+            #print 'end wait for rate ok'
             yield "\n\r--"+self.boundary+"\r\n"+intermediateheader+imgData+"\r\n"+self.boundary+"\n\r"
+        print 'End of content'
         #yield "\n\r--"+self.boundary+"\r\n"+intermediateheader+imgData+"\r\n"+self.boundary+"\n\r"
 

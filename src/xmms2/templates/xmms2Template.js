@@ -120,6 +120,12 @@ function startEverything(){
     });
 
 
+    jQuery("#file").change(function () {
+        alert("W");
+        //jQuery("#file_selector").trigger('click');
+    });
+
+
 }
 
 function deleteSong(id){

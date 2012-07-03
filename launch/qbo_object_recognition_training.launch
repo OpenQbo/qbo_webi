@@ -1,6 +1,6 @@
 <launch>
 
-        <node name="qbo_stereo_selector" pkg="qbo_stereo_selector" type="qbo_stereo_selector" output="screen" >
+        <node name="qbo_stereo_selector" pkg="qbo_stereo_selector" type="qbo_stereo_selector" >
                 <param name="move_head" value="true" />
                 <param name="search_min_pan" value="-0.8" />
                 <param name="search_max_pan" value="0.8" />
@@ -29,7 +29,7 @@
 	 <node name="orbit_client" pkg="qbo_object_recognition" type="orbit_client" output="screen">
 	 </node>
 	<param name="/qbo_object_recognition/input_image_topic" value="/qbo_stereo_selector/object"/>
-    <param name="/qbo_object_recognition/max_time_to_recognize" value="15"/> 
+    <param name="/qbo_object_recognition/max_time_to_recognize" value="10"/> 
 
 	 
    	 <node name="qbo_self_recognizer" pkg="qbo_self_recognizer" type="qbo_detector_node" output="screen" >

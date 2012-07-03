@@ -43,15 +43,42 @@ class ConfWizardManager(TabClass):
             return "false"
         return "true"
 
+
+
+
+    @cherrypy.expose
+    def create_user(self,userName,newPassword1,newPassword2):
+        if newPassword1 != newPassword2:
+            return "-2"        
+
+        path = roslib.packages.get_pkg_dir("qbo_http_api_login")
+
+        #we create a temporally dicctionary from users_pwd file
+        usersAndPasswords = {}
+        f = open(path+'/config/users_pwd')
+        for line in f.readlines():
+            parts = line.split(" ")
+            usersAndPasswords[ parts[0] ] = parts[1].replace("\n","")
+
+        f.close()
+
+        #add password to user
+        if userName in usersAndPasswords:
+                return "-1"
+        else:
+            usersAndPasswords[userName] = newPassword1
+
+
+        f = open(path+'/config/users_pwd','w')
+        #from dict to file
+        for name in usersAndPasswords:
+            f.write(name+" "+usersAndPasswords[name]+"\n")
+
+
     @cherrypy.expose
     def save_password(self,userName,oldPassword,newPassword1,newPassword2):
-
-
-        print "_------------------------------------__"
         if newPassword1 != newPassword2:
-            print "**"
             return "-2"
-        print "WW"
         
         path = roslib.packages.get_pkg_dir("qbo_http_api_login")
 
@@ -64,22 +91,37 @@ class ConfWizardManager(TabClass):
 
         f.close()
 
-        print str(usersAndPasswords)
-
         #change/add password to user
         if userName in usersAndPasswords:
+            print userName+" -------------- "+oldPassword+" --------"+  usersAndPasswords[userName]
             if oldPassword == usersAndPasswords[userName]:        
                 usersAndPasswords[userName] = newPassword1    
             else:
                 return "-1"
         else:
-            usersAndPasswords[userName] = newPassword1
+            return "-3"           
 
 
         f = open(path+'/config/users_pwd','w')
         #from dict to file
         for name in usersAndPasswords:
             f.write(name+" "+usersAndPasswords[name]+"\n")
+
+
+    @cherrypy.expose
+    def get_list_users(self):
+        path = roslib.packages.get_pkg_dir("qbo_http_api_login")
+
+        #we create a temporally dicctionary from users_pwd file
+        users = ""
+        f = open(path+'/config/users_pwd')
+        for line in f.readlines():
+            parts = line.split(" ")
+            users = parts[0]+":::"+users
+
+        f.close()
+
+        return users
 
 
 

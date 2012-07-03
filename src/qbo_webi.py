@@ -236,6 +236,9 @@ conf = {
         '/recorder/static/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/recorder/static/img'},
 
+        '/recorder/videos': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/recorder/videos'},
+
 
 }
 

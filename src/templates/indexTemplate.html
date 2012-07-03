@@ -50,6 +50,11 @@ jQuery(document).ready(function() {
                     return true;
                 }
 	});
+    jQuery(window).unload(function() {
+        tabUnload();
+        jQuery.get("/"+selectedOld.slice(0, -3)+"/unload");
+        tabUnload=originalTabUnload;
+    });
         selectedOld = jQuery("#tabs").find(".ui-state-active").attr('id');
 });
 </script>

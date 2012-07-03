@@ -1,10 +1,15 @@
 ## -*- coding: utf-8 -*-
 
+<div id="output_container" style="height:30px;" >
+    <div id="output" style="text-align:center;">
+    </div>
+</div>
+
 <div style="margin: 0 auto;width: 400px;">
 % if localclient:
-   <button id="camera_calib_button"class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['camera_calib_but']} </span></button> </br>
+   <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['camera_calib_but']} </span></button> </br>
    </br>
-   <button id="hand_gesture_calib_button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span></button>
+   <button id="hand_gesture_calib_button" style="width:400px;"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span></button>
 % else:
 
    <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled">  
@@ -23,27 +28,21 @@
 
 % endif
 </br>
-<div id="output">
-</div>
 
 
-<fieldset style="width: 365px;border: 2px solid #4297D7" >
-    <legend>${language['config_title_password']}</legend>
+   <button id="btn_create_user" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['config_btn_create_user']} </span></button>
+
+</br>
+
+<fieldset id="fieldset_create_user" style="width: 365px;border: 2px solid #4297D7; display:none;" >
+    <legend>${language['config_title_create_user']}</legend>
     <table>
         <tr>
             <td>
                 ${language['config_user_name']}
             </td>
             <td>
-                 <input id="userName" type="text" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                ${language['config_old_password']}
-            </td>
-            <td>
-                <input id="oldPassword" type="text" />
+                 <input id="newUserName" type="text" />
             </td>
         </tr>
         <tr>
@@ -51,7 +50,7 @@
                 ${language['config_password']}
             </td>
             <td>
-                <input id="password" type="text" />
+                <input id="newUserPassword" type="password" />
             </td>
         </tr>
         <tr>
@@ -59,7 +58,7 @@
                 ${language['config_repeat_password']}
             </td>
             <td>
-                <input id="password2" type="text" />
+                <input id="newUserPassword2" type="password" />
             </td>
         </tr>
     </table>
@@ -68,12 +67,85 @@
 
     <div id="saveButton" style="text-align: center;" >
 
-<button id="save_password" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password']}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
+<button id="save_create_user" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password']}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
 
 
     </div>
 
 </fieldset>
+
+</br>
+
+
+   <button id="btn_change_password" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['config_btn_change_password']} </span></button>
+
+    </br>
+
+<fieldset id="fieldset_change_password" style="width: 365px;border: 2px solid #4297D7; display:none;" >
+    <legend>${language['config_title_password']}</legend>
+    <table>
+        <tr>
+            <td>
+                ${language['config_user_name']}
+            </td>
+            <td>
+                <!-- <input id="userName" type="text" /> -->
+                <select class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="userName" name="userName"> </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ${language['config_old_password']}
+            </td>
+            <td>
+                <input id="oldPassword" type="password" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ${language['config_password']}
+            </td>
+            <td>
+                <input id="password" type="password" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ${language['config_repeat_password']}
+            </td>
+            <td>
+                <input id="password2" type="password" />
+            </td>
+        </tr>
+    </table>
+
+    <div id="errorMesages4Passwords" style="display:none;" ></div>
+
+    <div id="saveButton" style="text-align: center;" >
+
+<button id="save_change_password" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password']}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
+
+
+    </div>
+
+</fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 </div>
 
@@ -99,8 +171,32 @@ jQuery("#hand_gesture_calib_button").click(function(){
 });
 
 
+jQuery("#save_create_user").click(function(data){
 
-jQuery("#save_password").click(function(data){
+
+    userName = jQuery("#newUserName").val();
+    newPwd1 = jQuery("#newUserPassword").val();
+    newPwd2 = jQuery("#newUserPassword2").val();
+
+    param = {"userName": userName, "newPassword1": newPwd1 , "newPassword2": newPwd2};
+
+
+
+    jQuery.post("/confWizard/create_user",param,function(data){
+        if(data==0){
+            printMessage('${language["config_everything_ok"]}',"info");
+            setUsersNamesToSelect();
+        }else if(data==-1){
+            printMessage('${language["config_user_already_exists"]}',"error");
+        }else if (data==-2){
+            printMessage('${language["config_pwd_not_equals"]}',"error");
+        }    
+    });
+
+});
+
+
+jQuery("#save_change_password").click(function(data){
 
 
     userName = jQuery("#userName").val();
@@ -110,30 +206,71 @@ jQuery("#save_password").click(function(data){
 
     param = {"userName": userName, "oldPassword": oldPwd , "newPassword1": newPwd1 , "newPassword2": newPwd2};
 
-
-
     jQuery.post("/confWizard/save_password",param,function(data){
         if(data==0){
-            alert("todo ok");
+            printMessage('${language["config_everything_ok"]}',"info");
         }else if(data==-1){
-            alert("error en old password");
+            printMessage('${language["config_wrong_old_pwd"]}',"error");
         }else if (data==-2){
-            alert("error pwd no iguales");
-        }    
+            printMessage('${language["config_pwd_not_equals"]}',"error");
+        }else if (data==-3){
+            printMessage('${language["config_user_does_not_exist"]}',"info");
+        }
+        
     });
 
 });
 
 
+jQuery("#btn_create_user").click(function(data){
+    jQuery("#fieldset_create_user").toggle();
+    jQuery("#fieldset_change_password").hide();
+});
+
+jQuery("#btn_change_password").click(function(data){
+
+    jQuery("#fieldset_change_password").toggle();
+    jQuery("#fieldset_create_user").hide();
+});
 
 
 
-
+setUsersNamesToSelect();
 
 
 
 
 }
+
+
+function setUsersNamesToSelect(){
+    jQuery.post("/confWizard/get_list_users",function(data){
+
+        jQuery("#userName").html("");
+        if(data == ""){
+            jQuery("#userName").append("<option>There are no users yet</option>");
+        }
+        names=data.split(":::");
+        for (name in names){
+            if (names[name]=="") break;
+            jQuery("#userName").append("<option>"+names[name]+"</option>");
+        }
+    });
+}
+
+function printMessage(string,nature){    
+    if (nature=="info"){
+        jQuery("#output").css('color', 'blue');    
+    }else if (nature=="error"){
+        jQuery("#output").css('color', 'red'); 
+    }
+
+    jQuery("#output").html(string);
+    jQuery("#output").fadeIn("slow");
+    setTimeout('jQuery("#output").fadeOut("slow",function(){ jQuery("#output").html("");  });',1500);
+}
+
+
 </script>
 <script>
    startEverything();

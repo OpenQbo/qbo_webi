@@ -11,7 +11,8 @@ class SettingsManager(TabClass):
     def __init__(self,language):
         self.language = language
         self.htmlTemplate = Template(filename='settings/templates/settingsTemplate.html')
-        self.languages_names={'en':'English','es':'Español','pt':'Português','de':'Deutsch','fr':'Français','it':'Italiano'}
+        self.languages_names={'en':'English','es':'Espa&ntilde;ol','pt':'Portugu&ecirc;s','de':'Deutsch','fr':'Français','it':'Italiano'}
+#        self.languages_names={'en':'English','es':'Español','pt':'Português','de':'Deutsch','fr':'Français','it':'Italiano'}
 
     def get_languages(self):
         langlist=[]
@@ -24,6 +25,6 @@ class SettingsManager(TabClass):
     @cherrypy.expose
     def index(self):
         all_lang=self.get_languages()
-        return self.htmlTemplate.render(language=self.language,lannames=self.languages_names,alllanguage=all_lang).encode('utf8')
+        return self.htmlTemplate.render(language=self.language,lannames=self.languages_names,alllanguage=all_lang).encode('utf-8')
 
 

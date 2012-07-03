@@ -35,7 +35,7 @@ var auxTime4Coundown;
 var name2Learn;
 
 var objectORface="object";
-
+var first_itr="true";
 
 var msgWebCamWatching = "Watching";
 var msgWebCamTraining = "Training...";
@@ -51,29 +51,24 @@ function startEverything(){
         canvas = document.getElementById('canvasWebcam');
         ctx=canvas.getContext('2d');
 
-
 		//Getting images
 		output = {image:"live_leftEye", quality: quality, width: widthCamera, height: heightCamera};
 	    jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
 				//getDefaultImg = "http://"+ipLocal+":"+imgPort+data;
 				defaultImg = data;
-                actualUrlImg = data;
-                jQuery("#qboVision").attr("src",getDefaultImg);                
 	    });
 
 		output = {image:"live_objects", quality: quality, width: widthCamera, height:heightCamera};
 	    jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
 	            //getRecognizeObjImg = "http://"+ipLocal+":"+imgPort+data;
 	            recognizeObjImg = data;
+                launchNodes("object");
         });
 
 		output = {image:"live_faces", quality: quality, width: widthCamera, height:heightCamera};
 	    jQuery.post('/mjpegServer/getUrlFrom',output,function(data) {
                 recognizeFaceImg = data;
 	    });
-
-
-//		loop=setInterval("refreshWebCam();",fps);
 
 
         jQuery("#training").click(function(){
@@ -86,86 +81,32 @@ function startEverything(){
                 showMessage("${language['error_no_name_written']}");
 			}else{
 
-				 //launch Nodes
-        	     jQuery.post('/training/launchNodes',function(data) {	
-					       if(objectORface == "object"){
-
-                                       if( actualUrlImg.indexOf(recognizeObjImg) != -1 ){   
-                                            stopCmd = img.src.replace("stream","stop");
-                                            jQuery.get(stopCmd);                            
-                                       }
-                                       jQuery("#qboVision").attr("src",getRecognizeObjImg());
-                                       actualUrlImg=getRecognizeObjImg();
-        	        		       }else{
-                                       if( actualUrlImg.indexOf(recognizeFaceImg) != -1 ){
-                                            stopCmd = img.src.replace("stream","stop");
-                                            jQuery.get(stopCmd);
-                                       }
-                                       jQuery("#qboVision").attr("src",getRecognizeFaceImg());
-                                       actualUrlImg=getRecognizeFaceImg();
-        		        	       }
-	        		               auxTime4Coundown = new Date().getTime();
-	                		       action="learning";
-        		        	       countdown=3;
-                                   bool_drawing=true;
-			                       loop=setInterval('drawInfoinCanvas();',1000);
-					
-				});
+                   auxTime4Coundown = new Date().getTime();
+                   action="learning";
+                   countdown=3;
+                   bool_drawing=true;
+                   loop=setInterval('drawInfoinCanvas();',1000);
 			}
 		});
 
         jQuery("#guessing").click(function(){
-			//launch Nodes
-			jQuery.post('/training/launchNodes',function(data) {
-				if(objectORface == "object"){
-
-                    if( actualUrlImg.indexOf(recognizeObjImg) != -1 ){
-                        stopCmd = jQuery("#qboVision").attr("src").replace("stream","stop");
-                        jQuery.get(stopCmd);
-                    }
-					jQuery("#qboVision").attr("src",getRecognizeObjImg());
-                    actualUrlImg=getRecognizeObjImg();
-				}else{
-                    if( actualUrlImg.indexOf(recognizeFaceImg) != -1 ){
-                        stopCmd =  jQuery("#qboVision").attr("src").replace("stream","stop");
-                        jQuery.get(stopCmd);
-                    }   
-
-					jQuery("#qboVision").attr("src",getRecognizeFaceImg());
-                    actualUrlImg=getRecognizeFaceImg();
-				}
                 auxTime4Coundown = new Date().getTime();
                 action="recognizing";
                 countdown=3;
                 bool_drawing=true;
                 loop=setInterval('drawInfoinCanvas()',1000); 
             });
-		});
 
 		jQuery("#radioFace").click(function(){
-            
-			jQuery.post('/training/selectFaceRecognition',function(data) {
-                   
-				jQuery("#personORobject").html("person");
-                objectORface = "face";
-			});	
-
-		});
+            launchNodes("face");
+		});	
 
 		jQuery("#radioObject").click(function(){
-			jQuery.post('/training/selectObjectRecognition',function(data) {
-				jQuery("#personORobject").html("object");
-                objectORface = "object";
-			});	
-
-		});
-
-
+            launchNodes("object");
+		});	
 }
 
 function drawInfoinCanvas(){
-
-        
         try{
             if(bool_drawing){
                         //Painting countdown
@@ -183,7 +124,6 @@ function drawInfoinCanvas(){
 
                                 }else{
                                         countdown = -100;
-                                        //alert("lanzadera");
                                         //Lanzamos la grabacion de fotogramas                           
                                         //ID_grabaFotogramas = setInterval(grabaFotogramas, delayBtwFotogramsCaptured);
 
@@ -196,11 +136,8 @@ function drawInfoinCanvas(){
                                                 disableRadioBotton(true);
                                                 startRecognition();
                                         }
-
                                 }
-
                         }
-
                         if(recording && countdown==-100){
                                 ctx.clearRect ( 0 , 0 , canvas.width , canvas.height );
                                 ctx.font = "bold 36px sans-serif";
@@ -227,10 +164,7 @@ function drawInfoinCanvas(){
             ctx.clearRect ( 0 , 0 , canvas.width , canvas.height );
             clearInterval(loop);
         }
-
-
 }
-
 
 function startLearning(){
     //lanzamos aprendizaje
@@ -250,15 +184,6 @@ function startLearning(){
 
             jQuery("#inputFaceObjectName").hide();
 
-            //We back to normal image
-            stopCmd = jQuery("#qboVision").attr("src").replace("stream","stop");
-            jQuery.get(stopCmd);
-
-            jQuery("#qboVision").attr("src",getDefaultImg());            
-            actualUrlImg=getDefaultImg();
-            $.post('/training/stopNode',function(data) {
-
-            });
         });
     });
 }
@@ -277,46 +202,16 @@ function startRecognition(){
             showMessage("${language['dontKnow']}");
         }
 
-        //paramos nodo
-        jQuery.post('/training/stopNode',function(data) {
-        });
-
         jQuery("#inputFaceObjectName").hide();
 
-        //We back to normal image
-        stopCmd = jQuery("#qboVision").attr("src").replace("stream","stop");
-        jQuery.get(stopCmd);            
-
-
-        jQuery("#qboVision").attr("src",getDefaultImg());
-
-
-        actualUrlImg=getDefaultImg();
         disableRadioBotton(false);
 
-        })
-        .error(function() {
-            //paramos nodo
-            jQuery.post('training/stopNode',function(data) {
-        });
-
-
-        //We back to normal image
-        stopCmd = jQuery("#qboVision").attr("src").replace("stream","stop");
-        jQuery.get(stopCmd);
-        
-        jQuery("#qboVision").attr("src",getDefaultImg());
-        actualUrlImg=getDefaultImg();
+    })
+    .error(function() {
+        //paramos nodo
         disableRadioBotton(false);
-        });
-       }
-
-
-
-
-
-
-
+    });
+}
 
 
 function disableRadioBotton(disable){
@@ -328,13 +223,7 @@ function disableRadioBotton(disable){
 	}	
 }
 
-
-
-
-
-
 function showMessage(text){
-
     try{
         cleatTimeout(timeout4Message);
     }catch(e){}
@@ -353,9 +242,7 @@ function showMessage(text){
     jQuery("#errorText").html(text)
 
     timeout4Message = setTimeout('jQuery("#divQboMessage").fadeOut()',3000);
-
 }
-
 
 function getRecognizeObjImg(){
     t=new Date().getTime();
@@ -368,5 +255,66 @@ function getRecognizeFaceImg(){
 function getDefaultImg(){
     t=new Date().getTime();
     return defaultImg+"&t="+t;
+}
+
+function launchNodes(faceObjectString)
+{
+    if(faceObjectString == "face") //Face Recognition Mode
+    {
+        faceOnBool = "true";
+        personOrObjectString = "person";
+         
+        //Stop the stream of the previous selected image
+        //if( actualUrlImg.indexOf(recognizeFaceImg) != -1 ){
+
+        if(!first_itr)
+        {    stopCmd =  jQuery("#qboVision").attr("src").replace("stream","stop");
+            jQuery.get(stopCmd);
+        }
+        else
+        {
+
+            first_itr = false;
+        }
+
+         
+        //}   
+        
+        //Activate face tracking image
+        jQuery("#qboVision").attr("src",getRecognizeFaceImg());
+        actualUrlImg=getRecognizeFaceImg();
+
+    }   
+    else //Object Recognition Mode
+    {
+        faceOnBool = "false";
+        personOrObjectString = "object";
+
+        if(!first_itr)
+        {    stopCmd =  jQuery("#qboVision").attr("src").replace("stream","stop");
+            jQuery.get(stopCmd);
+        }
+        else
+        {
+
+            first_itr = false;
+        }
+
+
+        //Activate stereo selector image
+        jQuery("#qboVision").attr("src",getRecognizeObjImg());
+        actualUrlImg=getRecognizeObjImg(); 
+
+    }
+
+    //Stop the nodes of the previous state
+    jQuery.post('training/stopNode',function(data) { 
+        args = { faceOn : faceOnBool };
+        jQuery.post('/training/launchNodes',args, function(data) {
+            jQuery("#personORobject").html(personOrObjectString);
+            objectORface = faceObjectString;
+        });
+     });
+
 }
 

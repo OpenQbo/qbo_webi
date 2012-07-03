@@ -252,7 +252,7 @@ function startEverything(){
             if (this.value === this.defaultValue 
                 || this.value === "${language['message_sent']}"
                 || this.value === "${language['error_sending_message']}") {               
-                jQuery("#textarea").attr("style","color:black");
+                jQuery("#textarea").attr("style","color:black;font-weight:normal;");
                  this.value = '';
             }
       })
@@ -275,13 +275,15 @@ function startEverything(){
             if(data!="true")
             {    
                 jQuery("#textarea").val("${language['error_sending_message']}");
-                jQuery("#textarea").attr("style","color:red");
+                jQuery("#textarea").attr("style","color:red;font-weight:bold;");
             }
             else
             {   
               jQuery("#textarea").val("${language['message_sent']}");
+                jQuery("#textarea").attr("style","color:green;font-weight:bold;");
             }
             
+            jQuery("#textarea").trigger('blur');
             jQuery("#textarea").removeAttr("disabled");
        });   
     });
@@ -329,7 +331,7 @@ function printKeys() {
                 input = {"line":LINEAR_SPEED*-1,"angu":0};
                 jQuery.post('/teleoperation/move',input,function(data){
                 });                    
-          }else if (keypressed.indexOf("13") != -1  && textAreaFocused) {
+          }else if (keypressed.indexOf("13") != -1  && textAreaFocused && !$('#textarea').attr("disabled")) {
                 jQuery("#send_text").trigger('click');
 
           }else{

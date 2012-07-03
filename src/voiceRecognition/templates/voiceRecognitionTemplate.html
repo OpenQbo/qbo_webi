@@ -55,14 +55,14 @@
     <tr>
     <td>
         <div style="text-align: center;">
-            <select id="new_lang" name="new_lang">
-                <option value="" selected="selected">${language['first_language']}</option>
+            <select class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="new_lang" name="new_lang">
+                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  value="" selected="selected">${language['first_language']}</option>
                 % for row in alllanguage:
-                <option value="${row}">${lannames[row].decode('utf-8')}</option>
+                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="${row}">${lannames[row].decode('utf-8')}</option>
                 % endfor
             </select>
-            <select id="languageModel">
-                <option value="">${language['first_language']}</option>
+            <select class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  id="languageModel">
+                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="">${language['first_language']}</option>
             </select>
         </div>
     </td>

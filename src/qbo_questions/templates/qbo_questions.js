@@ -19,7 +19,7 @@ function startEverything(){
                 if(questions_list[i][0] == "[" || questions_list[i]==""){
                     break;
                 }else{            
-                    jQuery("#listQuestions").append("<option>"+questions_list[i]+"</option>");
+                    jQuery("#listQuestions").append('<option  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" >'+questions_list[i]+'</option>');
                 }
             } 
         }
@@ -72,7 +72,7 @@ function fillTable(data){
 
                 
 
-                html = html + '<li>'+data[key][i]+'<a target="_blank" class="tooltip" title="Remove: '+aux_id+'" > <img id="'+aux_id+'" alt="Delete '+aux_id+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img> </a>  </li>';
+                html = html + '<li>'+data[key][i]+'<a target="_blank" class="tooltip" title="Remove: '+aux_id+'" > <img id="'+aux_id+'" alt="Delete '+data[key][i]+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img> </a>  </li>';
             }
 
 

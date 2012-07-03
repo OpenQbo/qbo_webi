@@ -21,6 +21,7 @@
   <depend package="std_srvs"/>
   <depend package="opencv2"/>
   <depend package="cv_bridge"/>
+  <depend package="qbo_video_record"/>
 
 
 
