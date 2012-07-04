@@ -53,7 +53,7 @@ cherrypy.server.socket_timeout = 60
 class XMMS2Manager(TabClass):
     
     def __init__(self,language):
-        subprocess.call(['xmms2d'])
+        subprocess.Popen(['/usr/bin/xmms2d'])
         self.language = language
         self.songsPath=roslib.packages.get_pkg_dir("qbo_webi")+"/src/xmms2/songs/"
         self.htmlTemplate = Template(filename='xmms2/templates/xmms2Template.html')
