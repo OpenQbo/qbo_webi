@@ -29,6 +29,7 @@ var countdown;
 var bool_drawing=false;
 var recording = false;
 var watching = false;
+var sendingToCloud = false;
 var training = false;
 var auxTime4Coundown;
 
@@ -39,6 +40,7 @@ var first_itr="true";
 
 var msgWebCamWatching = "Watching";
 var msgWebCamTraining = "Training...";
+var msgSendingToCloud = "Sending to Q.bo Cloud...";
 var msgWebCam = "";
 var msgWebCamRec = "Rec";
 
@@ -130,7 +132,7 @@ function drawInfoinCanvas(){
                                         if(action=="learning"){
                                                 recording=true;
                                                 disableRadioBotton(true);
-                                                startLearning();
+                                                startLearningAndTraining();
                                         }else if(action=="recognizing"){
                                                 watching=true;
                                                 disableRadioBotton(true);
@@ -148,6 +150,11 @@ function drawInfoinCanvas(){
                                 ctx.font = "bold 36px sans-serif";
                                 ctx.fillStyle = "rgb(255, 0, 0)";
                                 ctx.fillText(msgWebCamTraining, 10, 200);
+                        }else if(sendingToCloud && countdown==-100){
+                                ctx.clearRect ( 0 , 0 , canvas.width , canvas.height );
+                                ctx.font = "bold 20px sans-serif";
+                                ctx.fillStyle = "rgb(255, 0, 0)";
+                                ctx.fillText(msgSendingToCloud, 10, 200);
                         }else if(watching && countdown==-100){
                                 ctx.clearRect ( 0 , 0 , canvas.width , canvas.height );
                                 ctx.font = "bold 36px sans-serif";
@@ -166,28 +173,56 @@ function drawInfoinCanvas(){
         }
 }
 
-function startLearning(){
+function startLearningAndTraining(){
     //lanzamos aprendizaje
     output = { objectName : name2Learn };
-    jQuery.post('/training/startLearning' ,output, function(data) {
-        recording=false;
-        training=true;
-        jQuery.post('/training/startTraining' , function(data) {
-            training=false;
-            bool_drawing=false;
 
-            if(data){
-                showMessage("${language['learning_ok']}"+name2Learn);
-            }else{//error
-                showMessage("${language['learning_ko']}"+name2Learn); 
-            }
+    var cloudIsChecked = jQuery("#checkboxCloud").attr('checked')?true:false;
 
-            jQuery("#inputFaceObjectName").hide();
+    if(cloudIsChecked && objectORface == "object") //Share with the Cloud
+    {
+        jQuery.post('/training/startLearning' ,output, function(data) {
+            recording=false;
+            sendingToCloud = true;
+            jQuery.post('/training/sendToCloud',function(data) {
+                sendingToCloud = false;
+                training=true;
+                jQuery.post('/training/startTraining' , function(data) {
+                    training=false;
+                    bool_drawing=false;
 
+                    if(data){
+                        showMessage("${language['learning_ok']}"+name2Learn);
+                    }else{//error
+                        showMessage("${language['learning_ko']}"+name2Learn); 
+                    }
+
+                    jQuery("#inputFaceObjectName").hide();
+               });
+             });
         });
-    });
-}
+    }    
+    else //Do NOT share with the Cloud
+    {
+        jQuery.post('/training/startLearning' ,output, function(data) {
+            recording=false;
+            training=true;
+            jQuery.post('/training/startTraining' , function(data) {
+                training=false;
+                bool_drawing=false;
 
+                if(data){
+                    showMessage("${language['learning_ok']}"+name2Learn);
+                }else{//error
+                    showMessage("${language['learning_ko']}"+name2Learn); 
+                }
+
+                jQuery("#inputFaceObjectName").hide();
+
+            });
+        });
+    }
+}
 
 function startRecognition(){
 	 //start recognition
@@ -283,6 +318,7 @@ function launchNodes(faceObjectString)
         //Activate face tracking image
         jQuery("#qboVision").attr("src",getRecognizeFaceImg());
         actualUrlImg=getRecognizeFaceImg();
+        jQuery("#divShareToCloud").hide();
 
     }   
     else //Object Recognition Mode
@@ -304,7 +340,9 @@ function launchNodes(faceObjectString)
         //Activate stereo selector image
         jQuery("#qboVision").attr("src",getRecognizeObjImg());
         actualUrlImg=getRecognizeObjImg(); 
-
+        
+        jQuery("#divShareToCloud").show();
+    
     }
 
     //Stop the nodes of the previous state

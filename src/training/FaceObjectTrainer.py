@@ -16,9 +16,20 @@ from qbo_object_recognition.srv import LearnNewObject
 from qbo_face_msgs.srv  import GetName
 from qbo_face_msgs.srv  import LearnFaces
 from qbo_face_msgs.srv  import Train
+import roslib.packages
+
+
 import unicodedata
+
+
 from  otherFunctionalities.mjpegServerFuntions.MjpegServerFunctions  import MjpegServerFunctions
 
+import time
+import urllib
+import urllib2_file
+import urllib2
+import sys, json
+import os
 
 class FaceObjectTrainer(TabClass):
 
@@ -118,6 +129,13 @@ class FaceObjectTrainer(TabClass):
             rospy.loginfo("Starting Object Recognition")
             returned= self.startRecognizeObject()
             return returned
+
+    @cherrypy.expose
+    def sendToCloud(self):
+        if self.faceON:
+            return "Face Mode is activated." 
+        self.send_images_to_cloud()
+        return "True"    
 
 ############ Face Training and Recognition ######################################
 
@@ -244,4 +262,52 @@ class FaceObjectTrainer(TabClass):
         resultTraining = training()
         rospy.loginfo("Qbo Webi: Response from Object Teach Service -> "+str(resultTraining.taught))
         return "True"
+
+############ Sharing with the Q.bo Cloud functions ########################
+    def send_images_to_cloud(self):
+        
+        #Get the path of the newly captured object's images
+        path=roslib.packages.get_pkg_dir('qbo_object_recognition')+"/objects/new_objects/"
+        
+        path=path.rstrip('/')
+
+        print "Images to send to Cloud are in path: ",path
+        
+        files_list=os.listdir(path)
+        for object_name in files_list:
+            object_path=path+'/'+object_name
+            print "Object found in path: ",object_path
+            if os.path.isdir(object_path):
+                images_list=os.listdir(object_path)
+                total_response=True
+                for image in images_list:
+                    response_data = self.send_image(object_name,object_path+'/'+image)
+                    try:
+                        response = json.loads(response_data)
+                        if response:
+                            #borro imagenes
+                            print "Image sent"
+                        else:
+                            total_response=False
+                    except Exception, e:
+                        print e
+                        print 'Something went wrong'
+                    print object_name, ' ', image, ' ', response_data
+                    #print object_name, ' ', image, ' ', send_image(object_name,object_path+'/'+image)
+                    #print send_image(object_name,object_path+'/'+image)
+                if total_response:
+                    print "Transfer has been successful"
+
+
+
+    def send_image(self,object_name,image_path):
+        data = {'image_file' : open(image_path,'rb'),
+               #'data' : 'algo',
+               'data':json.dumps({'new_image':True}),
+           }
+
+        req = urllib2.Request('http://192.168.1.16:8800/object/'+urllib.quote(object_name)+'/', data, {})
+        u = urllib2.urlopen(req)
+        #print u.read()
+        return u.read()
 
