@@ -11,32 +11,49 @@
 <script src="/recorder/recorderJs"></script>
 <script> startEverything(); </script>
 <br />
+
+<div style="width:900px; margin: 0 auto;">
+
+
+
+<div>
+<button id="start_record" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+ <img id="button" src="/recorder/static/img/rec.png" />
+</button>
+<img id="recording" src="/recorder/static/img/nothing.png" />
+</div>
+
+<div style="float:left; width:300px; margin: 0 auto; height:320px; overflow:auto; margin-right: 30px;  ">
 <table border="0">
 <tr>
-  <td>
-    <button id="start_record" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-    <img id="button" src="/recorder/static/img/rec.png" />
-    </button>
-    <img id="recording" src="/recorder/static/img/nothing.png" />
-  </td>
   <td>
   </td>
 </tr>
 <tr>
 <td valign="top">
 <div id="video_list">
-<ol id="selectable" class="ui-selectable">
-<% num=0 %>
-% for row in videos:
-<li id="element${num}" class="ui-widget-content ui-selectee" name="/recorder/videos/${row}" >${row}</li>
-<% num=num+1 %>
-% endfor
-</ol>
+<!--<ol id="selectable" class="ui-selectable">
+</ol>-->
+
+<div id="div_video_list">
+    <ul id="video_list">
+    </ul>
+</div>
+
+
 </div>
 </td>
-<td>
-<div id="video_player" style="height:320px;width:480px">
-</div>
-</td>
+
 </tr>
+
 </table>
+
+</div>
+
+
+<div id="video_player" style="height:320px;width:480px;float:left;">
+</div>
+
+
+
+</div>

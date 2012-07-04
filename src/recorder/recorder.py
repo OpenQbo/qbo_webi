@@ -33,10 +33,16 @@ class RecorderManager(TabClass):
         videos=self.get_videos()
         index=0
         html='<ol id="selectable" class="ui-selectable">'
+        test=""
         for video in videos:
-            html=html+'<li id="element'+str(index)+'" class="ui-widget-content ui-selectee" name="/recorder/videos/'+video+'" >'+video+'</li>'
+            #html=html+'<li id="element'+str(index)+'" class="ui-widget-content ui-selectee" name="/recorder/videos/'+video+'" >     <table style="width:100%;"><tr>  <td style="width: 15px;" > </td> <td style="width: 215px;"> <p style="width:215px; margin:0; word-wrap:break-word; overflow: hidden;height: 20px;line-height: 20px;  ">'+video+' </p>   </td> <td onClick="deleteVideo(\''+video+'\');">  <div style="float:right;width:16px;height:16px;" class="BasuraIcon" ></div>   </td>    </tr>          </table>     </li>'
+
+
+            html=html+'<li class="ui-state-default" onclick="playVideo(\'/recorder/videos/'+video+'\')" id="'+video+'">  <table style="width:100%;"><tr>  <td style="width: 15px;" > </td> <td style="width: 215px;"> <p style="width:215px; margin:0; word-wrap:break-word; overflow: hidden;height: 20px;line-height: 20px;  ">'+video+' </p>   </td> <td> <div onclick="deleteVideo(\''+video+'\')" style="float:right;" class="ui-icon ui-icon-trash delete-buttons" ></div>   </td>    </tr>          </table>             </li> '
+
             index=index+1
-        html=html+"</ol>" 
+
+        html=html+"</ol>"+test 
         return html
 
     @cherrypy.expose
@@ -63,10 +69,19 @@ class RecorderManager(TabClass):
             stop()
             return "0"
 
+
+    @cherrypy.expose
+    def deleteVideo(self, videoName):
+        print "-------------------"
+        os.remove(self.videosDir+videoName)
+        print "--------------2"
+        return self.video_list_html()
+
+
     @cherrypy.expose
     def recorderJs(self, **params):
         return self.jsTemplate.render(language=self.language)
 
     @cherrypy.expose
     def index(self):
-        return self.htmlTemplate.render(language=self.language,videos=self.get_videos())
+        return self.htmlTemplate.render(language=self.language)
