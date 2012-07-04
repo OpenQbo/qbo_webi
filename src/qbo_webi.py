@@ -26,7 +26,7 @@ from xmms2.xmms2 import XMMS2Manager
 from mjpeg.mjpeg import MjpegGrabber
 import os
 import sys
-
+import signal
 
 pathh = '/'.join(os.path.abspath( __file__ ).split('/')[:-1])
 os.chdir(pathh)
@@ -123,6 +123,11 @@ class Root(object):
 #        return "HOLA"+new_lang
 
 
+def SIGINT_handler(signal, frame):
+    print "SigInt Recived"
+    rospy.signal_shutdown("ROS Node kill was sent by exterior process")
+    sys.exit(0)
+
 cherrypy.root = Root()
 cherrypy.root.checkers = sysChecksManager(cherrypy.root.language)
 cherrypy.root.training = FaceObjectTrainer(cherrypy.root.language)
@@ -138,8 +143,10 @@ cherrypy.root.qbo_questions = Qbo_questionsManager(cherrypy.root.language)
 cherrypy.root.recorder = RecorderManager(cherrypy.root.language)
 
 
+
 #Initialize ROS node associated with Q.bo Webi
-rospy.init_node(name="qbo_webi", argv=sys.argv)
+rospy.init_node(name="qbo_webi", argv=sys.argv, disable_signals=True)
+signal.signal(signal.SIGINT, SIGINT_handler)
 
 
 
@@ -244,6 +251,7 @@ conf = {
 
 
 }
+
 
 def roskill_handler():
     print "qbo_webi ROS node is shuting down"
