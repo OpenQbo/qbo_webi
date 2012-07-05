@@ -1,0 +1,3 @@
+#!/bin/bash
+chmod o+w /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/xmms2/songs/
+chmod o+w /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/recorder/videos/
