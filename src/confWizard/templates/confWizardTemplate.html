@@ -7,19 +7,19 @@
 
 <div style="margin: 0 auto;width: 400px;">
 % if localclient:
-   <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['camera_calib_but']} </span></button> </br>
+   <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['camera_calib_but'].decode('utf-8')} </span></button> </br>
    </br>
-   <button id="hand_gesture_calib_button" style="width:400px;"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span></button>
+   <button id="hand_gesture_calib_button" style="width:400px;"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['hand_gesture_calib_but'].decode('utf-8')} </span></button>
 % else:
 
    <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled">  
 
-        <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert']}" >  <span class="ui-button-text"> ${language['camera_calib_but']} </span>  </a>  
+        <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert'].decode('utf-8')}" >  <span class="ui-button-text"> ${language['camera_calib_but']} </span>  </a>  
     </button> </br>
    </br>
    <button id="hand_gesture_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled"> 
 
-     <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert']}" > <span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span>  </a>
+     <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert'].decode('utf-8')}" > <span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span>  </a>
 
    </button>
    </br>
@@ -30,16 +30,16 @@
 </br>
 
 
-   <button id="btn_create_user" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['config_btn_create_user']} </span></button>
+   <button id="btn_create_user" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['config_btn_create_user'].decode('utf-8')} </span></button>
 
 </br>
 
 <fieldset id="fieldset_create_user" style="width: 365px;border: 2px solid #4297D7; display:none;" >
-    <legend>${language['config_title_create_user']}</legend>
+    <legend>${language['config_title_create_user'].decode('utf-8')}</legend>
     <table>
         <tr>
             <td>
-                ${language['config_user_name']}
+                ${language['config_user_name'].decode('utf-8')}
             </td>
             <td>
                  <input id="newUserName" type="text" />
@@ -47,7 +47,7 @@
         </tr>
         <tr>
             <td>
-                ${language['config_password']}
+                ${language['config_password'].decode('utf-8')}
             </td>
             <td>
                 <input id="newUserPassword" type="password" />
@@ -55,7 +55,7 @@
         </tr>
         <tr>
             <td>
-                ${language['config_repeat_password']}
+                ${language['config_repeat_password'].decode('utf-8')}
             </td>
             <td>
                 <input id="newUserPassword2" type="password" />
@@ -67,7 +67,7 @@
 
     <div id="saveButton" style="text-align: center;" >
 
-<button id="save_create_user" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password']}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
+<button id="save_create_user" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password'].decode('utf-8')}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
 
 
     </div>
@@ -77,16 +77,16 @@
 </br>
 
 
-   <button id="btn_change_password" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['config_btn_change_password']} </span></button>
+   <button id="btn_change_password" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['config_btn_change_password'].decode('utf-8')} </span></button>
 
     </br>
 
 <fieldset id="fieldset_change_password" style="width: 365px;border: 2px solid #4297D7; display:none;" >
-    <legend>${language['config_title_password']}</legend>
+    <legend>${language['config_title_password'].decode('utf-8')}</legend>
     <table>
         <tr>
             <td>
-                ${language['config_user_name']}
+                ${language['config_user_name'].decode('utf-8')}
             </td>
             <td>
                 <!-- <input id="userName" type="text" /> -->
@@ -95,7 +95,7 @@
         </tr>
         <tr>
             <td>
-                ${language['config_old_password']}
+                ${language['config_old_password'].decode('utf-8')}
             </td>
             <td>
                 <input id="oldPassword" type="password" />
@@ -103,7 +103,7 @@
         </tr>
         <tr>
             <td>
-                ${language['config_password']}
+                ${language['config_password'].decode('utf-8')}
             </td>
             <td>
                 <input id="password" type="password" />
@@ -111,7 +111,7 @@
         </tr>
         <tr>
             <td>
-                ${language['config_repeat_password']}
+                ${language['config_repeat_password'].decode('utf-8')}
             </td>
             <td>
                 <input id="password2" type="password" />
@@ -123,7 +123,7 @@
 
     <div id="saveButton" style="text-align: center;" >
 
-<button id="save_change_password" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password']}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
+<button id="save_change_password" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password'].decode('utf-8')}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
 
 
     </div>
@@ -157,7 +157,7 @@ jQuery("#camera_calib_button").click(function(){
    jQuery.post("/confWizard/camera_calib",function(data){
        if (data!="true")
         {       
-        jQuery("#output").html('<font color="red"> ${language["camera_calib_err"]} </font>');
+        jQuery("#output").html('<font color="red"> ${language["camera_calib_err"].decode("utf-8")} </font>');
         }
     });
 });
@@ -165,7 +165,7 @@ jQuery("#hand_gesture_calib_button").click(function(){
    jQuery.post("/confWizard/hand_gesture_calib",function(data){
        if (data!="true")
        {       
-       jQuery("#output").html('<font color="red"> ${language["hand_gesture_calib_err"]} </font>');
+       jQuery("#output").html('<font color="red"> ${language["hand_gesture_calib_err"].decode("utf-8")} </font>');
        } 
    });
 });
@@ -184,12 +184,12 @@ jQuery("#save_create_user").click(function(data){
 
     jQuery.post("/confWizard/create_user",param,function(data){
         if(data==0){
-            printMessage('${language["config_everything_ok"]}',"info");
+            printMessage('${language["config_everything_ok"].decode("utf-8")}',"info");
             setUsersNamesToSelect();
         }else if(data==-1){
-            printMessage('${language["config_user_already_exists"]}',"error");
+            printMessage('${language["config_user_already_exists"].decode("utf-8")}',"error");
         }else if (data==-2){
-            printMessage('${language["config_pwd_not_equals"]}',"error");
+            printMessage('${language["config_pwd_not_equals"].decode("utf-8")}',"error");
         }    
     });
 
@@ -208,13 +208,13 @@ jQuery("#save_change_password").click(function(data){
 
     jQuery.post("/confWizard/save_password",param,function(data){
         if(data==0){
-            printMessage('${language["config_everything_ok"]}',"info");
+            printMessage('${language["config_everything_ok"].decode("utf-8")}',"info");
         }else if(data==-1){
-            printMessage('${language["config_wrong_old_pwd"]}',"error");
+            printMessage('${language["config_wrong_old_pwd"].decode("utf-8")}',"error");
         }else if (data==-2){
-            printMessage('${language["config_pwd_not_equals"]}',"error");
+            printMessage('${language["config_pwd_not_equals"].decode("utf-8")}',"error");
         }else if (data==-3){
-            printMessage('${language["config_user_does_not_exist"]}',"info");
+            printMessage('${language["config_user_does_not_exist"].decode("utf-8")}',"info");
         }
         
     });
