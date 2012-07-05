@@ -72,7 +72,7 @@ function fillTable(data){
 
                 
 
-                html = html + '<li>'+data[key][i]+'<a target="_blank" class="tooltip" title="Remove: '+aux_id+'" > <img id="'+aux_id+'" alt="Delete '+data[key][i]+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img> </a>  </li>';
+                html = html + '<li>'+data[key][i]+'<a target="_blank" class="tooltip" title="Remove: '+data[key][i]+'" > <img id="'+aux_id+'" alt="Delete '+data[key][i]+'"  class="delete_sentence" src="/qbo_questions/static/img/close.png"></img> </a>  </li>';
             }
 
 
