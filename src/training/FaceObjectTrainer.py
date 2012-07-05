@@ -180,8 +180,17 @@ class FaceObjectTrainer(TabClass):
         rospy.loginfo("Qbo Webi: Service for face learning is ready")
         learn = rospy.ServiceProxy('/qbo_face_recognition/learn_faces',LearnFaces)
         rospy.loginfo("Qbo Webi: Person to learn ->"+faceName)
-        asciiFaceName = unicodedata.normalize('NFKD', faceName).encode('ascii','ignore')
-        resultLearn = learn(asciiFaceName)
+
+        if type(faceName) is unicode:
+            asciiFaceName = unicodedata.normalize('NFKD', faceName).encode('ascii','ignore')
+            resultLearn = learn(asciiFaceName)
+        else:
+            resultLearn = learn(faceName)
+
+
+        #asciiFaceName = unicodedata.normalize('NFKD', faceName).encode('ascii','ignore')        
+        #resultLearn = learn(asciiFaceName)
+
         rospy.loginfo("Qbo Webi: Learning result->"+str(resultLearn.learned))
         return str(resultLearn)
 
