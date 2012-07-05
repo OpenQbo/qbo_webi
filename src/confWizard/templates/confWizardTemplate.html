@@ -248,7 +248,7 @@ function setUsersNamesToSelect(){
 
         jQuery("#userName").html("");
         if(data == ""){
-            jQuery("#userName").append("<option>There are no users yet</option>");
+            jQuery("#userName").append("<option>${language['config_there_are_no_users_yet'].decode('utf-8')}</option>");
         }
         names=data.split(":::");
         for (name in names){

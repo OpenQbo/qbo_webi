@@ -54,6 +54,7 @@
 "config_pwd_not_equals":"Las contrase&ntildeas no coinciden",
 "config_user_does_not_exist":"El usuario no existe",
 "config_wrong_old_pwd":"La contrase&ntildea para de este usuario no es correcta",
+"config_there_are_no_users_yet":"Todav&iacutea no hay usuarios",
 "Voice_Recognition":"Reconocimiento de Voz",
 "first_language":"Primero elige un idioma",
 "choose_model":"Elige modelo",

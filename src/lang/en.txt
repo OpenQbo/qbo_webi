@@ -52,6 +52,7 @@
 "config_everything_ok":"Data saved successfully",
 "config_user_already_exists":"Sorry, but this user already exists",
 "config_pwd_not_equals":"The passwords do not match",
+"config_there_are_no_users_yet":"There are no users yet",
 "config_user_does_not_exist":"The user does not exist",
 "config_wrong_old_pwd":"The password for that user is not correct",
 "save_changes":"Save changes",
