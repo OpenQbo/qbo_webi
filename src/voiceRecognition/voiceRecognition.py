@@ -6,14 +6,32 @@ import subprocess
 from mako.template import Template
 from tabsClass import TabClass
 
+import simplejson
+
+from subprocess import Popen, PIPE, STDOUT
+
 import roslib
+import signal
 roslib.load_manifest('qbo_webi');
 
 import rospy
 
+import time
+
+from uuid import getnode as get_mac
+from poster.encode import multipart_encode
+from poster.streaminghttp import register_openers
+import urllib2
 
 class VoiceRecognitionManager(TabClass):
+
+
+
     def __init__(self,language):
+       
+
+        self.ipWavServer = "192.168.1.11"
+        self.portWavServer="8588"
         self.language = language
         self.juliusPath=roslib.packages.get_pkg_dir("qbo_listen")
         self.htmlTemplate = Template(filename='voiceRecognition/templates/voiceRecognitionTemplate.html')
@@ -25,10 +43,15 @@ class VoiceRecognitionManager(TabClass):
         self.PhonemsFileName="/phonems"
         self.TiedlistFileName="/tiedlist"
         self.languages_names={'en':'English','es':'Español','pt':'Português','de':'Deutsch','fr':'Français','it':'Italiano'}
+        self.path = roslib.packages.get_pkg_dir("qbo_webi")+"/src/voiceRecognition/"
+        self.lan = self.language["current_language"]
+        self.mac = get_mac()
+        self.p = None
 
 
     @cherrypy.expose
     def voiceRecognitionJs(self, parameters=None):
+        self.lan = self.language["current_language"]
         return self.jsTemplate.render(language=self.language)
 
 
@@ -152,3 +175,156 @@ class VoiceRecognitionManager(TabClass):
         else:
             return "Qbo listen not installed"
 #        return self.htmlTemplate.render(language=self.language)
+
+
+
+
+
+
+    @cherrypy.expose
+    def rec(self):
+
+        #   n = self.getLenght("Arturo","sp")
+        #   print "***** "+n
+
+        #Borramos la anterior grabacion, si la habia
+        try:
+            cmd="rm "+self.path+"tmp/*.wav"
+            self.p = Popen(cmd.split())
+        except ValueError:
+            print "Nada que borrar"
+
+        '''
+        try:    
+            cmd="rm "+self.path+"/*_en"
+            self.p = Popen(cmd.split())
+        except ValueError:
+            print "Nada que borrar"
+
+        try:
+            cmd="rm "+path+"/*sp"
+            print cmd
+            self.p = Popen(cmd.split())
+
+        except ValueError:
+            print "Nada que borrar"
+        '''
+
+
+        
+        self.filename = str(self.mac)+"_"+self.lan
+        #filename = filename.replace("\"","")
+
+    #   filename = "tmp.wav"
+
+        print "FILENAME == "+self.filename
+
+        print "grabnando!!!! "+self.path+"tmp/"+self.filename
+        cmd="arecord -f S16_LE  -r 44100 -c 1 "+self.path+"tmp/"+self.filename
+
+        self.p = Popen(cmd.split())
+
+        name="oleole"
+        return name
+
+
+    @cherrypy.expose
+    def stop(self):
+
+
+        if(self.p==None):
+            print "P ES NULL!!??"
+        else:
+            print "matar grabacin"
+            self.p.send_signal(signal.SIGINT)
+
+        cmd="python "+self.path+"sendWav2Server.py "+self.path+"tmp/"+self.filename+" "+self.ipWavServer+" "+self.portWavServer
+        print cmd
+        out = runCmd(cmd)
+
+        print out[0]
+
+        if out[1] != "":
+            print "Error"
+            return "error"
+
+
+        return unicode(out[0],'utf8')
+
+     
+
+
+
+    @cherrypy.expose
+    def play(self):
+        print "play sound"  
+
+        os.system('aplay '+self.path+"tmp/"+self.filename)
+
+        return "ok"
+
+
+    @cherrypy.expose
+    def save(self,transcripcion):
+        print "SAVE! transcripcion="+transcripcion
+
+
+        cmd="python "+self.path+"sendTranscription2Server.py "+str(self.mac)+" '"+transcripcion+"' "+self.lan+" "+self.ipWavServer+" "+self.portWavServer
+        out = runCmd(cmd)
+        
+
+        if out[1] != "":
+            print "Error"
+            return "error"
+
+        return out[0]
+
+
+    
+
+
+
+
+def runCmd(cmd, timeout=None):
+    '''
+    Will execute a command, read the output and return it back.
+    
+    @param cmd: command to execute
+    @param timeout: process timeout in seconds
+    @return: a tuple of three: first stdout, then stderr, then exit code
+    @raise OSError: on missing command or if a timeout was reached
+    '''
+
+    ph_out = None # process output
+    ph_err = None # stderr
+    ph_ret = None # return code
+
+    p = subprocess.Popen(cmd, shell=True,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    # if timeout is not set wait for process to complete
+    if not timeout:
+        ph_ret = p.wait()
+    else:
+        fin_time = time.time() + timeout
+        while p.poll() == None and fin_time > time.time():
+            time.sleep(1)
+
+        # if timeout reached, raise an exception
+        if fin_time < time.time():
+
+            # starting 2.6 subprocess has a kill() method which is preferable
+            # p.kill()
+            os.kill(p.pid, signal.SIGKILL)
+            raise OSError("Process timeout has been reached")
+
+        ph_ret = p.returncode
+
+
+    ph_out, ph_err = p.communicate()
+
+    return (ph_out, ph_err, ph_ret)
+
+
+
+

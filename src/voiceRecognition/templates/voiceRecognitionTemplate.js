@@ -91,7 +91,139 @@ function startEverything(){
 
 
 
+    //Acustic Model stuff
+    jQuery("#stop_btn").hide();
+    jQuery("#play_off").show();
+    jQuery("#play").hide();
+    jQuery("#save_off").show();
+    jQuery("#save_am").hide();
 
+    jQuery("#save_btn").attr('disabled', 'disabled');
+    jQuery("#play_btn").attr('disabled', 'disabled');
+// jQuery("#test2").removeAttr("disabled");
+
+
+
+//Eventos AUDIO
+
+    jQuery("#rec_btn").click(function() {
+            jQuery("#stop_btn").show();
+            jQuery("#rec_btn").hide();
+
+            jQuery("#play_off").show();
+            jQuery("#play").hide();
+            jQuery("#play_btn").attr('disabled', 'disabled');
+
+            jQuery("#save_off").show();
+            jQuery("#save_am").hide();
+            jQuery("#save_btn").attr('disabled', 'disabled');
+
+            botonesOn=false;
+       
+            jQuery.post('/voiceRecognition/rec', function(data) {
+                if(data=="ERROR"){
+                    //window.location = "http://"+ipBasic+"/brainchat_sp/";
+                    printMessage("${language['voiceRecog_error_connect_server']}","error");
+
+                }
+            });
+    });
+
+
+
+    jQuery("#stop_btn").click(function() {
+
+
+        jQuery("#stop_btn").hide();
+        jQuery("#rec_btn").show();
+
+       
+        jQuery('*').css('cursor', 'progress');
+ 
+        
+        jQuery.post('/voiceRecognition/stop',function(data) {
+
+            if (data=="error"){
+                printMessage("${language['voiceRecog_error_connect_server']}","error");
+            }
+       
+
+ 
+            jQuery('*').css('cursor', '');
+    
+            jQuery("#play_off").hide();
+            jQuery("#play").show();
+            jQuery("#play_btn").removeAttr("disabled");
+    
+
+            jQuery("#save_off").hide();
+            jQuery("#save_am").show();
+            jQuery("#save_btn").removeAttr("disabled");        
+
+            jQuery("#Input").val(data);
+
+            alert(data+" ");
+
+            botonesOn=true;
+            
+        });
+
+    });
+
+    jQuery("#play_btn").click(function() {
+        if(botonesOn){
+         jQuery.post('/voiceRecognition/play', function(data) {              
+            //jQuery("#title").html(data) ;
+
+         });
+        }
+    });
+
+    jQuery("#save_btn").click(function() {
+        if(botonesOn){
+            jQuery('*').css('cursor', 'progress');
+
+            var output = { transcripcion: jQuery("#Input").val()  };
+            jQuery.post('/voiceRecognition/save',output, function(data) {                
+
+
+                if (data=="error"){
+                    printMessage("${language['voiceRecog_error_connect_server']}","error");
+                }else{
+                    printMessage("${language['voiceRecog_response_from_server_ok']}","info");
+                }
+
+                jQuery('*').css('cursor', '');
+                //antes sacabamos por pantalla los tiempos totales, pero ya nop $("#Input").val(data);
+                jQuery("#play_off").show();
+                jQuery("#play").hide();
+                jQuery("#play_btn").attr('disabled', 'disabled');
+
+
+                jQuery("#save_off").show();
+                jQuery("#save_am").hide();
+                jQuery("#save_btn").attr('disabled', 'disabled');  
+            });
+        }
+    });
+
+
+
+
+
+}
+
+
+function printMessage(string,nature){    
+    if (nature=="info"){
+        jQuery("#info_am").css('color', 'blue');    
+    }else if (nature=="error"){
+        jQuery("#info_am").css('color', 'red'); 
+    }
+
+    jQuery("#info_am").html(string);
+    jQuery("#info_am").fadeIn("slow");
+    setTimeout('jQuery("#info_am").fadeOut("slow",function(){ jQuery("#info_am").html("");  });',1500);
 }
 
 

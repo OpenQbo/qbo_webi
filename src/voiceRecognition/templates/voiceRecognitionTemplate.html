@@ -66,11 +66,9 @@
             </select>
         </div>
     </td>
-    <td>
-    </td>
     </tr>
     <tr>
-    <td colspan="2">
+    <td>
         <div id="divTextArea" class="blueborder">
             <textarea id="textArea" class="rte-zone" ></textarea>
         </div>
@@ -80,7 +78,6 @@
     <tr>
         <td>
             <div id="buttons_voiceRecog" style="display:none;">
-
                 <button id="test1" style="width:100px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved">
                     <span class="ui-button-text">
                         ${language['test1'].decode('utf-8')}
@@ -98,15 +95,68 @@
                         ${language['save'].decode('utf-8')}
                     </span>
                 </button>
-
             </div>
             <div id="outputConsole"></div>
         </td>
     </tr>
-
-
-
 </table>
+
+
+
+
+
+
+<fieldset id="fieldset_traingAM" style="width: 477px;border: 2px solid #4297D7; margin-top:30px; " >
+    <legend>${language['voiceRecog_trainAM_legend']}</legend>
+    <div class="divContainerLeft">                                                
+        <input type="text"  id="Input" value=""  autocomplete="off" required="required" class="border" style="width:477px;  float: left;" maxlength="140" />
+        <div id="menu_small">
+
+            <button id="rec_btn" style="width: 51px; height: 21px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" >
+                <span style="width: 45px;">
+                    <img src="/voiceRecognition/static/img/rec.png" alt="rec" id="rec" /> 
+                </span>
+            </button>
+
+            <button id="stop_btn" style="width: 51px; height: 21px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" >
+                <span style="width: 45px;">
+                    <img src="/voiceRecognition/static/img/stop.png" alt="stop" id="stop" />
+                </span>
+            </button>
+
+
+                               
+            <button id="play_btn" style="width: 51px; height: 21px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" >    
+                <span style="width: 45px;">
+                    <img src="/voiceRecognition/static/img/play_off.png" alt="play" id="play_off" />
+                    <img src="/voiceRecognition/static/img/play.png" alt="play" id="play" />  
+                </span>
+            </button>
+
+            <button id="save_btn" style="width: 51px; height: 21px" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved">                   
+                <span style="width: 45px;">
+                    <img src="/voiceRecognition/static/img/save_off.png" alt="save" id="save_off" />
+                    <img src="/voiceRecognition/static/img/save.png" alt="save" id="save_am" />  
+                </span> 
+            </button>
+            
+            <span id="info_am" style="display:none;">
+            </span>
+
+        </div>
+    </div> 
+</fieldset>
+
+
+
+
+
+
+
+
+
+
+
 
 </div>
 
