@@ -183,8 +183,18 @@ function startEverything(){
         if(botonesOn){
             jQuery('*').css('cursor', 'progress');
 
-            var output = { transcripcion: jQuery("#Input").val()  };
-            jQuery.post('/voiceRecognition/save',output, function(data) {                
+            value = jQuery("#Input").val();
+
+            alert(value);
+
+            value = value.replace("'","\\'");
+
+
+            alert(value);
+
+            var param = { transcripcion: value };
+
+            jQuery.post('/voiceRecognition/save',param, function(data) {                
 
 
                 if (data=="error"){
