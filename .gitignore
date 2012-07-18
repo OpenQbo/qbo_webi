@@ -4,5 +4,5 @@
 *.swo
 src/xmms2/songs/*
 src/recorder/videos/*
-voiceRecognition/tmp/*
+src/voiceRecognition/tmp/*
 !.gitignore
