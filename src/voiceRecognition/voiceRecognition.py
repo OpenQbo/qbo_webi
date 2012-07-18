@@ -1,4 +1,5 @@
-# coding: utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 import cherrypy
 import os
 import gen_grammar
@@ -189,7 +190,7 @@ class VoiceRecognitionManager(TabClass):
 
         #Borramos la anterior grabacion, si la habia
         try:
-            cmd="rm "+self.path+"tmp/*.wav"
+            cmd="rm "+self.path+"tmp/*"
             self.p = Popen(cmd.split())
         except ValueError:
             print "Nada que borrar"
@@ -269,17 +270,18 @@ class VoiceRecognitionManager(TabClass):
         print "SAVE! transcripcion="+transcripcion
 
 
-        cmd="python "+self.path+"sendTranscription2Server.py "+str(self.mac)+" '"+transcripcion+"' "+self.lan+" "+self.ipWavServer+" "+self.portWavServer
+        cmd="python "+self.path+"sendTranscription2Server.py "+str(self.mac)+" \""+transcripcion+"\" "+self.lan+" "+self.ipWavServer+" "+self.portWavServer
+        print cmd
         out = runCmd(cmd)
         
 
         if out[1] != "":
-            print "Error"
+            print "Error "+out[1]
             return "error"
 
         return out[0]
 
-
+#        return "ok"
     
 
 
