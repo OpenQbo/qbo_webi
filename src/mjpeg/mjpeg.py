@@ -53,6 +53,11 @@ class image_converter:
 
 class MjpegGrabber():
 
+    _cp_config = {
+        'tools.sessions.locking': 'explicit',
+        'auth.require': []
+    }
+
     def __init__(self):
         self.subscribedTopics={}
         self.boundary="--streammjpeg--"
@@ -125,6 +130,7 @@ class MjpegGrabber():
             imageRate.sleep()
             #time.sleep(1./rate)
             #print 'end wait for rate ok'
+            #break
             yield "\n\r--"+self.boundary+"\r\n"+intermediateheader+imgData+"\r\n"+self.boundary+"\n\r"
         print 'End of content'
         #yield "\n\r--"+self.boundary+"\r\n"+intermediateheader+imgData+"\r\n"+self.boundary+"\n\r"
