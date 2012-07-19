@@ -38,7 +38,7 @@ class TeleoperationManager(TabClass):
     @cherrypy.expose
     def unload(self):
         #self.mjpegServer.stop("8081")
-        self.changeLang(voice_EN)
+        self.changeLang(self.voice_EN)
         return "ok"
         
     @cherrypy.expose

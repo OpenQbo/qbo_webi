@@ -26,7 +26,53 @@
 
 <%include file="teleoperationTemplate.js" />
 
+
 startEverything();
+
+</script>
+
+<script language="JavaScript" src="/teleoperation/sip/rtmplite/videoPhone/bin-release/AC_OETags.js"></script>
+
+<script language="JavaScript" src="/teleoperation/sip/rtmplite/videoPhone/bin-release/externalInterface.js"></script>
+
+<script language="JavaScript" type="text/javascript">
+
+<!--
+
+// -----------------------------------------------------------------------------
+
+// Globals
+
+// Major version of Flash required
+
+var requiredMajorVersion = 10;
+
+// Minor version of Flash required
+
+var requiredMinorVersion = 0;
+
+// Minor version of Flash required
+
+var requiredRevision = 22;
+
+// -----------------------------------------------------------------------------
+
+// -->
+
+
+
+function hola(str){
+
+     alert(str);
+
+}
+
+function recieveTextFromFlash(Txt) {
+
+    document.getElementById('htmlText').value = Txt;
+
+}
+
 
 </script>
 
@@ -103,3 +149,188 @@ startEverything();
 </tr>
 </table>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<center>
+
+<script language="JavaScript" type="text/javascript">
+
+<!--
+
+var flashVars=document.location.search;
+
+    
+
+// remove the '?' sign if exists
+
+if (flashVars[0]=='?') {
+
+    flashVars=flashVars.substr(2, flashVars.length-1);
+
+}
+
+else {
+
+    // you can supply certain parameters from flashVars as follows
+
+    // flashVars+="&sipURL=myuser@iptel.org&authName=myuser&authPass=mypass&gatewayURL=rtmp://localhost/sip&signupURL=http://serweb.iptel.org/user/reg/index.php";
+
+}
+
+
+
+// Version check for the Flash Player that has the ability to start Player Product Install (6.0r65)
+
+var hasProductInstall = DetectFlashVer(6, 0, 65);
+
+
+
+
+
+// Version check based upon the values defined in globals
+
+var hasRequestedVersion = DetectFlashVer(requiredMajorVersion, requiredMinorVersion, requiredRevision);
+
+
+
+if ( hasProductInstall && !hasRequestedVersion ) {
+
+    // DO NOT MODIFY THE FOLLOWING FOUR LINES
+
+    // Location visited after installation is complete if installation is required
+
+    var MMPlayerType = (isIE == true) ? "ActiveX" : "PlugIn";
+
+    var MMredirectURL = window.location;
+
+    document.title = document.title.slice(0, 47) + " - Flash Player Installation";
+
+    var MMdoctitle = document.title;
+
+
+
+    AC_FL_RunContent(
+
+        "src", "playerProductInstall",
+
+        "FlashVars", "MMredirectURL="+MMredirectURL+'&MMplayerType='+MMPlayerType+'&MMdoctitle='+MMdoctitle+"",
+
+        "width", "514",
+
+        "height", "537",
+
+        "align", "middle",
+
+        "id", "VideoPhone",
+
+        "quality", "high",
+
+        "bgcolor", "#869ca7",
+
+        "name", "VideoPhone",
+
+        "allowScriptAccess","sameDomain",
+
+        "type", "application/x-shockwave-flash",
+
+        "pluginspage", "http://www.adobe.com/go/getflashplayer"
+
+    );
+
+} else if (hasRequestedVersion) {
+
+    var hasVersion10_3 = DetectFlashVer(10, 3, 0);
+
+    var hasVersion11 = DetectFlashVer(11, 0, 0);
+
+    ///////////////////////////var VideoPhone = (hasVersion11 ? 'VideoPhone11' : (hasVersion10_3 ? 'VideoPhone45' : 'VideoPhone'));
+
+
+
+//  var VideoPhone = (hasVersion11 ? 'VideoPhone11' : (hasVersion10_3 ? 'VideoPhone45' : 'VideoPhone'));
+    var VideoPhone = (hasVersion11 ? 'VideoPhone' : (hasVersion10_3 ? 'VideoPhone' : 'VideoPhone'));
+
+
+
+    // if we've detected an acceptable version
+
+    // embed the Flash Content SWF when all tests are passed
+
+    AC_FL_RunContent(
+
+            "src", "/teleoperation/sip/rtmplite/videoPhone/bin-release/"+VideoPhone,
+
+            "width", "314",
+
+            "height", "237",
+
+            "align", "middle",
+
+            "id", "VideoPhone",
+
+            "quality", "high",
+
+            "bgcolor", "#869ca7",
+
+            "name", "VideoPhone",
+
+            "allowScriptAccess","always",
+
+            "allowFullScreen", "true",
+
+            "flashVars", flashVars,
+
+            "type", "application/x-shockwave-flash",
+
+            "pluginspage", "http://www.adobe.com/go/getflashplayer"
+
+    );
+
+  } else {  // flash is too old or we can't detect the plugin
+
+    var alternateContent = 'Alternate HTML content should be placed here. '
+
+    + 'This content requires the Adobe Flash Player. '
+
+    + '<a href=http://www.adobe.com/go/getflash/>Get Flash</a>';
+
+    document.write(alternateContent);  // insert non-flash content
+
+  }
+
+// -->
+
+</script>
+
+
+</center>
+
+
+
