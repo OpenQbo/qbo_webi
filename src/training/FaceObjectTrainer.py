@@ -13,9 +13,11 @@ from qbo_talk.srv import Text2Speach
 from qbo_object_recognition.srv import RecognizeObject
 from qbo_object_recognition.srv import Teach
 from qbo_object_recognition.srv import LearnNewObject
+from qbo_object_recognition.srv import Update
 from qbo_face_msgs.srv  import GetName
 from qbo_face_msgs.srv  import LearnFaces
 from qbo_face_msgs.srv  import Train
+
 import roslib.packages
 
 
@@ -30,7 +32,8 @@ import urllib2_file
 import urllib2
 import sys, json
 import os
-
+import tarfile
+import shutil
 class FaceObjectTrainer(TabClass):
 
 
@@ -42,6 +45,8 @@ class FaceObjectTrainer(TabClass):
         self.variablesTemplate = Template(filename='static/js/generalVariables.js')
         self.exposed = True
     	self.faceON = False
+        self.cloudAddress = 'http://192.168.1.16:8800'
+
 
     @cherrypy.expose
     def unload(self):
@@ -74,6 +79,7 @@ class FaceObjectTrainer(TabClass):
 
     @cherrypy.expose
     def launchNodes(self, faceOn):
+        
         if faceOn == "true":
             self.faceON = True
             rospy.loginfo("Face Recognition Mode is activated")
@@ -135,7 +141,91 @@ class FaceObjectTrainer(TabClass):
         if self.faceON:
             return "Face Mode is activated." 
         self.send_images_to_cloud()
-        return "True"    
+        return "True"
+
+    @cherrypy.expose
+    def startCloudRecognition(self):
+        #Get path to the local cloud data base
+        object_path=roslib.packages.get_pkg_dir('qbo_webi')+"/config/"+"cloud_objects_"+self.language["current_language"]
+
+        #Check if the objects folder exists and if not, create it
+        if not os.path.exists(object_path):
+            os.makedirs(object_path)
+        
+        rospy.loginfo("Qbo Webi: Path for the cloud's objects: "+object_path) 
+        
+        #If version file does not exists
+        if not os.path.isfile(object_path+"/version"):
+            #Download latest version
+            rospy.loginfo("Qbo Webi: Downloading latest version from the Q.bo Cloud")
+            resp = self.download_latest_version(object_path)
+            if resp != "ok":
+                return json.dumps({'status':'Unable to download latest version from Q.bo Cloud','object':'none'})
+        
+        else: 
+            #Read version file
+            version_str = "" 
+            try:
+                version_file = open(object_path+"/version") 
+                version_str = version_file.read().strip()
+                version_file.close()
+            except IOError as e:
+                return json.dumps({'status':'Could not access local files','object':'none'})
+            
+            #Get latest version of Q.bo Cloud
+            rospy.loginfo("Qbo Webi: Getting version number from Q.bo Cloud...")
+            resp = self.get_version() 
+            if resp=="":
+                return json.dumps({'status':'Could not get version number from Q.bo Cloud','object':'none'})
+            
+            rospy.loginfo("Qbo Webi: Latest version is "+resp+" and local version is "+version_str)
+
+            if resp == version_str: #If you have latest version, don't do anything
+                rospy.loginfo("Qbo Webi: Local version is the latest version: "+version_str)
+            else:
+                rospy.loginfo("Qbo Webi: Downloading latest version from Q.bo Cloud")
+                #download latest version
+                resp = self.download_latest_version(object_path)
+                if resp != "ok":
+                    return json.dumps({'status':'Unable to download latest version from Q.bo Cloud'    ,'object':'none'})
+                rospy.loginfo("Qbo Webi: Latest version has been succesfully downloaded from Q.bo Cloud")
+        
+        #Store the previous update_path
+        update_path_back = roslib.packages.get_pkg_dir('qbo_object_recognition')+"/objects/objects_db/"
+        rospy.loginfo("Qbo Webi: Storing the previous update path: "+update_path_back)
+        
+        #Change the update_path of the object recognizer
+        rospy.set_param("/qbo_object_recognition/update_path", object_path)
+
+
+        rospy.loginfo("Qbo Webi: Loading object recognition with the cloud object path")
+        #Update the objects folder of the object recognizer to the latest version of Q.bo cloud
+
+        rospy.loginfo("Qbo Webi: Waiting for service update...")
+        rospy.wait_for_service("/qbo_object_recognition/update")
+        rospy.loginfo("Qbo Webi: Update service is ready!")
+        update_srv = rospy.ServiceProxy('/qbo_object_recognition/update',Update)
+        resultUpdating = update_srv()
+
+        #Call the recognize service of the object recognizer
+        
+        rospy.loginfo("Qbo Webi: Started object recognizer mode. Waiting for service...")
+        rospy.wait_for_service("/qbo_object_recognition/recognize_with_stabilizer")
+        rospy.loginfo("Qbo Webi: Recognize service is ready!")
+        recog = rospy.ServiceProxy('/qbo_object_recognition/recognize_with_stabilizer',RecognizeObject)
+        object_recog = recog()
+        
+
+        #Restore the previous update_path and load the previous object daba base
+        rospy.set_param("/qbo_object_recognition/update_path", update_path_back)
+
+        rospy.loginfo("Restoring the object recognition node with the previous data base")
+        update_srv = rospy.ServiceProxy('/qbo_object_recognition/update',Update)
+        resultUpdating = update_srv()
+
+        output = json.dumps({'status':'ok','object':str(object_recog.object_name)})
+        
+        return output
 
 ############ Face Training and Recognition ######################################
 
@@ -272,7 +362,7 @@ class FaceObjectTrainer(TabClass):
         rospy.loginfo("Qbo Webi: Response from Object Teach Service -> "+str(resultTraining.taught))
         return "True"
 
-############ Sharing with the Q.bo Cloud functions ########################
+############ Q.bo Cloud functions ########################
     def send_images_to_cloud(self):
         
         #Get the path of the newly captured object's images
@@ -312,11 +402,38 @@ class FaceObjectTrainer(TabClass):
     def send_image(self,object_name,image_path):
         data = {'image_file' : open(image_path,'rb'),
                #'data' : 'algo',
-               'data':json.dumps({'new_image':True}),
+               'data':json.dumps({'new_image':True,'lang':str(self.language['current_language'])}),
            }
-
-        req = urllib2.Request('http://192.168.1.16:8800/object/'+urllib.quote(object_name)+'/', data, {})
+        req = urllib2.Request(self.cloudAddress+'/object/'+urllib.quote(object_name)+'/', data, {})
         u = urllib2.urlopen(req)
         #print u.read()
         return u.read()
 
+    def get_version(self):
+        data={'data':json.dumps({'lang':str(self.language['current_language'])})}
+        try:    
+            req = urllib2.Request(self.cloudAddress+'/getVersion/',data,{})
+            u = urllib2.urlopen(req)
+        except:
+            return ""
+        
+        version = u.read().strip()
+        return version
+
+    def download_latest_version(self, path_to_store):
+        
+        #Empty the folder
+        shutil.rmtree(path_to_store)
+
+        try:
+            urllib.urlretrieve(self.cloudAddress+"/static/"+self.language["current_language"]+"_training.tgz", "training.tgz")
+        except:
+            return "fail"
+        #descomprimo archivo de reconocimientos nuevo
+        tar_file = tarfile.open("training.tgz")
+        tar_file.extractall(path=path_to_store)
+        tar_file.close()
+       
+        #Remove the .tgz file 
+        os.remove("training.tgz")
+        return "ok" 

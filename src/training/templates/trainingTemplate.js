@@ -192,7 +192,7 @@ function startLearningAndTraining(){
                     bool_drawing=false;
 
                     if(data){
-                        showMessage("${language['learning_ok']}"+name2Learn);
+                        showMessage("${language['learning_ok']}"+name2Learn+"${language['share_it']}");
                     }else{//error
                         showMessage("${language['learning_ko']}"+name2Learn); 
                     }
@@ -224,30 +224,114 @@ function startLearningAndTraining(){
     }
 }
 
+/*
 function startRecognition(){
 	 //start recognition
-    jQuery.post('/training/startRecognition',function(data) {
-        actualUrlImg=getDefaultImg();
-        watching=false;
-        bool_drawing=false;
+    
+   var cloudIsChecked = jQuery("#checkboxCloud").attr('checked')?true:false;
 
-        if(data!=""){
-            showMessage("${language['this_is_a']}"+data.toLowerCase());
-        }else{
-            showMessage("${language['dontKnow']}");
-        }
+    if(cloudIsChecked && objectORface == "object") //User Cloud Data base
+    {
+        alert("hola");
+        jQuery.getJSON('/training/startCloudRecognition',function(data) 
+        {   
+            //actualUrlImg=getDefaultImg();
+            watching=false;
+            bool_drawing=false;
+           
+            //alert(data{'status'});
+            if(data!=""){
+                showMessage("${language['this_is_a']}"+data.toLowerCase());
+            }else{
+                showMessage("${language['dontKnow']}");
+            }
+            jQuery("#inputFaceObjectName").hide();
 
-        jQuery("#inputFaceObjectName").hide();
+            disableRadioBotton(false);
 
-        disableRadioBotton(false);
+        })
+        
+ 
+    }
+    else //Use local Object of Face data base
+    { 
+        jQuery.post('/training/startRecognition',function(data) {
+            //actualUrlImg=getDefaultImg();
+            watching=false;
+            bool_drawing=false;
 
-    })
+            if(data!=""){
+                showMessage("${language['this_is_a']}"+data.toLowerCase());
+            }else{
+                showMessage("${language['dontKnow']}");
+            }
+
+            jQuery("#inputFaceObjectName").hide();
+
+            disableRadioBotton(false);
+
+        })
+    }
+
+
     .error(function() {
         //paramos nodo
         disableRadioBotton(false);
     });
 }
+*/
 
+
+
+function startRecognition(){
+ 
+
+    var cloudIsChecked = jQuery("#checkboxCloud").attr('checked')?true:false;
+
+    if(cloudIsChecked && objectORface == "object") //User Cloud Data base
+    {
+        jQuery.getJSON('/training/startCloudRecognition',function(data) 
+        {   
+            //actualUrlImg=getDefaultImg();
+            watching=false;
+            bool_drawing=false;
+            
+            if(data['status']=="ok"){
+                showMessage("${language['this_is_a']}"+data['object'].toLowerCase());
+            }else{
+                showMessage("PROBLEM: "+data['status']);
+            }
+            jQuery("#inputFaceObjectName").hide();
+    
+            disableRadioBotton(false);
+        })
+    }
+    else
+    {
+
+      //start recognition
+      jQuery.post('/training/startRecognition',function(data) {
+          actualUrlImg=getDefaultImg();
+          watching=false;
+          bool_drawing=false;
+  
+          if(data!=""){
+              showMessage("${language['this_is_a']}"+data.toLowerCase());
+          }else{
+              showMessage("${language['dontKnow']}");
+          }
+  
+          jQuery("#inputFaceObjectName").hide();
+  
+          disableRadioBotton(false);
+  
+     })
+      .error(function() {
+          //paramos nodo
+          disableRadioBotton(false);
+      });
+    }
+  }
 
 function disableRadioBotton(disable){
 
