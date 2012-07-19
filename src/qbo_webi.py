@@ -28,12 +28,23 @@ import os
 import sys
 import signal
 
+from auth import AuthController, require, member_of, name_is
+
 pathh = '/'.join(os.path.abspath( __file__ ).split('/')[:-1])
 os.chdir(pathh)
 
 rospy.loginfo("Webi: "+pathh)
 
 class Root(object):
+
+    _cp_config = {
+        'tools.sessions.on': True,
+        'tools.auth.on': True,
+        'tools.sessions.locking': 'explicit'
+        #'auth.require': []
+    }
+    
+    auth = AuthController()
 
     def __init__(self):
         self.indexHtmlTemplate = Template(filename='templates/indexTemplate.html')
@@ -79,6 +90,7 @@ class Root(object):
             res=""
         return res
 
+    @cherrypy.expose
     def index(self,new_lang="",activeTab=0):
         if new_lang!="":
             self.change_language(new_lang)
@@ -89,9 +101,9 @@ class Root(object):
 
         return self.indexHtmlTemplate.render(language=self.language,tab=activeTab)
 
-
-    index.exposed = True
-
+    @cherrypy.expose
+    def test(self):
+        return "Login needed test service"
 
     def change_language(self, new_lang):
         #Load specific dict
@@ -157,6 +169,10 @@ conf = {
     'global': {
         'server.socket_host': '0.0.0.0',
         'server.socket_port': server_port,
+        'server.ssl_module':'pyopenssl',
+        'server.ssl_certificate':'/home/qboblue/keys/server.crt',
+        'server.ssl_private_key':'/home/qboblue/keys/server.key.insecure',
+        'server.ssl_certificate_chain':'/home/qboblue/keys/server.crt'
     },
 
     '/favicon.ico': {'tools.staticfile.on': True,
@@ -207,6 +223,9 @@ conf = {
         '/teleoperation/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/teleoperation/static/css'},
 
+        '/teleoperation/sip': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/teleoperation/sip2rtmp'},
+
         '/launchersTab/static/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/launchersTab/static/img'},
 
@@ -242,6 +261,10 @@ conf = {
 
         '/voiceRecognition/static/css': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/voiceRecognition/static/css'},
+
+        '/voiceRecognition/static/img': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/voiceRecognition/static/img'},
+
 
         '/recorder/static/img': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/recorder/static/img'},
