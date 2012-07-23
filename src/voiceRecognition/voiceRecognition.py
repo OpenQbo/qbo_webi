@@ -35,11 +35,11 @@ class VoiceRecognitionManager(TabClass):
         self.portWavServer="8588"
         self.language = language
         self.juliusPath=roslib.packages.get_pkg_dir("qbo_listen")
+        self.juliusAMPath="/usr/share/qbo-julius-model/"
         self.htmlTemplate = Template(filename='voiceRecognition/templates/voiceRecognitionTemplate.html')
         self.jsTemplate = Template(filename='voiceRecognition/templates/voiceRecognitionTemplate.js')
         self.tmpdir="/tmp/"
         self.LMPaths="/config/LM/"
-        self.AMPaths="/config/AM/"
         self.LMFileName="/sentences.conf"
         self.PhonemsFileName="/phonems"
         self.TiedlistFileName="/tiedlist"
@@ -81,7 +81,6 @@ class VoiceRecognitionManager(TabClass):
 
     def getLMSentences(self,language,model):
         try:
-            #print self.juliusPath+self.LMPaths+language+"/"+model+self.LMFileName
             f = open(self.juliusPath+self.LMPaths+language+"/"+model+self.LMFileName,'r')
             return f.read()
         except:
@@ -107,7 +106,7 @@ class VoiceRecognitionManager(TabClass):
         f = open(self.tmpdir+'LModel', 'w')
         f.write(text)
         f.close()
-        words=gen_grammar.verrors(self.tmpdir+'LModel',self.juliusPath+self.AMPaths+lang+"/"+self.PhonemsFileName)
+        words=gen_grammar.verrors(self.tmpdir+'LModel',self.juliusAMPath+lang+"/"+self.PhonemsFileName)
         if words==0:
              return ""
         else:
@@ -131,10 +130,10 @@ class VoiceRecognitionManager(TabClass):
                 f.write("[sentence]\n")
                 f.write(word)
                 f.close()
-                gen_grammar.createvoca(self.tmpdir+'word', self.juliusPath+self.AMPaths+lang+"/"+self.PhonemsFileName, self.tmpdir+'word')
+                gen_grammar.createvoca(self.tmpdir+'word', self.juliusAMPath+lang+"/"+self.PhonemsFileName, self.tmpdir+'word')
                 print self.tmpdir+'word'
-                print self.juliusPath+self.AMPaths+lang+"/"+self.TiedlistFileName
-                if gen_grammar.perrors(self.tmpdir+'word.voca',self.juliusPath+self.AMPaths+lang+"/"+self.TiedlistFileName)!=0:
+                print self.juliusAMPath+lang+"/"+self.TiedlistFileName
+                if gen_grammar.perrors(self.tmpdir+'word.voca',self.juliusAMPath+lang+"/"+self.TiedlistFileName)!=0:
                     errorlist=errorlist+word+"::"
         errorlist=errorlist[:-2]
         return errorlist.upper()
