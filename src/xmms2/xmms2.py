@@ -171,7 +171,9 @@ class XMMS2Manager(TabClass):
         try:
             self.c.playlist_set_next_rel(1)
             self.c.playback_tickle()
+	    print "Parece que todo OK en NEXT "
         except XMMSError:
+	    print "ERROR en next de xmms2"
             pass
         return self.getSelectedSong()
 

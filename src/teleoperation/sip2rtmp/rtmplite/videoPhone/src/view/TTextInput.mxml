@@ -6,4 +6,4 @@ This component extends built-in Flex TextInput component to create horizontal fi
 text input control using the ttextinput style name.
 -->
  
-<mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml" styleName="ttextinput" width="100%" height="20"/>
+<mx:TextInput xmlns:mx="http://www.adobe.com/2006/mxml" styleName="ttextinput" width="0" height="20"/>

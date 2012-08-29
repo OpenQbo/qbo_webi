@@ -184,7 +184,9 @@ class Agent(Dispatcher):
     def receivedResponse(self, ua, response, stack): pass
     def cancelled(self, ua, request, stack): pass
     def dialogCreated(self, dialog, ua, stack): pass
-    def authenticate(self, ua, header, stack): return True
+    def authenticate(self, ua, header, stack):
+	print "sipapi.py autheticate!!!!" 
+        return True
     def createTimer(self, app, stack): return Timer(app)
     
 
@@ -199,6 +201,9 @@ class Subscriber(dict):
         '''Store a new user and his realm and password in this table.'''
         self[uri] = [realm, password]
     def authenticate(self, request, realm='localhost'):
+
+
+        print "sipapi.py otro autheticante!"
         '''Returns 200 on success, 401 on failure, 0 if missing or invalid nonce, and 404 if no password/user information available.'''
         auths = filter(lambda x: x['realm']==realm, request.all('Authorization', 'Proxy-Authorization')) # search all our authenticate headers
         if not auths: return 0 # missing authenticate header

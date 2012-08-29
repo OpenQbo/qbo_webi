@@ -9,7 +9,7 @@ remote video using the VideoPlay component, in the both state it displays both l
 videos, such that VideoPublish is picture-in-picture inside VideoPlay view.
 -->
 
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" currentState="{IDLE}" xmlns:view="view.*">
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" currentState="{IDLE}" xmlns:view="view.*"   >
 	
 	<mx:Script>
 		<![CDATA[
@@ -197,10 +197,10 @@ videos, such that VideoPublish is picture-in-picture inside VideoPlay view.
 	-->
 	
 	<mx:states>
-		<mx:State name="idle">
+		<mx:State name="idle"  >
 			<!-- The idle state just displays a help message. -->
 			<mx:AddChild>
-				<mx:Text width="100%" height="100%" top="20"
+				<mx:Text width="0" height="0" top="20"
 					text="{_('Use the box above to configure your gateway URL and SIP account first. Once logged in you can make or receive SIP calls. Use right-click menu to go full-screen.')}"/>
 			</mx:AddChild>
 		</mx:State>
@@ -228,7 +228,7 @@ videos, such that VideoPublish is picture-in-picture inside VideoPlay view.
 				<view:VideoPlay connector="{connector}"/>
 			</mx:AddChild>
 			<mx:AddChild>
-				<view:VideoPublish width="33%" height="33%"
+				<view:VideoPublish width="0" height="0"
 					addedToStage="UIComponent(event.currentTarget).move(4, this.height*2/3-7)"
 					mouseDown="UIComponent(event.currentTarget).startDrag()" mouseUp="UIComponent(event.currentTarget).stopDrag()"/>
 			</mx:AddChild>

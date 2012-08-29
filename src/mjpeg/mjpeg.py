@@ -55,7 +55,7 @@ class MjpegGrabber():
 
     _cp_config = {
         'tools.sessions.locking': 'explicit',
-        'auth.require': []
+        #'auth.require': []
     }
 
     def __init__(self):
@@ -87,9 +87,15 @@ class MjpegGrabber():
         imageInfo['height']=int(height)
         imageInfoStr=json.dumps(imageInfo)
 
+        #unsubscibe=False
         if imageInfoStr not in self.subscribedTopics.keys():
             self.subscribedTopics[imageInfoStr]=image_converter(imageInfo)
+            #unsubscibe=True
         imgData=self.subscribedTopics[imageInfoStr].getImage(wait=True)
+
+        #if unsubscibe:
+            #self.subscribedTopics[imageInfoStr].stop()
+            #del self.subscribedTopics[imageInfoStr]
 
         cherrypy.response.headers['Content-Type'] = 'image/jpeg'
         cherrypy.response.headers['Content-Length']='%d' % (len(imgData))

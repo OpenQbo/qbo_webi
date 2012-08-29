@@ -202,6 +202,6 @@ it before it disappears or when it is sticky.
 	
 	<mx:Text htmlText="{msg}" link="dispatchEvent(new TextEvent(TextEvent.LINK, false, false, event.text))"/>
 	
-	<mx:Button label="X" styleName="closebutton" width="11" height="11" click="closeThis(event)"/>
+	<mx:Button label="X" styleName="closebutton" width="0" height="0" click="closeThis(event)"/>
 		
 </mx:Canvas>

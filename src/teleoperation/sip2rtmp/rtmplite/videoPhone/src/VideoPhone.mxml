@@ -30,6 +30,7 @@ an incoming call. Please refer to the file Connector.as for further details.
 	<mx:Script>
 		<![CDATA[
 			import model.Connector;
+			import model.PopUpUtils;
 			import mx.events.FlexEvent;
 			import mx.core.UIComponent;
 
@@ -39,18 +40,31 @@ an incoming call. Please refer to the file Connector.as for further details.
 
 			private var alert:Alert;
 
-   		        private function callRobot(msg:String):void {
-			    Alert.show("holaQQ ");
+   		        private function callRobot(callTo:String):void {
+			    connector.invite(callTo);
+		        }
+   		        private function hangUpRobot():void {
+			    /*Alert.show("hangUp22222 ");
 		    	    var now:Date = new Date();
 			    alert = Alert.show(msg,now.toLocaleDateString());
-			    alert.status = now.toLocaleTimeString();
+			    alert.status = now.toLocaleTimeString();*/
+
+
+			    connector.bye();
 		        }
-   		        private function hangUpRobot(msg:String):void {
-			    Alert.show("holaQQ ");
-		    	    var now:Date = new Date();
-			    alert = Alert.show(msg,now.toLocaleDateString());
-			    alert.status = now.toLocaleTimeString();
-		        }
+
+                        private function connectRobot(gatewayURL:String=null, sipURL:String=null, authName:String=null, authPass:String=null, displayName:String=null):void {
+                            connector.connect(gatewayURL, sipURL, authName, authPass, displayName);			
+			}
+
+			private function disconnectRobot():void{
+			    connector.disconnect();
+			}
+
+			//----- Detección de aceptación de los permisos de la camara y micro
+
+
+
 			//--------------------------------------
 			// PRIVATE PROPERTIES
 			//--------------------------------------
@@ -81,13 +95,44 @@ an incoming call. Please refer to the file Connector.as for further details.
 			//--------------------------------------
 			// PRIVATE METHODS
 			//--------------------------------------
+
+
+			private function test():void{
+				Alert.show(PopUpUtils.hasVisiblePopups() ? 'Yes' : 'No', 'Are there visible popups?');
+			}
 			
 			private function creationCompleteHandler(event:Event):void 
 			{
 
-				Alert.show("holaQQ ");
 				ExternalInterface.addCallback("callRobot", callRobot);
 				ExternalInterface.addCallback("hangUpRobot", hangUpRobot);
+				ExternalInterface.addCallback("connectRobot", connectRobot);
+
+
+				var cam:Camera = Camera.getCamera();
+if (cam != null)
+{
+    cam.addEventListener(StatusEvent.STATUS, statusHandler);
+    var vid:Video = new Video();
+    vid.attachCamera(cam);
+    addChild(vid);
+}
+function statusHandler(event:StatusEvent):void
+{
+
+    switch (event.code)
+    {
+        case "Camera.Muted":
+	    ExternalInterface.call("recieveTextFromFlash", "User clicked Deny.");
+            break;
+        case "Camera.Unmuted":
+	    ExternalInterface.call("recieveTextFromFlash", "User clicked Accept.");
+            break;
+    }
+
+
+}
+
 
 
 				applyParameters();
@@ -163,6 +208,10 @@ an incoming call. Please refer to the file Connector.as for further details.
 		]]>
 	</mx:Script>
     
-    <view:View id="main" connector="{connector}"/>
+    <view:View id="main" connector="{connector}"/> 
+
+<!--	<mx:Button label="Are there visible popups?"
+		click="{Alert.show(PopUpUtils.hasVisiblePopups() ? 'Yes' : 'No',
+			'Are there visible popups?')}"/>-->
     
 </mx:Application>

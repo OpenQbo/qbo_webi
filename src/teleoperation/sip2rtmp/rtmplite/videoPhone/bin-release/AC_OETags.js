@@ -194,7 +194,7 @@ function AC_Generateobj(objAttrs, params, embedAttrs)
   		str += '> </embed>';
     }
 
-    document.write(str);
+    document.getElementById("flash").innerHTML = str;
 }
 
 function AC_FL_RunContent(){

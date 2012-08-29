@@ -166,11 +166,16 @@ class AbstractAgent(object):
     def receivedResponse(self, ua, response, stack): pass
     def cancelled(self, ua, request, stack): pass
     def dialogCreated(self, dialog, ua, stack): pass
-    def authenticate(self, ua, header, stack): return True
+    def authenticate(self, ua, header, stack): 
+	print "heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+	return True
     def createTimer(self, app, stack): return Timer(app)
     
     # following application level callbacks are invoked by this AbstractAgent
     def onREGISTER(self, ua, request, stack): # incoming registration
+
+	print "reeeeeeeeeeeeeeeeeeeeegisteeeeeeer"
+
         if request.To.value.uri != request.From.value.uri:
             ua.sendResponse(400, 'Third-party registration not supported')
             return
@@ -224,6 +229,9 @@ class AbstractAgent(object):
         return request['user-agent'] and request['user-agent'].value.find('X-Lite') >= 0
         
     def authorize(self, request, realm='localhost'):
+
+	print "autorizacion melocotonnnnnnnnnnn"
+
         '''Server side of authentication. Returns 200 on success, 401 on failure, 0 if missing or invalid
         nonce, and 404 if no password/user information available.'''
         auths = filter(lambda x: x['realm']==realm, request.all('Authorization', 'Proxy-Authorization')) # search all our authenticate headers

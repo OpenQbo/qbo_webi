@@ -14,6 +14,7 @@
   <depend package="qbo_talk"/>
   <depend package="qbo_object_recognition"/>
   <depend package="qbo_face_msgs"/>
+  <depend package="qbo_pymouth"/>
   <depend package="std_msgs"/>
   <depend package="sensor_msgs"/>
   <depend package="geometry_msgs"/>

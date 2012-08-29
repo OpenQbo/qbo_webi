@@ -15,6 +15,7 @@ from sysChecks.sysChecks import sysChecksManager
 from training.FaceObjectTrainer import FaceObjectTrainer
 from settings.settings import SettingsManager
 #CHANGED
+from test.test import TestManager
 from teleoperation.teleoperation import TeleoperationManager
 from confWizard.confWizard import ConfWizardManager
 from launchersTab.launchersTab import LaunchersTabManager
@@ -101,9 +102,9 @@ class Root(object):
 
         return self.indexHtmlTemplate.render(language=self.language,tab=activeTab)
 
-    @cherrypy.expose
-    def test(self):
-        return "Login needed test service"
+    #@cherrypy.expose
+    #def test(self):
+        #return "Login needed test service"
 
     def change_language(self, new_lang):
         #Load specific dict
@@ -153,6 +154,7 @@ cherrypy.root.mjpegServer = MjpegServerFunctions()
 cherrypy.root.image = MjpegGrabber()
 cherrypy.root.qbo_questions = Qbo_questionsManager(cherrypy.root.language)
 cherrypy.root.recorder = RecorderManager(cherrypy.root.language)
+cherrypy.root.test = TestManager(cherrypy.root.language)
 
 
 
@@ -169,10 +171,10 @@ conf = {
     'global': {
         'server.socket_host': '0.0.0.0',
         'server.socket_port': server_port,
-        'server.ssl_module':'pyopenssl',
-        'server.ssl_certificate':'/home/qboblue/keys/server.crt',
-        'server.ssl_private_key':'/home/qboblue/keys/server.key.insecure',
-        'server.ssl_certificate_chain':'/home/qboblue/keys/server.crt'
+        #'server.ssl_module':'pyopenssl',
+        #'server.ssl_certificate':'/home/qboblue/keys/server.crt',
+        #'server.ssl_private_key':'/home/qboblue/keys/server.key.insecure',
+        #'server.ssl_certificate_chain':'/home/qboblue/keys/server.crt'
     },
 
     '/favicon.ico': {'tools.staticfile.on': True,
@@ -271,6 +273,12 @@ conf = {
 
         '/recorder/videos': {'tools.staticdir.on': True,
         'tools.staticdir.dir': pathh+'/recorder/videos'},
+
+        '/test/js': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/test/static/js'},
+
+        '/test/img': {'tools.staticdir.on': True,
+        'tools.staticdir.dir': pathh+'/test/static/img'},
 
 
 }

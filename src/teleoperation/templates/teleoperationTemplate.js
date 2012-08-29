@@ -244,6 +244,7 @@ function startEverything(){
         input = {"width": value*320, "height":value*240};
         jQuery.post('/teleoperation/changeVideoSize',input,function(data) {
        });
+	setFlashPosition();
     });
 
 
@@ -287,6 +288,24 @@ function startEverything(){
             jQuery("#textarea").removeAttr("disabled");
        });   
     });
+
+
+
+	// Flash position
+	setFlashPosition();
+	jQuery(window).resize(function(){ setFlashPosition(); });
+
+
+	// SIP buttons
+	jQuery("#btn_connect").click(function(){
+		jQuery("#btn_hungup").show();
+		jQuery("#btn_connect").hide();
+	});
+        jQuery("#btn_hungup").click(function(){
+                jQuery("#btn_connect").show();
+                jQuery("#btn_hungup").hide();
+        });
+
 }
 
 function printKeys() {
@@ -344,5 +363,19 @@ function printKeys() {
 }
 
 
+//In order to set the flash position in an accurate place, just near the video
+function setFlashPosition(){
 
+	videoPosition = jQuery("#iframeTeleoperation").offset();
+	marginLeft = 10;
+
+	_left = videoPosition.left + jQuery("#iframeTeleoperation").width() + marginLeft;
+	_top = videoPosition.top + jQuery("#iframeTeleoperation").height() - 150 - jQuery("#flashButtons").height(); //237 is the height of the flass
+
+
+
+	jQuery("#div_audio").offset({ top: _top, left: _left });
+	
+
+}
 

@@ -7,4 +7,4 @@ This component extends built-in Flex HBox component so as to stretch both width 
 -->
 
 <mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" styleName="hbar"
-	width="100%" height="100%" horizontalScrollPolicy="off" verticalScrollPolicy="off"/>
+	width="0%" height="0%" horizontalScrollPolicy="off" verticalScrollPolicy="off"/>

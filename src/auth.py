@@ -7,20 +7,74 @@
 import cherrypy
 import roslib; roslib.load_manifest('qbo_webi')
 import PAM
+import subprocess
+
+def runCmd(cmd, timeout=None):
+    '''
+    Will execute a command, read the output and return it back.
+    
+    @param cmd: command to execute
+    @param timeout: process timeout in seconds
+    @return: a tuple of three: first stdout, then stderr, then exit code
+    @raise OSError: on missing command or if a timeout was reached
+    '''
+
+    ph_out = None # process output
+    ph_err = None # stderr
+    ph_ret = None # return code
+
+    p = subprocess.Popen(cmd, shell=True,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    # if timeout is not set wait for process to complete
+    if not timeout:
+        ph_ret = p.wait()
+    else:
+        fin_time = time.time() + timeout
+        while p.poll() == None and fin_time > time.time():
+            time.sleep(1)
+
+        # if timeout reached, raise an exception
+        if fin_time < time.time():
+
+            # starting 2.6 subprocess has a kill() method which is preferable
+            # p.kill()
+            os.kill(p.pid, signal.SIGKILL)
+            raise OSError("Process timeout has been reached")
+
+        ph_ret = p.returncode
+
+
+    ph_out, ph_err = p.communicate()
+
+    return (ph_out, ph_err, ph_ret)
 
 SESSION_KEY = '_cp_username'
 
+robotpass='caca'
+
 def verify_password(user, password):
+    print 'cyphered credentials:'
+    print '  user: '+user
+    print '  pass: '+password
+
+    (username, err, ret)=runCmd("echo "+user+" | openssl enc -aes-256-cbc -pass pass:"+robotpass+" -d -base64")
+    (passw, err, ret)=runCmd("echo "+password+" | openssl enc -aes-256-cbc -pass pass:"+robotpass+" -d -base64")
+
+    print 'decyphered user credentials:'
+    print '  user: '+username
+    print '  pass: '+passw
+
     def pam_conv(auth, query_list, userData):
         resp = []
-        resp.append( (password, 0))
+        resp.append( (passw, 0))
         return resp
     res = False
     service = 'passwd'
 
     auth = PAM.pam()
     auth.start(service)
-    auth.set_item(PAM.PAM_USER, user)
+    auth.set_item(PAM.PAM_USER, username)
     auth.set_item(PAM.PAM_CONV, pam_conv)
     try:
         auth.authenticate()
@@ -152,14 +206,36 @@ class AuthController(object):
         """Called on logout"""
     
     def get_loginform(self, username, msg="Enter login information", from_page="/"):
-        return """<html><body>
-            <form method="post" action="/auth/login">
-            <input type="hidden" name="from_page" value="%(from_page)s" />
-            %(msg)s<br />
-            Username: <input type="text" name="username" value="%(username)s" /><br />
-            Password: <input type="password" name="password" /><br />
-            <input type="submit" value="Log in" />
-        </body></html>""" % locals()
+        return """<html>
+        <head>
+            <script src="/js/jquery-1.7.2.min.js" type="text/javascript"></script>
+            <script src="/js/aes.js" type="text/javascript"></script>
+            <!-- <script src="http://crypto-js.googlecode.com/svn/tags/3.0.2/build/rollups/aes.js"></script> -->
+
+            <script>
+                jQuery(document).ready(function() {
+                    jQuery("#go").submit(function() {
+                      var userEncoded = CryptoJS.AES.encrypt(jQuery("#username").val(), jQuery("#robotpass").val());
+                      var passEncoded = CryptoJS.AES.encrypt(jQuery("#password").val(), jQuery("#robotpass").val());
+                      jQuery("#username").val(userEncoded);
+                      jQuery("#password").val(passEncoded);
+                      jQuery("#robotpass").attr("disabled","disabled");
+                      return true;
+                    });
+                });
+            </script>
+        </head>
+         <body>
+            <form id="go" action="/auth/login">
+            <div>
+                User name:  <input type="username" name="username" id="username"/><br />
+                User pass:  <input type="password" name="password" id="password"/><br />
+                Robot pass: <input type="password" name="robotpass" id="robotpass"/><br />
+                <input type="submit" value="Log in" />
+            </div><br />
+            </form>
+         </body>
+        </html>""" % locals()
     
     @cherrypy.expose
     def login(self, username=None, password=None, from_page="/"):

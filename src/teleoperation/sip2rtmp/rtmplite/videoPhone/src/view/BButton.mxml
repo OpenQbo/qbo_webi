@@ -5,4 +5,4 @@
 This component extends the built-in Flex Button component with 20x20 size and style name of bbutton.
 -->
 
-<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" styleName="bbutton" width="20" height="20"/>
+<mx:Button xmlns:mx="http://www.adobe.com/2006/mxml" styleName="bbutton" width="0" height="0"/>

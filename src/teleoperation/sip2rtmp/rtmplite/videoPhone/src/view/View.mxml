@@ -6,7 +6,7 @@ This is the main view part of the software. There are two parts in this view: th
 appears on top, and the video part which takes almost whole of the view.
 -->
 
-<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="view.*" width="100%" height="100%"
+<mx:Canvas xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="view.*" width="0" height="0"
 	horizontalScrollPolicy="off" verticalScrollPolicy="off"
 	currentState="{connector != null ? connector.currentState : 'idle'}">
 	
@@ -228,7 +228,7 @@ appears on top, and the video part which takes almost whole of the view.
 
 	<!-- The VVideo component is used to display the video part in the background. -->
 	
-	<view:VVideo id="video" width="100%" height="100%" connector="{connector}"/>
+	<view:VVideo id="video" width="0" height="0" connector="{connector}"/>
 	
 	<!-- 
 	The top-bar has control components, which are displayed based on display state.
@@ -270,11 +270,11 @@ appears on top, and the video part which takes almost whole of the view.
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="sipURL">
+		<mx:State name="sipURL" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:BButton label="&lt;" toolTip="{_('Prev: gateway URL')}" click="currentState='idle'"/>
-					<view:TTextInput text="sip:" editable="false" width="28"/>
+					<view:TTextInput text="sip:" editable="false" width="0"/>
 					<view:TTextInput text="{connector.sipURL}" toolTip="{_('Edit your SIP URL,\ne.g., bob@iptel.org')}" 
 						change="connector.sipURL=TTextInput(event.currentTarget).text" enter="currentState='authName'"
 						addedToStage="addedHandler(event)"/>
@@ -283,7 +283,7 @@ appears on top, and the video part which takes almost whole of the view.
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="authName">
+		<mx:State name="authName" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:BButton label="&lt;" toolTip="{_('Prev: SIP URL')}" click="currentState='sipURL'"/>
@@ -295,7 +295,7 @@ appears on top, and the video part which takes almost whole of the view.
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="authPass">
+		<mx:State name="authPass" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:BButton label="&lt;" toolTip="{_('Prev: auth name')}" click="currentState='authName'"/>
@@ -307,7 +307,7 @@ appears on top, and the video part which takes almost whole of the view.
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="displayName">
+		<mx:State name="displayName" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:BButton label="&lt;" toolTip="{_('Prev: auth password')}" click="currentState='authPass'"/>
@@ -319,7 +319,7 @@ appears on top, and the video part which takes almost whole of the view.
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="codecs">
+		<mx:State name="codecs" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:BButton label="&lt;" toolTip="{_('Prev: display name')}" click="currentState='displayName'"/>
@@ -331,18 +331,18 @@ appears on top, and the video part which takes almost whole of the view.
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="remember">
+		<mx:State name="remember" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:BButton label="&lt;" toolTip="{_('Prev: audio codecs')}" click="currentState='codecs'"/>
-					<mx:CheckBox label="{_('Remember me?')}" toolTip="{_('Save your credentials on this PC?')}" width="100%" labelPlacement="left" 
+					<mx:CheckBox label="{_('Remember me?')}" toolTip="{_('Save your credentials on this PC?')}" width="0" labelPlacement="left" 
 						selected="{connector.remember}" change="connector.remember=CheckBox(event.currentTarget).selected; connector.save();"/>
 					<view:BButton label="&gt;" toolTip="{_('Next: connect')}" click="connector.save(); connector.connect()"/>
 				</view:HBar>
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="connecting">
+		<mx:State name="connecting" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:TTextInput text="{_('connecting...')}" editable="false"/>
@@ -366,7 +366,7 @@ appears on top, and the video part which takes almost whole of the view.
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="outbound">
+		<mx:State name="outbound" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:TTextInput text="{connector.targetURL}" editable="false" toolTip="{_('Calling out to\n{0}', connector.targetURL)}"/>
@@ -376,7 +376,7 @@ appears on top, and the video part which takes almost whole of the view.
 			</mx:AddChild>
 		</mx:State>
 		
-		<mx:State name="inbound">
+		<mx:State name="inbound" >
 			<mx:AddChild>
 				<view:HBar>
 					<view:TTextInput text="{connector.targetURL}" editable="false" toolTip="{_('Incoming call from\n{0}', connector.targetURL)}"/>
