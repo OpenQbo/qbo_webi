@@ -2,6 +2,6 @@
 chmod 777 /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/xmms2/songs/
 chmod 777 /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/recorder/videos/
 
-export PYTHONPATH = /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/teleoperation/sip2rtmp/p2p-sip:$PYTHONPATH
+export PYTHONPATH=/opt/ros/electric/stacks/qbo_stack/qbo_webi/src/teleoperation/sip2rtmp/p2p-sip:$PYTHONPATH
 
 
