@@ -733,6 +733,7 @@ function setupCanvas() {
         jQuery("#emoWindow").html("<img id='emo1' src='img/oh.png' /><img id='emo2' src='img/plain.png' /><img id='emo3' src='img/smile2.png' /><img id='emo4' src='img/sad.png' /><img id='emo5' src='img/punker_right.png' /><img id='emo6' src='img/big_smile.png' /><img id='emo7' src='img/tongue.png' /><img id='emo8' src='img/what.png' />");
         jQuery("#emo1").click(function() {
           if (!jQuery("#emo1").hasClass('optionOn')) {
+            jQuery("#emoWindow").children().removeClass("optionOn");
             jQuery("#emo1").addClass("optionOn");
             jQuery.get('/teleoperation/changeMouth?mouth=1');
           } else {
@@ -742,6 +743,7 @@ function setupCanvas() {
         });
         jQuery("#emo2").click(function() {
           if (!jQuery("#emo2").hasClass('optionOn')) {
+            jQuery("#emoWindow").children().removeClass("optionOn");
             jQuery("#emo2").addClass("optionOn");
             jQuery.get('/teleoperation/changeMouth?mouth=2');
           } else {
@@ -751,6 +753,7 @@ function setupCanvas() {
         });
         jQuery("#emo3").click(function() {
           if (!jQuery("#emo3").hasClass('optionOn')) {
+            jQuery("#emoWindow").children().removeClass("optionOn");
             jQuery("#emo3").addClass("optionOn");
             jQuery.get('/teleoperation/changeMouth?mouth=3');
           } else {
@@ -760,6 +763,7 @@ function setupCanvas() {
         });
         jQuery("#emo4").click(function() {
           if (!jQuery("#emo4").hasClass('optionOn')) {
+            jQuery("#emoWindow").children().removeClass("optionOn");
             jQuery("#emo4").addClass("optionOn");
             jQuery.get('/teleoperation/changeMouth?mouth=4');
           } else {
@@ -769,6 +773,7 @@ function setupCanvas() {
         });
         jQuery("#emo5").click(function() {
           if (!jQuery("#emo5").hasClass('optionOn')) {
+            jQuery("#emoWindow").children().removeClass("optionOn");
             jQuery("#emo5").addClass("optionOn");
             jQuery.get('/teleoperation/changeMouth?mouth=5');
           } else {
@@ -778,6 +783,7 @@ function setupCanvas() {
         });
         jQuery("#emo6").click(function() {
           if (!jQuery("#emo6").hasClass('optionOn')) {
+            jQuery("#emoWindow").children().removeClass("optionOn");
             jQuery("#emo6").addClass("optionOn");
             jQuery.get('/teleoperation/changeMouth?mouth=6');
           } else {
@@ -787,6 +793,7 @@ function setupCanvas() {
         });
         jQuery("#emo7").click(function() {
           if (!jQuery("#emo7").hasClass('optionOn')) {
+            jQuery("#emoWindow").children().removeClass("optionOn");
             jQuery("#emo7").addClass("optionOn");
             jQuery.get('/teleoperation/changeMouth?mouth=7');
           } else {
@@ -796,6 +803,7 @@ function setupCanvas() {
         });
         jQuery("#emo8").click(function() {
           if (!jQuery("#emo8").hasClass('optionOn')) {
+            jQuery("#emoWindow").children().removeClass("optionOn");
             jQuery("#emo8").addClass("optionOn");
             jQuery.get('/teleoperation/changeMouth?mouth=8');
           } else {
