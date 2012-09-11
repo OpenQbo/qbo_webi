@@ -8,13 +8,12 @@ Copyright (C) 2012 Thecorpora S.L.
 
 === Description  ===
 
-This node runs the Web GUI
+This node starts the Web GUI
 
 
 === Run ===
 
-rosrun rosrun qbo_brainchat_pro qbo_brainchat_pro.py
-
+roslaunch qbo_webi qbo_webi.launch
 
 === Homepage ===
 
@@ -39,6 +38,5 @@ Mako:
  apt-get install python-mako
 
 
-remove this
 
 

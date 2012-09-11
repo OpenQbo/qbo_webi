@@ -1,5 +1,5 @@
 # Copyright (c) 2008, Kundan Singh. All rights reserved. See LICENSING for details.
-
+# Copyright (c) 2012 TheCorpora SL
 '''
 Implements a SIP server including the following functions:
 1. SIP registration, proxy and redirect server
