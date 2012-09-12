@@ -1,6 +1,7 @@
 #!/bin/bash
-chmod 777 /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/xmms2/songs/
-chmod 777 /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/recorder/videos/
+chmod -R 777 /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/xmms2/songs/
+chmod -R 777 /opt/ros/electric/stacks/qbo_stack/qbo_webi/src/recorder/videos/
+chmod 666 /opt/ros/electric/stacks/qbo_stack/qbo_linphone/config/linphonerc.in 
 
 export PYTHONPATH=/opt/ros/electric/stacks/qbo_stack/qbo_webi/src/teleoperation/sip2rtmp/p2p-sip:$PYTHONPATH
 
