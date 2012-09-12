@@ -64,7 +64,7 @@ class TeleoperationManager(TabClass):
         self.templatelookup = TemplateLookup(directories=['./'])
         self.htmlTemplate = Template(filename='teleoperation/templates/teleoperationTemplate.html',lookup=self.templatelookup)
         self.jsTemplate = Template(filename='teleoperation/templates/teleoperationTemplate.js')
-        self.variablesTemplate = Template(filename='static/js/generalVariables.js')
+        #self.variablesTemplate = Template(filename='static/js/generalVariables.js')
         self.cmd_vel_pub=rospy.Publisher('/cmd_vel', Twist)
         self.cmd_joints_pub=rospy.Publisher('/cmd_joints', JointState)
         self.client_speak = rospy.ServiceProxy("/qbo_talk/festival_say", Text2Speach)
@@ -179,7 +179,7 @@ class TeleoperationManager(TabClass):
     @cherrypy.expose
     def getAuthBot(self):
 	#this is called right before making the call to the bot. We delay the answer, in order to make
-        #sure everything is settle down.ç
+        #sure everything is settle down.
 	time.sleep(1)
 	return json.dumps({"host": self.host, "auth": self.authBot})
 
@@ -230,9 +230,9 @@ class TeleoperationManager(TabClass):
     def teleoperationJs(self, parameters=None):
         return self.jsTemplate.render(language=self.language)
 
-    @cherrypy.expose
-    def teleoperationVariables(self, parameters=None):
-        return self.variablesTemplate.render(language=self.language)
+    #@cherrypy.expose
+    #def teleoperationVariables(self, parameters=None):
+    #    return self.variablesTemplate.render(language=self.language)
 
     @cherrypy.expose
     def move(self,line,angu):

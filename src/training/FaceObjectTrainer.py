@@ -66,7 +66,7 @@ class FaceObjectTrainer(TabClass):
         #self.mjpegServer = MjpegServerFunctions()
         self.htmlTemplate = Template(filename='training/templates/trainingTemplate.html')
         self.jsTemplate = Template(filename='training/templates/trainingTemplate.js')
-        self.variablesTemplate = Template(filename='static/js/generalVariables.js')
+        #self.variablesTemplate = Template(filename='static/js/generalVariables.js')
         self.exposed = True
     	self.faceON = False
         self.cloudAddress = 'http://192.168.1.16:8800'
@@ -87,9 +87,9 @@ class FaceObjectTrainer(TabClass):
     def trainingJs(self, parameters=None):
         return self.jsTemplate.render(language=self.language)
 
-    @cherrypy.expose
-    def trainingVariables(self, parameters=None):
-        return self.variablesTemplate.render(language=self.language)
+    #@cherrypy.expose
+    #def trainingVariables(self, parameters=None):
+    #    return self.variablesTemplate.render(language=self.language)
 
     @cherrypy.expose
     def selectFaceRecognition(self):
