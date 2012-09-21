@@ -10,8 +10,27 @@
     else:
         resultSrc="/img/loading.gif"
 %>
-    <h3 id="${availableChekers[cheker].name}"><a href="#">${language[availableChekers[cheker].name]} <img id="${availableChekers[cheker].name}Img" src="${resultSrc}" align="right"></img></a></h3>
-    <div id="${availableChekers[cheker].name}_content" style="height:400px"><p>Loading...</p></div>
+    <h3 id="${availableChekers[cheker].name}" class="qbo_checker_header" >
+            
+             
+             <a href="#" >
+              <table>
+		<tr>
+		 <td>
+             <img src="img/icon_${availableChekers[cheker].name}.png" ></img>   
+		 </td>
+		 <td style="width:300px">
+             <span class="qbo_checker_header_text" > ${language[availableChekers[cheker].name]} </span>
+		 </td>
+		 <td style="width:400px">
+             <img id="${availableChekers[cheker].name}Img" src="${resultSrc}" align="right"></img>
+	         </td>
+		</tr>
+              </table>
+             </a> 
+            
+    </h3>
+    <div id="${availableChekers[cheker].name}_content" class="qbo_div_content_check" style="height:400px"><p>Loading...</p></div>
 % endfor
 
 </div>

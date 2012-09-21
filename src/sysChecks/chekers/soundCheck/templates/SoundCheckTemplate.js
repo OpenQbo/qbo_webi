@@ -37,11 +37,8 @@ function startEverything(){
         jQuery("#stopLeftAudioButton").show();
         jQuery("#leftAudioButton").hide();
 
-        jQuery.post('/checkers/index/soundCheck/play/left',function(data) {
-            jQuery("#stopLeftAudioButton").hide();
-            jQuery("#leftAudioButton").show();
-            jQuery("#menuLeftAudio").show();
-        });
+	playLeftAudio();
+
     });
 
 
@@ -53,11 +50,7 @@ function startEverything(){
         jQuery("#stopRightAudioButton").show();
         jQuery("#rightAudioButton").hide();
 
-        jQuery.post('/checkers/index/soundCheck/play/right',function(data) {
-            jQuery("#stopRightAudioButton").hide();
-            jQuery("#rightAudioButton").show();
-            jQuery("#menuRightAudio").show();
-        });
+	playRightAudio();
     });
 
 
@@ -66,11 +59,7 @@ function startEverything(){
         jQuery("#stopCenterAudioButton").show();
         jQuery("#centerAudioButton").hide();
 
-        jQuery.post('/checkers/index/soundCheck/play/center',function(data) {
-            jQuery("#stopCenterAudioButton").hide();
-            jQuery("#centerAudioButton").show();
-            jQuery("#menuCenterAudio").show();
-        });
+	playBothAudio();
     });
 
 
@@ -157,5 +146,35 @@ function finalCheck(){
     }
 
 }
+
+
+function playLeftAudio(){
+        jQuery.post('/checkers/index/soundCheck/play/left',function(data) {
+            jQuery("#stopLeftAudioButton").hide();
+            jQuery("#leftAudioButton").show();
+            jQuery("#menuLeftAudio").show();
+        });
+
+}
+
+
+function playRightAudio(){
+        jQuery.post('/checkers/index/soundCheck/play/right',function(data) {
+            jQuery("#stopRightAudioButton").hide();
+            jQuery("#rightAudioButton").show();
+            jQuery("#menuRightAudio").show();
+        });
+
+}
+
+
+function playBothAudio(){
+        jQuery.post('/checkers/index/soundCheck/play/center',function(data) {
+            jQuery("#stopCenterAudioButton").hide();
+            jQuery("#centerAudioButton").show();
+            jQuery("#menuCenterAudio").show();
+        });
+}
+
 
 

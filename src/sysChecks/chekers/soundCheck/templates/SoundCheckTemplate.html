@@ -32,19 +32,21 @@
 
 <table>
 
-    <tr>
+    <tr >
         <td>
-            ${language['title_left_speaker']}
+            ${language['title_1_left_speaker']}
         </td>
-        <td>
-            <img id="leftAudioButton" src="sysChecks/static/img/play.png"></img>
+        <td style="width: 200px;" > 
+	    <a style="color:#005073 !important;" href="javascript:playLeftAudio()">${language['title_2_left_speaker']}</a>
+<!--        <img id="leftAudioButton" src="sysChecks/static/img/play.png"></img>
             <img id="stopLeftAudioButton" src="sysChecks/static/img/playing.png" style="display:none;"></img>
+-->
         </td>
-        <td>
+        <td style="width: 300px;">
             <div id="menuLeftAudio" style="display:none;">
                 ${language['sound_fine']}
-                <span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  id="yesButtonLeft"><span class="ui-button-text"  >${language['yes']}</span> </button</span>   
-                <span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="noButtonLeft" ><span class="ui-button-text"  >${language['no']}</span> </button</span>
+                <span><button class="qbo_button ui-corner-all"  id="yesButtonLeft"><span class="ui-button-text"  >${language['yes']}</span> </button</span>   
+                <span><button class="qbo_button ui-corner-all" id="noButtonLeft" ><span class="ui-button-text"  >${language['no']}</span> </button</span>
             </div>
         </td>
         <td>
@@ -56,20 +58,27 @@
 
     </tr>
 
+    <tr>
+	<td>
+		<hr/>
+	</td>
+    </tr>
 
     <tr>
         <td>
-            ${language['title_right_speaker']}
+            ${language['title_1_right_speaker']}
         </td>
-        <td>
-            <img id="rightAudioButton" src="sysChecks/static/img/play.png"></img>
+        <td style="width: 200px;">
+	    <a style="color:#005073 !important;" href="javascript:playRightAudio()">${language['title_2_right_speaker']}</a>
+<!--            <img id="rightAudioButton" src="sysChecks/static/img/play.png"></img>
             <img id="stopRightAudioButton" src="sysChecks/static/img/playing.png" style="display:none;"></img>
+-->
         </td>
-        <td>
+        <td style="width: 300px;">
             <div id="menuRightAudio" style="display:none;">
                 ${language['sound_fine']} 
-                <span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="yesButtonRight"><span class="ui-button-text"  >${language['yes']}</span></button</span>   
-                <span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="noButtonRight" ><span class="ui-button-text"  >${language['no']}</span></button</span>
+                <span><button class="qbo_button ui-corner-all" id="yesButtonRight"><span class="ui-button-text"  >${language['yes']}</span></button</span>   
+                <span><button class="qbo_button ui-corner-all" id="noButtonRight" ><span class="ui-button-text"  >${language['no']}</span></button</span>
             </div>
         </td>
         <td>
@@ -81,20 +90,21 @@
 
     </tr>
 
-
     <tr>
         <td>
-            ${language['title_center_speaker']}
+            ${language['title_1_center_speaker']}
         </td>
-        <td>
-            <img id="centerAudioButton" src="sysChecks/static/img/play.png"></img>
+        <td style="width: 200px;">	
+            <a style="color:#005073 !important;" href="javascript:playBothAudio()">${language['title_2_center_speaker']}</a>
+<!---            <img id="centerAudioButton" src="sysChecks/static/img/play.png"></img>
             <img id="stopCenterAudioButton" src="sysChecks/static/img/playing.png" style="display:none;"></img>
+-->
         </td>
-        <td>
+        <td style="width: 300px;">
             <div id="menuCenterAudio" style="display:none;">
                 ${language['sound_fine']} 
-                <span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="yesButtonCenter"><span class="ui-button-text"  >${language['yes']}</span></button</span>   
-                <span><button class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="noButtonCenter" ><span class="ui-button-text"  >${language['no']}</span></button</span>
+                <span><button class="qbo_button ui-corner-all" id="yesButtonCenter"><span class="ui-button-text"  >${language['yes']}</span></button</span>   
+                <span><button class="qbo_button ui-corner-all" id="noButtonCenter" ><span class="ui-button-text"  >${language['no']}</span></button</span>
             </div>
         </td>
         <td>
