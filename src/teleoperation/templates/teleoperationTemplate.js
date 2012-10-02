@@ -269,7 +269,7 @@ function startEverything(){
         input = {"width": value*320, "height":value*240};
         jQuery.post('/teleoperation/changeVideoSize',input,function(data) {
        });
-	setFlashPosition();
+	//setFlashPosition();
     });
 
 
@@ -317,8 +317,8 @@ function startEverything(){
 
 
 	// Flash position
-	setFlashPosition();
-	jQuery(window).resize(function(){ setFlashPosition(); });
+	//setFlashPosition();
+	//jQuery(window).resize(function(){ setFlashPosition(); });
 
 
 	// SIP buttons
@@ -389,6 +389,7 @@ function printKeys() {
 
 
 //In order to set the flash position in an accurate place, just near the video
+/*
 function setFlashPosition(){
 
 	videoPosition = jQuery("#iframeTeleoperation").offset();
@@ -403,4 +404,4 @@ function setFlashPosition(){
 	
 
 }
-
+*/

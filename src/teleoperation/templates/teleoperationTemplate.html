@@ -60,17 +60,8 @@ var requiredRevision = 22;
 // -->
 
 
-
-function hola(str){
-
-     alert(str);
-
-}
-
 function recieveTextFromFlash(Txt) {
 
-
-	alert(Txt);
 	jQuery("#btn_connect").click();
 //    document.getElementById('htmlText').value = Txt;
 
@@ -80,28 +71,123 @@ function recieveTextFromFlash(Txt) {
 </script>
 
 
-<table>
+<table class="table_teleoperation">
+
 	<tr>
-		Seleccin de la camara
+		<td>
+			<table class="table_teleoperation_options">
+				<tr>
+				     <td class="table_teleoperation_options_special_td" >
+					<div class="icon_table_teleoperation">
+					  <span class="ui-icon ui-icon-triangle-1-e">  </span>
+					</div>
+					<div>
+					  ${language['camera_selection']}
+					</div>
+			             </td>
+				</tr>
+			        <tr>
+				     <td> 
+				        <div id="radio" title="Camera Selection">
+			                 <input type="radio" id="radioLeft" name="radio" checked="checked"/><label for="radio1"> ${language['left_eye']}</label></br>
+                <input type="radio" id="radioRight" name="radio" /><label for="radio2"> ${language['right_eye']}</label>
+ 			 	         </br>
+			                 <input type="radio" id="radio3d" name="radio" /><label for="radio2"> ${language['3d']}</label></br>
+				        </div>
+
+			             </td>
+			        </tr>
+
+			        <tr>
+			             <td  class="table_teleoperation_options_special_td" >
+                                        <div class="icon_table_teleoperation">
+                                          <span class="ui-icon ui-icon-triangle-1-e">  </span> 
+                                        </div> 
+                                        <div> 
+                                           ${language['text_to_speech']}
+                                        </div>
+					
+			             </td> 
+			        </tr>
+			        <tr>
+			             <td> 
+<div id="input" >
+    <textarea id="textarea" name="comments" cols="15" rows="3" style="border-shadow:1px;resize: none;width:158px;"> ${language['enter_message']}</textarea>
+<button id="send_text" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="width: 158px;">
+        <span class="qbo-button-text" >
+            ${language['send_button']}
+        </span>
+    </button>
+</div>
+
+			             </td>
+			        </tr>
+			        <tr>
+			             <td  class="table_teleoperation_options_special_td" >
+                                        <div class="icon_table_teleoperation">
+                                          <span class="ui-icon ui-icon-triangle-1-e">  </span> 
+                                        </div> 
+                                        <div> 
+                                          ${language['head_move_type']}
+                                        </div>
+			             </td>
+			        </tr>
+			        <tr>
+			             <td>
+				        <div id="radio" title="Camera Selection">
+			                 <input type="radio" id="head_type1" name="radio_type" checked="checked"/><label for="radio1"> ${language['type1']} </label></br>
+			                 <input type="radio" id="head_type2" name="radio_type" /><label for="radio2"> ${language['type2']} </label>
+				         </br>
+				        </div>
+			             </td>
+			        </tr>
+
+
+			</table>
+		</td>
+	
+
+
+	 		 <td >
+
+<div style="width:28px;height:28px;margin-left:10px;">
+	<img src="img/icon_cameraCheck.png"></img>
+</div>
+<div id="qbo_video" style="width:480px;height:360px;margin-left: 10px;">
+        <div id="video" style="position:absolute;margin:0 auto;">
+                <img id="iframeTeleoperation" width="480px" height="360px" ></img>
+        </div>
+        <div id="video2" style="position:absolute;z-index:22;" align="center">
+            <img id="imgInvisible" src="/teleoperation/static/img/cross.png" width="480px" height="360px"></img>
+        </div>
+
+</div>
+
+
+
+
+			 </td>
+                         <td>
+                                <div class="div_cruceta" >
+
+
+
+
+
+<img id="cruceta" src="/teleoperation/static/img/cruzeta.png" usemap="#cruceta_map" style="margin-top: 100px;" />
+
+<map name="cruceta_map">
+<area id="forward"  shape="rect" coords="46,0,94,44"  alt="Foward" title="Foward"    />
+<area id="left" shape="rect" coords="0,52,45,98"  alt="Left" title="Left"    />
+<area id="right" shape="rect" coords="100,52,145,98" alt="Right" title="Right"    />
+<area id="back" shape="rect" coords="53,105,99,145" alt="Back" title="Back"    />
+</map>
+
+
+                                      
+                                </div>
+                         </td>
 	</tr>
-        <tr>
-
-		ojo ojojojo
-        </tr>
-
-        <tr>
-		escribe texto
-        </tr>
-        <tr>
-		lkajdfalkjdf
-        </tr>
-        <tr>
-		movimiento de la cabeza
-        </tr>
-        <tr>
-		tipo 1 y 2
-        </tr>
-
 
 </table>
 
@@ -109,21 +195,21 @@ function recieveTextFromFlash(Txt) {
 
 
 
-
-
-<div id="qbo_video" style="width:100%;height:480px;" align="center">
-	<div id="video" style="position:absolute;margin:0 auto;width:100%;">
-		<img id="iframeTeleoperation" width="640px" height="480px" class="blueBorder"></img>
-	</div>
-    	<div id="video2" style="width:100%;position:absolute;z-index:22;" align="center">
-	    <img id="imgInvisible" src="/teleoperation/static/img/cross.png" width="640px" height="480px"></img>
-    	</div>
-	
-</div>
-
 <!------------ VOICE FLASH ----------------->
 
-<div id="div_audio" style="position:absolute;width:315px;z-index:40;" >
+<div id="div_audio" style="width:300px;height:150px;margin-left: 160px;" >
+
+        <div id="flashButtons" style="float: left;">
+
+
+                <button id="btn_hungup" onClick="hangUp();" class="ui-state-default ui-corner-all" style="display:none;" >
+                        <span class="ui-icon ui-icon-stop"  > </span>
+                </button>
+                <button id="btn_connect" onClick="connect();" class="ui-state-default ui-corner-all" >
+                        <span class="ui-icon ui-icon-volume-on"  >  </span>
+                </button>
+        </div>
+
 
 <div id="flash" >
 </div>
@@ -278,91 +364,10 @@ if ( hasProductInstall && !hasRequestedVersion ) {
 </script>
 
 
-	<div id="flashButtons" >
-
-		
-		<button id="btn_hungup" onClick="hangUp();" class="ui-state-default ui-corner-all" style="display:none;" >
-			<span class="ui-icon ui-icon-stop"  > </span>
-		</button>
-                <button id="btn_connect" onClick="connect();" class="ui-state-default ui-corner-all" >
-                        <span class="ui-icon ui-icon-volume-on"  >  </span>
-                </button>
-	</div>
-
-
 </div>
 
 </div>
 <!---------  END FLASH ------------>
-
-
-
-
-
-
-<div style="margin-top:10px;">
-
-<table id="second_table" border="0" style="width:100%;" align="center">
-<tr>
-<td style="width:33%;">
-<div id="camera_selection" style="width:20em;">
-<fieldset style="border: 2px solid #4297D7">
-<legend style="font-weight:bold;">${language['camera_selection']}</legend>
-	<div id="radio" title="Camera Selection">
-		<input type="radio" id="radioLeft" name="radio" checked="checked"/><label for="radio1"> ${language['left_eye']}</label></br>
-		<input type="radio" id="radioRight" name="radio" /><label for="radio2"> ${language['right_eye']}</label>
-        </br>
-		<input type="radio" id="radio3d" name="radio" /><label for="radio2"> ${language['3d']}</label></br>
-	</div>	
-   </fieldset>
-</div>
-</br>
-<div id="input" >
-    <textarea id="textarea"name="comments" cols="30" rows="1" class="blueborder" style="border-shadow:1px;"> ${language['enter_message']}</textarea>
-<button id="send_text" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
-        <span class="ui-button-text" >
-            ${language['send_button']}
-        </span>
-    </button>
-</div>
-
-</td>
-<td style="width:33%;">
-<center> <div id="buttons">
-    <button id="forward" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">&uarr; W</span></button></br>
-    <button id="left" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text">&larr; A</span></button>
-    <button id="right" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text"> D &rarr;</span></button></br>
-    <button id="back" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text">&darr; S </span></button>
-</div></td>
-<td style="width:33%;">
-<div id="video_size" title="Video Size" style="width:15em;">
-<fieldset style="border: 2px solid #4297D7">
-<legend style="font-weight:bold;">${language['video_size']}</legend>
-    <select   class="ui-widget select ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only "  id="video_size_select" >
-        <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  value="0.5">${language['small']}</option>
-        <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  value="1">${language['normal']}</option>
-        <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  value="2" selected="selected">${language['large']}</option>
-        <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  value="3">${language['very_large']}</option>
-    </select>    
-</fieldset>
-</div>
-</br>
-<div id="head_movement_type" style="width:15em;">
-<fieldset style="border: 2px solid #4297D7">
-<legend style="font-weight:bold;">${language['head_move_type']}</legend>
-	<div id="radio" title="Camera Selection">
-		<input type="radio" id="head_type1" name="radio_type" checked="checked"/><label for="radio1"> ${language['type1']} </label></br>
-		<input type="radio" id="head_type2" name="radio_type" /><label for="radio2"> ${language['type2']} </label>
-        </br>
-	</div>	
-   </fieldset>
-</div>
-</td>
-</tr>
-</table>
-</div>
-
-
 
 
 

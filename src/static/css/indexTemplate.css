@@ -84,7 +84,7 @@ body{
 .blueBorder {
     border-style: solid;
     border-width: 2px;
-    border-color: #4297D7;
+    border-color: #5D6C7A;
 }
 
 
@@ -157,8 +157,132 @@ body{
     background: url("/img/tab_title_background.png") repeat-x scroll 50% 50% #77838C !important;
 }
 
+
 .ui-button-text{
     color: #FFFFFF;
     font-weight: normal;
     font-size:14;
 }
+
+
+
+.qbo-button {
+   background: url("/img/qbo_button.png") repeat-x scroll 50% 50% #77838C !important;
+   border: none !important;
+}
+
+.qbo-button[disabled]{
+   background: #F4F4F4 !important ;   
+   border: none !important;
+}
+
+
+.qbo-button-text {
+    color: #6b7780;
+    font-size: 14px;
+    font-weight: normal;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+
+.qbo-drop-down{
+    background: url("/img/qbo_button.png") repeat-x scroll 50% 50% #DFEFFC;
+    border: 0px;
+    color: #6b7780;
+    font-weight: normal;
+    font-size: 12px !important;
+}
+
+/* Config Wizard*/
+.qbo_button_div{
+        background: #e8ecee;
+        background-image: url("/img/config_background.png");
+        background-repeat:  repeat-x;
+        -moz-border-radius: 0px;
+        -webkit-border-radius: 0px;
+        -khtml-border-radius: 0px;
+        border-radius: 0px;
+        padding:25px;
+        text-align: center;
+        margin: 2px;
+}
+
+.config_fieldset{
+    border: medium none;
+    display: none;
+    padding: 10px 0 0;
+}
+
+
+
+
+
+
+
+/* TELEOPERATION */
+
+.table_teleoperation{
+	margin-left: -20px;
+	border-spacing: 0px;
+}
+
+table.table_teleoperation_options {
+        border-width: 1px;
+        border-spacing: 1px;
+        border-style: none;
+        border-color: #cdcdcd;
+        border-collapse: collapse;
+        background-color: white;
+}
+table.table_teleoperation_options th {
+        border-width: 1px;
+        padding: 1px;
+        border-style: inset;
+        border-color: #cdcdcd;
+        background-color: white;
+        -moz-border-radius: ;
+}
+table.table_teleoperation_options td {
+        border-width: 1px;
+        padding: 1px;
+        color: #6B7780;
+        border-style: inset;
+        border-color: #cdcdcd;
+        background-color: white;
+        -moz-border-radius: ;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+.table_teleoperation_options_special_td{
+	padding-top: 5px !important;	
+	padding-bottom: 5px !important;
+        color: black !important;
+	background-color: #efefef !important;
+}
+
+
+.icon_table_teleoperation{
+	float: left;
+	margin-left: -6px;
+	margin-right: 5px;
+}
+
+.div_cruceta{
+	background-color: #E2E2E2;
+        border: 1px solid #5D6C7A;
+        height: 364px;
+        margin-top: 28px;
+}
+
+#qbo_video{
+	width: 480px;
+	margin-left: 10px;
+	background-color: #E2E2E2;
+	border: 1px solid #5D6C7A;
+	height: 360px;
+	padding: 2px;
+}
+
+

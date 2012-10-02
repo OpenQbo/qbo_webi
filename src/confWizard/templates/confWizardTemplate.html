@@ -5,37 +5,35 @@
     </div>
 </div>
 
-<div style="margin: 0 auto;width: 400px;">
+<div style="margin: 0 auto;">
 % if localclient:
-   <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['camera_calib_but'].decode('utf-8')} </span></button> </br>
-   </br>
-   <button id="hand_gesture_calib_button" style="width:400px;"  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['hand_gesture_calib_but'].decode('utf-8')} </span></button>
+<div class="qbo_button_div">
+   <button id="camera_calib_button" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="qbo-button-text"> ${language['camera_calib_but'].decode('utf-8')} </span></button>
+</div>
+<div class="qbo_button_div">
+   <button id="hand_gesture_calib_button" style="width:400px;"  class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="qbo-button-text"> ${language['hand_gesture_calib_but'].decode('utf-8')} </span></button>
+</div>
 % else:
+<div class="qbo_button_div">
+   <button id="camera_calib_button" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled">  
 
-   <button id="camera_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled">  
+        <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert'].decode('utf-8')}" >  <span class="qbo-button-text"> ${language['camera_calib_but']} </span>  </a>  
+    </button> 
+</div>
+<div class="qbo_button_div">
+   <button id="hand_gesture_calib_button" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled"> 
 
-        <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert'].decode('utf-8')}" >  <span class="ui-button-text"> ${language['camera_calib_but']} </span>  </a>  
-    </button> </br>
-   </br>
-   <button id="hand_gesture_calib_button" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled"> 
-
-     <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert'].decode('utf-8')}" > <span class="ui-button-text"> ${language['hand_gesture_calib_but']} </span>  </a>
+     <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert'].decode('utf-8')}" > <span class="qbo-button-text"> ${language['hand_gesture_calib_but']} </span>  </a>
 
    </button>
-   </br>
+</div>
 
 
 % endif
-</br>
-
-
-   <button id="btn_create_user" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['config_btn_create_user'].decode('utf-8')} </span></button>
-
-</br>
-
-<fieldset id="fieldset_create_user" style="width: 365px;border: 2px solid #4297D7; display:none;" >
-    <legend>${language['config_title_create_user'].decode('utf-8')}</legend>
-    <table>
+<div class="qbo_button_div">
+   <button id="btn_create_user" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="qbo-button-text"> ${language['config_btn_create_user'].decode('utf-8')} </span></button>
+<fieldset id="fieldset_create_user" class="config_fieldset" >
+    <table class="qbo-button-text">
         <tr>
             <td>
                 ${language['config_user_name'].decode('utf-8')}
@@ -66,30 +64,24 @@
 
     <div id="saveButton" style="text-align: center;" >
 
-<button id="save_create_user" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password'].decode('utf-8')}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
+<button id="save_create_user" style="width:200px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password'].decode('utf-8')}" >  <span class="qbo-button-text">  ${language['config_save_password']} </span> </a>  </button>
 
-
-    </div>
-
+</div>
+</div>
 </fieldset>
+<div class="qbo_button_div">
+   <button id="btn_change_password" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="qbo-button-text"> ${language['config_btn_change_password'].decode('utf-8')} </span></button>
 
-</br>
-
-
-   <button id="btn_change_password" style="width:400px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="ui-button-text"> ${language['config_btn_change_password'].decode('utf-8')} </span></button>
-
-    </br>
-
-<fieldset id="fieldset_change_password" style="width: 365px;border: 2px solid #4297D7; display:none;" >
-    <legend>${language['config_title_password'].decode('utf-8')}</legend>
-    <table>
+    <br />
+<fieldset id="fieldset_change_password" class="config_fieldset" >
+    <table class="qbo-button-text">
         <tr>
             <td>
                 ${language['config_user_name'].decode('utf-8')}
             </td>
             <td>
                 <!-- <input id="userName" type="text" /> -->
-                <select class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="userName" name="userName"> </select>
+                <select class="qbo-drop-down ui-widget ui-corner-all ui-button-text-only" id="userName" name="userName" style="width: 178px;"> </select>
             </td>
         </tr>
         <tr>
@@ -122,27 +114,11 @@
 
     <div id="saveButton" style="text-align: center;" >
 
-<button id="save_change_password" style="width:200px;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password'].decode('utf-8')}" >  <span>  ${language['config_save_password']} </span> </a>  </button>
-
-
-    </div>
-
+<button id="save_change_password" style="width:200px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password'].decode('utf-8')}" >  <span class="qbo-button-text">  ${language['config_save_password']} </span> </a>  </button>
 </fieldset>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </div>
+</div>
 
 
 

@@ -83,6 +83,7 @@
 "large":"Grande",
 "very_large":"Muy Grande",
 "head_move_type":"Movimiento de la Cabeza",
+"text_to_speech":"Texto a decir",
 "type1":"Tipo 1",
 "type2":"Tipo 2",
 "send_button":"Enviar",

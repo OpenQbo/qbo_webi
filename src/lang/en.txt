@@ -84,6 +84,7 @@
 "large":"Large",
 "very_large":"Very Large",
 "head_move_type":"Head Movement Type",
+"text_to_speech":"Text to speech",
 "type1":"Type 1",
 "type2":"Type 2",
 "send_button":"Send",
