@@ -91,21 +91,18 @@
 </div>
 
 <div id="video" style="width: 350px; height:240px; margin: 0 auto;">
-    <div id="divCanvas">
-        <div id="divQboVision" style="float:left;">
+        <div id="divQboVision" style="text-align:center;">
             <img id="qboVision"  width="320" height="240" ></img>
+            <canvas  id="canvasWebcam" width="320" height="240" style="position:relative; top:-240px;" > ${language['error_html5']}  </canvas>
         </div>
-        <div style="position:absolute;">
-            <canvas  id="canvasWebcam" width="320" height="240" > ${language['error_html5']}  </canvas>
-        </div>
-    </div>
-    <div id="divShareToCloud" style="clear:both;">
+</div>
+    <div id="divShareToCloud" style="text-align:center;">
         <input id="checkboxCloud" type="checkbox" name="shareToCloud" value="" /> ${language['shareWithCloud']}<br />
     </div>
 </div>
 
 
-<div id="divQboMessage" style="position:absolute;display:none;">
+<div id="divQboMessage" style="position: relative; top: -100px; left: 600px; display:none;">
     
         <div id="divQboAvatar">
             <img id="qboAvatar"  src="/training/static/img/QboAvatar2.png"></img>
@@ -116,14 +113,14 @@
 
 </div>
 
-<div id="botones" style="width: 380px; margin: 0 auto; margin-top:35px;">
-	<button id="training" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"> 
+<div id="botones" style="text-align:center;margin-top:35px; ">
+	<button id="training" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="position:center;"> 
         <span class="ui-button-text">
             ${language['training_botton']}
         </span>
     </button>
 
-    <button id="guessing" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only">
+    <button id="guessing" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="position:center;">
         <span class="ui-button-text">
             ${language['guessing_botton']}
         </span>

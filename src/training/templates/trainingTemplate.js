@@ -377,8 +377,8 @@ function showMessage(text){
     //We set the position for the error "dialog", where an avatar of qbo appears and says something
     positionCanvas = jQuery("#divQboVision").offset();
 
-    jQuery("#divQboMessage").offset({ top: positionCanvas.top+jQuery("#divQboVision").height()-jQuery("#qboAvatar").height(),
-                                      left: positionCanvas.left+jQuery("#divQboVision").width()+20   });
+    //jQuery("#divQboMessage").offset({ top: positionCanvas.top+jQuery("#divQboVision").height()-jQuery("#qboAvatar").height(),
+      //                                left: positionCanvas.left+jQuery("#divQboVision").width()+20   });
 
     jQuery("#divQboMessage").hide();
     jQuery("#divQboMessage").fadeIn();
