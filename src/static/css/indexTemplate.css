@@ -169,6 +169,7 @@ body{
 .qbo-button {
    background: url("/img/qbo_button.png") repeat-x scroll 50% 50% #77838C !important;
    border: none !important;
+   height: 23px;
 }
 
 .qbo-button[disabled]{
