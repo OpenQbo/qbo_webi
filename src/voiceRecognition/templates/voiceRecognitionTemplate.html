@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-
 <link type="text/css" rel="stylesheet" href="js/rte-light-read-only/rte.css" />
 <link type="text/css" rel="stylesheet" href="voiceRecognition/static/css/voiceRecognition.css" />
-
 
 <script type="text/javascript" src="js/rte-light-read-only/jquery.rte.js"></script>
 
@@ -56,13 +54,13 @@
     <td>
         <div style="text-align: center;">
             <select class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="new_lang" name="new_lang">
-                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  value="" selected="selected">${language['first_language'].decode('utf-8')}</option>
+                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  style="display: block;" value="" selected="selected">${language['first_language'].decode('utf-8')}</option>
                 % for row in alllanguage:
-                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="${row}">${lannames[row].decode('utf-8')}</option>
+                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="display: block;" value="${row}">${lannames[row].decode('utf-8')}</option>
                 % endfor
             </select>
             <select class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  id="languageModel">
-                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="">${language['first_language'].decode('utf-8')}</option>
+                <option class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="display: block;" value="">${language['first_language'].decode('utf-8')}</option>
             </select>
         </div>
     </td>
@@ -89,7 +87,6 @@
                         ${language['test2'].decode('utf-8')}
                     </span>
                 </button>
-
                 <button id="save" style="width:100px;" disabled="disabled" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved">
                     <span class="ui-button-text">
                         ${language['save'].decode('utf-8')}
@@ -100,10 +97,6 @@
         </td>
     </tr>
 </table>
-
-
-
-
 
 
 <fieldset id="fieldset_traingAM" style="width: 477px;border: 2px solid #5D6C7A; margin-top:30px; " >

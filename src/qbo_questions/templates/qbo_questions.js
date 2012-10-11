@@ -43,7 +43,7 @@ function startEverything(){
                 if(questions_list[i][0] == "[" || questions_list[i]==""){
                     break;
                 }else{            
-                    jQuery("#listQuestions").append('<option  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" >'+questions_list[i]+'</option>');
+                    jQuery("#listQuestions").append('<option  class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" style="display: block;" >'+questions_list[i]+'</option>');
                 }
             } 
         }
