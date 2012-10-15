@@ -27,9 +27,9 @@ import cherrypy
 
 class TabClass:
 
-    #_cp_config = {
-        #'auth.require': []
-    #}
+    _cp_config = {
+        'auth.require': []
+    }
 
     @cherrypy.expose
     def unload(self):

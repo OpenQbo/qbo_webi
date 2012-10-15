@@ -67,7 +67,6 @@ class Root(object):
         'tools.sessions.on': True,
         'tools.auth.on': True,
         'tools.sessions.locking': 'explicit'
-        #'auth.require': []
     }
     
     auth = AuthController()

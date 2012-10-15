@@ -77,12 +77,13 @@ def runCmd(cmd, timeout=None):
 
 SESSION_KEY = '_cp_username'
 
-robotpass='caca'
-
 def verify_password(user, password):
     print 'cyphered credentials:'
     print '  user: '+user
     print '  pass: '+password
+
+    f = open('robotpass', "r")
+    robotpass = f.read().strip()
 
     (username, err, ret)=runCmd("echo "+user+" | openssl enc -aes-256-cbc -pass pass:"+robotpass+" -d -base64")
     (passw, err, ret)=runCmd("echo "+password+" | openssl enc -aes-256-cbc -pass pass:"+robotpass+" -d -base64")

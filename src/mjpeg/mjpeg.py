@@ -78,7 +78,7 @@ class MjpegGrabber():
 
     _cp_config = {
         'tools.sessions.locking': 'explicit',
-        #'auth.require': []
+        'auth.require': []
     }
 
     def __init__(self):
