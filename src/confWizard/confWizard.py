@@ -32,6 +32,47 @@ from subprocess import Popen, PIPE, STDOUT
 import signal
 import shlex
 
+
+def runCmd(cmd, timeout=None):
+    '''
+    Will execute a command, read the output and return it back.
+    
+    @param cmd: command to execute
+    @param timeout: process timeout in seconds
+    @return: a tuple of three: first stdout, then stderr, then exit code
+    @raise OSError: on missing command or if a timeout was reached
+    '''
+
+    ph_out = None # process output
+    ph_err = None # stderr
+    ph_ret = None # return code
+
+    p = subprocess.Popen(cmd, shell=True,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE)
+    # if timeout is not set wait for process to complete
+    if not timeout:
+        ph_ret = p.wait()
+    else:
+        fin_time = time.time() + timeout
+        while p.poll() == None and fin_time > time.time():
+            time.sleep(1)
+
+        # if timeout reached, raise an exception
+        if fin_time < time.time():
+
+            # starting 2.6 subprocess has a kill() method which is preferable
+            # p.kill()
+            os.kill(p.pid, signal.SIGKILL)
+            raise OSError("Process timeout has been reached")
+
+        ph_ret = p.returncode
+
+
+    ph_out, ph_err = p.communicate()
+
+    return (ph_out, ph_err, ph_ret)
+
 class ConfWizardManager(TabClass):
 
     def __init__(self,language):
@@ -53,6 +94,9 @@ class ConfWizardManager(TabClass):
 
     @cherrypy.expose
     def camera_calib(self):
+        if not self.localclient():
+            return "false"
+
         try:
             self.camera_calibration = subprocess.Popen(shlex.split('gnome-terminal -x bash -c "roslaunch qbo_camera qbo_cameras_stereo_calibration.launch"'))
         except:
@@ -61,6 +105,9 @@ class ConfWizardManager(TabClass):
 
     @cherrypy.expose
     def hand_gesture_calib(self):
+        if not self.localclient():
+            return "false"
+
         try:    
             self.hand_gesture_calibration = subprocess.Popen(shlex.split('gnome-terminal -x bash -c "roslaunch qbo_music_player hand_gesture_calib.launch"'))
         except:
@@ -72,6 +119,9 @@ class ConfWizardManager(TabClass):
 
     @cherrypy.expose
     def create_user(self,userName,newPassword1,newPassword2):
+        if not self.localclient():
+            return "false"
+
         if newPassword1 != newPassword2:
             return "-2"        
 
@@ -101,6 +151,9 @@ class ConfWizardManager(TabClass):
 
     @cherrypy.expose
     def save_password(self,userName,oldPassword,newPassword1,newPassword2):
+        if not self.localclient():
+            return "false"
+
         if newPassword1 != newPassword2:
             return "-2"
         
@@ -134,6 +187,9 @@ class ConfWizardManager(TabClass):
 
     @cherrypy.expose
     def get_list_users(self):
+        if not self.localclient():
+            return "false"
+
         path = roslib.packages.get_pkg_dir("qbo_http_api_login")
 
         #we create a temporally dicctionary from users_pwd file
@@ -148,5 +204,21 @@ class ConfWizardManager(TabClass):
         return users
 
 
+    @cherrypy.expose
+    def change_robot_password(self,suPass,newPass1,newPass2):
+        path = roslib.packages.get_pkg_dir("qbo_webi")+'/src/robotpass'
 
+        if not self.localclient():
+            return "false"
+
+        if newPass1==newPass2:
+            if newPass2=='':
+                return "false"
+            result=runCmd("echo "+suPass+" | sudo -S echo test")
+            if result[2]==0:
+                result=runCmd("echo "+suPass+" | sudo -S echo "+newPass1+" > "+path)
+            print result
+            return str(result[2])
+
+        return "false"
 

@@ -56,7 +56,7 @@ class VoiceRecognitionManager(TabClass):
     def __init__(self,language):
        
 
-        self.ipWavServer = "192.168.1.11"
+        self.ipWavServer = "audio.openqbo.org"
         self.portWavServer="8588"
         self.language = language
         self.juliusPath=roslib.packages.get_pkg_dir("qbo_listen")

@@ -102,6 +102,13 @@
 "answer_label":"Answer",
 "question_label":"Question",
 "add_button":"Add",
-"recorder":"Recorder"
+"recorder":"Recorder",
+"change_robot_password_but":"Change robot password",
+"su_password":"Enter administrator password",
+"robot_password":"Enter new robot password",
+"robot_repeat_password":"Repeat the new robot password",
+"robot_save_password":"Save the new password",
+"change_robot_pass_ok":"Password changed",
+"change_robot_pass_wrong":"ERROR: Password not changed"
 }
 

@@ -101,6 +101,13 @@
 "answer_label":"Respuesta",
 "question_label":"Pregunta",
 "qbo_questions_tab":"Preguntas y Respuestas",
-"add_button":"A&ntildeadir"
+"add_button":"A&ntildeadir",
+"change_robot_password_but":"Cambiar la clave del robot",
+"su_password":"Introduce la clave de administrador",
+"robot_password":"Introduce la nueva clave del robot",
+"robot_repeat_password":"Repite la nueva clave del robot",
+"robot_save_password":"Salvar la nueva clave",
+"change_robot_pass_ok":"Clave cambiada",
+"change_robot_pass_wrong":"ERROR: La clave no ha sido cambiada"
 }
 

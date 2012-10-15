@@ -73,7 +73,7 @@
    <button id="btn_change_password" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="qbo-button-text"> ${language['config_btn_change_password'].decode('utf-8')} </span></button>
 
     <br />
-<fieldset id="fieldset_change_password" class="config_fieldset" >
+    <fieldset id="fieldset_change_password" class="config_fieldset" >
     <table class="qbo-button-text">
         <tr>
             <td>
@@ -114,10 +114,63 @@
 
     <div id="saveButton" style="text-align: center;" >
 
-<button id="save_change_password" style="width:200px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password'].decode('utf-8')}" >  <span class="qbo-button-text">  ${language['config_save_password']} </span> </a>  </button>
-</fieldset>
+    <button id="save_change_password" style="width:200px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['config_save_password'].decode('utf-8')}" >  <span class="qbo-button-text">  ${language['config_save_password']} </span> </a>  </button>
+    </fieldset>
 
-    </div>
+</div>
+
+% if localclient:
+<div class="qbo_button_div">
+   <button id="btn_change_robot_password" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="qbo-button-text"> ${language['change_robot_password_but'].decode('utf-8')} </span></button>
+
+<br />
+    <fieldset id="fieldset_change_robot_password" class="config_fieldset" >
+    <table class="qbo-button-text">
+        <tr>
+            <td>
+                ${language['su_password'].decode('utf-8')}
+            </td>
+            <td>
+                <input id="suPass" type="password" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ${language['robot_password'].decode('utf-8')}
+            </td>
+            <td>
+                <input id="newPass1" type="password" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ${language['robot_repeat_password'].decode('utf-8')}
+            </td>
+            <td>
+                <input id="newPass2" type="password" />
+            </td>
+        </tr>
+    </table>
+
+    <div id="errorMesages4Passwords" style="display:none;" ></div>
+
+    <div id="saveButton" style="text-align: center;" >
+
+    <button id="robot_change_password" style="width:200px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" > <a target="_blank" class="tooltip" title="${language['robot_save_password'].decode('utf-8')}" >  <span class="qbo-button-text">  ${language['robot_save_password']} </span> </a>  </button>
+    </fieldset>
+
+</div>
+% else:
+<div class="qbo_button_div">
+   <button id="btn_change_robot_password" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only qbo_button_improved" disabled="disabled">
+
+        <a style="color:gray !important;" target="_blank" class="tooltip" title="${language['config_wizard_alert'].decode('utf-8')}" >  <span class="qbo-button-text"> ${language['change_robot_password_but']} </span>  </a>
+    </button>
+</div>
+
+
+% endif
+
 </div>
 
 
@@ -196,19 +249,47 @@ jQuery("#save_change_password").click(function(data){
 
 });
 
+jQuery("#robot_change_password").click(function(data){
+
+
+    suPwd = jQuery("#suPass").val();
+    newPwd1 = jQuery("#newPass1").val();
+    newPwd2 = jQuery("#newPass2").val();
+
+    param = {"suPass": suPwd , "newPass1": newPwd1 , "newPass2": newPwd2};
+
+    jQuery.post("/confWizard/change_robot_password",param,function(data){
+        if(data==0){
+            printMessage('${language["change_robot_pass_ok"].decode("utf-8")}',"info");
+            jQuery("#fieldset_change_robot_password").hide();
+        }else {
+            printMessage('${language["change_robot_pass_wrong"].decode("utf-8")}',"error");
+        }
+        
+    });
+
+});
+
 
 jQuery("#btn_create_user").click(function(data){
     jQuery("#fieldset_create_user").toggle();
     jQuery("#fieldset_change_password").hide();
+    jQuery("#fieldset_change_robot_password").hide();
 });
 
 jQuery("#btn_change_password").click(function(data){
 
     jQuery("#fieldset_change_password").toggle();
     jQuery("#fieldset_create_user").hide();
+    jQuery("#fieldset_change_robot_password").hide();
 });
 
+jQuery("#btn_change_robot_password").click(function(data){
 
+    jQuery("#fieldset_change_robot_password").toggle();
+    jQuery("#fieldset_change_password").hide();
+    jQuery("#fieldset_create_user").hide();
+});
 
 setUsersNamesToSelect();
 
