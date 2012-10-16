@@ -67,7 +67,7 @@ var base_move_timer;
 
 
 var LINEAR_SPEED = 0.3;
-var ANGULAR_SPEED = 0.6;
+var ANGULAR_SPEED = 1.0;
 
 function move_timer(line, ang)
 {
