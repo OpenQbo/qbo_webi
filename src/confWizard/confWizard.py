@@ -119,8 +119,8 @@ class ConfWizardManager(TabClass):
 
     @cherrypy.expose
     def create_user(self,userName,newPassword1,newPassword2):
-        if not self.localclient():
-            return "false"
+        #if not self.localclient():
+            #return "false"
 
         if newPassword1 != newPassword2:
             return "-2"        
@@ -151,8 +151,8 @@ class ConfWizardManager(TabClass):
 
     @cherrypy.expose
     def save_password(self,userName,oldPassword,newPassword1,newPassword2):
-        if not self.localclient():
-            return "false"
+        #if not self.localclient():
+            #return "false"
 
         if newPassword1 != newPassword2:
             return "-2"
@@ -187,8 +187,8 @@ class ConfWizardManager(TabClass):
 
     @cherrypy.expose
     def get_list_users(self):
-        if not self.localclient():
-            return "false"
+        #if not self.localclient():
+            #return "false"
 
         path = roslib.packages.get_pkg_dir("qbo_http_api_login")
 

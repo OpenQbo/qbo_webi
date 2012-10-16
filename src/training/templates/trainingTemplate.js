@@ -322,7 +322,10 @@ function startRecognition(){
             bool_drawing=false;
             
             if(data['status']=="ok"){
-                showMessage("${language['this_is_a']}"+data['object'].toLowerCase());
+                if(data['object'] != "")
+                  showMessage("${language['this_is_a']}"+data['object'].toLowerCase());
+                else
+                  showMessage("${language['dontKnow']}");
             }else{
                 showMessage("PROBLEM: "+data['status']);
             }

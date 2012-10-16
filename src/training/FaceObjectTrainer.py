@@ -69,7 +69,7 @@ class FaceObjectTrainer(TabClass):
         #self.variablesTemplate = Template(filename='static/js/generalVariables.js')
         self.exposed = True
     	self.faceON = False
-        self.cloudAddress = 'http://192.168.1.16:8800'
+        self.cloudAddress = 'http://88.2.100.97:8800'
 
 
     @cherrypy.expose

@@ -245,6 +245,8 @@ class AuthController(object):
                     jQuery("#go").submit(function() {
                       var userEncoded = CryptoJS.AES.encrypt(jQuery("#username").val(), jQuery("#robotpass").val());
                       var passEncoded = CryptoJS.AES.encrypt(jQuery("#password").val(), jQuery("#robotpass").val());
+                      jQuery("#username").attr("hidden","true");
+                      jQuery("#password").attr("hidden","true");
                       jQuery("#username").val(userEncoded);
                       jQuery("#password").val(passEncoded);
                       jQuery("#robotpass").attr("disabled","disabled");

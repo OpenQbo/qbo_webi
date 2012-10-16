@@ -34,8 +34,9 @@ var quality=50;
 var widthCamera=320;
 var heightCamera=240;
 
-
-
+var last_time_pressed=0;
+var movement_mode = 0;
+var TIME_THRESHOLD=300;
 var fps=24;
 
 var ctx;
@@ -66,7 +67,7 @@ var base_move_timer;
 
 
 var LINEAR_SPEED = 0.3;
-var ANGULAR_SPEED = 1;
+var ANGULAR_SPEED = 0.6;
 
 function move_timer(line, ang)
 {
@@ -340,41 +341,96 @@ function printKeys() {
 		keypressed += i + ' ';
 	}
           textAreaFocused = jQuery("#textarea").is(":focus");
+         var d=new Date();
+	 var time_now = d.getTime();
+         var time_diff = time_now-last_time_pressed;
+
 
           if (keypressed.indexOf("87") != -1  && keypressed.indexOf("65") != -1 && !textAreaFocused  ) {                
                 input = {"line":LINEAR_SPEED,"angu":ANGULAR_SPEED};
-                jQuery.post('/teleoperation/move',input,function(data){
-                });
+
+                if(!(movement_mode == 1 && time_diff<TIME_THRESHOLD))
+	        {       
+                        jQuery.post('/teleoperation/move',input,function(data){
+                        });
+        	          last_time_pressed = time_now;
+                	  movement_mode=1;
+                }
+          
           }else if (keypressed.indexOf("87") != -1  && keypressed.indexOf("68") != -1  && !textAreaFocused ) {
                 input = {"line":LINEAR_SPEED,"angu":ANGULAR_SPEED*-1};
-                jQuery.post('/teleoperation/move',input,function(data){
-                });
+
+                 if(!(movement_mode == 2 && time_diff<TIME_THRESHOLD))
+	        {       
+                	jQuery.post('/teleoperation/move',input,function(data){
+	                });
+                  last_time_pressed = time_now;
+                  movement_mode=2;
+                }
+ 
+
           }else if (keypressed.indexOf("83") != -1  && keypressed.indexOf("65") != -1 && !textAreaFocused ) {
                 input = {"line":LINEAR_SPEED*-1,"angu":ANGULAR_SPEED*-1};
-                jQuery.post('/teleoperation/move',input,function(data){
-                });
+                  if(!(movement_mode == 3 && time_diff<TIME_THRESHOLD))
+	        {       
+               		jQuery.post('/teleoperation/move',input,function(data){
+	                });
+		 last_time_pressed = time_now;
+                  movement_mode=3;
+                }
+ 
           }else if (keypressed.indexOf("83") != -1  && keypressed.indexOf("68") != -1 && !textAreaFocused ) {
                 input = {"line":LINEAR_SPEED*-1,"angu":ANGULAR_SPEED};
-                jQuery.post('/teleoperation/move',input,function(data){
-                });
+                 if(!(movement_mode == 4 && time_diff<TIME_THRESHOLD))
+	        {       
+	                jQuery.post('/teleoperation/move',input,function(data){
+        	        });
+                  last_time_pressed = time_now;
+                  movement_mode=4;
+                }
+ 
           }else if (keypressed.indexOf("68") != -1 && !textAreaFocused ) {
                 input = {"line":0,"angu":ANGULAR_SPEED*-1};
-                jQuery.post('/teleoperation/move',input,function(data){
-                });
 
+                 if(!(movement_mode == 5 && time_diff<TIME_THRESHOLD))
+	        {       
+	                jQuery.post('/teleoperation/move',input,function(data){
+        	        });
+                	  last_time_pressed = time_now;
+                  	movement_mode=5;
+                }
+ 
           }else if (keypressed.indexOf("65") != -1  && !textAreaFocused) {
                 input = {"line":0,"angu":ANGULAR_SPEED};
-                jQuery.post('/teleoperation/move',input,function(data){
-                });
+ 
+               if(!(movement_mode == 6 && time_diff<TIME_THRESHOLD))
+	        {       
+			jQuery.post('/teleoperation/move',input,function(data){
+                	});
+                   last_time_pressed = time_now;
+                  movement_mode=6;
+                }
           }else if (keypressed.indexOf("87") != -1 && !textAreaFocused ) {
                 input = {"line":LINEAR_SPEED,"angu":0};
-                jQuery.post('/teleoperation/move',input,function(data){
-                });
 
+                if(!(movement_mode == 7 && time_diff<TIME_THRESHOLD))
+	        {       
+                	jQuery.post('/teleoperation/move',input,function(data){
+                	});
+                  last_time_pressed = time_now;
+                  movement_mode=7;
+                }
+ 
           }else if (keypressed.indexOf("83") != -1  && !textAreaFocused) {
                 input = {"line":LINEAR_SPEED*-1,"angu":0};
-                jQuery.post('/teleoperation/move',input,function(data){
-                });                    
+                
+                if(!(movement_mode == 8 && time_diff<TIME_THRESHOLD))
+	        {       
+                	jQuery.post('/teleoperation/move',input,function(data){
+                	});                    
+                  last_time_pressed = time_now;
+                  movement_mode=8;
+                }
           }else if (keypressed.indexOf("13") != -1  && textAreaFocused && !$('#textarea').attr("disabled")) {
                 jQuery("#send_text").trigger('click');
 
