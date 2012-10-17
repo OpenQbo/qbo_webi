@@ -46,15 +46,25 @@ from random import *
 import string
 import json
 import time
+import types
+
+def numberToMouthArray(shapeNumber):
+    #create shape array from string number
+    #shapeNumber = int(number)
+    shapeBinString="{0:b}".format(shapeNumber)
+    shape = [ 1 if n=='1' else 0 for n in shapeBinString ]
+    while len(shape)<20:
+        shape = [0] + shape
+    shape.reverse()
+    return shape
 
 class Mouth:
-
-    def __init__(self,idN,name,b1,b2,b3):
+    def __init__(self,idN,name,shape):
+        if type(shape)==types.IntType:
+            shape=numberToMouthArray(shape)
         self.idN=int(idN)
         self.name=str(name)
-        self.b1=int(b1)
-        self.b2=int(b2)
-        self.b3=int(b3)
+        self.shape=shape
 
 class TeleoperationManager(TabClass):
     def __init__(self,language):
@@ -75,23 +85,25 @@ class TeleoperationManager(TabClass):
         #self.qbo_mouth_control=mouth()
         self.mouth_pub=rospy.Publisher('/cmd_mouth', Mouth_msg)
         self.vMouths=[]
-        self.vMouths.append(Mouth(0,"Happy",0,136,14));
-        self.vMouths.append(Mouth(1,"Sad",0,112,17));
-        self.vMouths.append(Mouth(2,"Ooh",92,140,14));
-        self.vMouths.append(Mouth(3,"Pucker the mouth to the right",192,15,0));
-        self.vMouths.append(Mouth(4,"Pucker the mouth to the left",192,135,0));
-        self.vMouths.append(Mouth(5,"Straight face",0,248,0));
-        self.vMouths.append(Mouth(6,"Small mouth",136,82,4));
-        self.vMouths.append(Mouth(7,"Speak 1",62,0,0));
-        self.vMouths.append(Mouth(8,"Speak 2",190,3,0));
-        self.vMouths.append(Mouth(9,"Speak 3",126,116,0));
-        self.vMouths.append(Mouth(10,"Speak 4",254,119,0));
-        self.vMouths.append(Mouth(11,"Speak 5",126,140,14));
-        self.vMouths.append(Mouth(12,"Speak 6",254,255,14));
-        self.vMouths.append(Mouth(13,"None",0,0,0));
-        self.vMouths.append(Mouth(14,"surprise",92,140,14));
-        self.vMouths.append(Mouth(15,"regular",130,32,8));
-        self.vMouths.append(Mouth(16,"tongue",192,47,2));
+
+        self.vMouths.append(Mouth(0,"Happy",476160,));
+        self.vMouths.append(Mouth(1,"Sad",571392));
+        self.vMouths.append(Mouth(2,"Ooh",476718));
+        self.vMouths.append(Mouth(3,"Pucker the mouth to the right",17376));
+        self.vMouths.append(Mouth(4,"Pucker the mouth to the left",2016));
+        self.vMouths.append(Mouth(5,"Straight face",31744));
+        self.vMouths.append(Mouth(6,"Small mouth",141636));
+        self.vMouths.append(Mouth(7,"Speak 1",31));
+        self.vMouths.append(Mouth(8,"Speak 2",479));
+        self.vMouths.append(Mouth(9,"Speak 3",14911));
+        self.vMouths.append(Mouth(10,"Speak 4",15359));
+        self.vMouths.append(Mouth(11,"Speak 5",476735));
+        self.vMouths.append(Mouth(12,"Speak 6",491519));
+        self.vMouths.append(Mouth(13,"None",0));
+
+        self.vMouths.append(Mouth(14,"surprise",476718));
+        self.vMouths.append(Mouth(15,"regular",69904));
+        self.vMouths.append(Mouth(16,"tongue",283616));
 
         self.changeLang = rospy.ServiceProxy("/qbo_talk/festival_language", Text2Speach)
 
@@ -104,11 +116,7 @@ class TeleoperationManager(TabClass):
 
     def setMouth(self,mo):
         boca=Mouth_msg()
-        boca.mouthImage=[]
-        boca.mouthImage.append(mo.b1)
-        boca.mouthImage.append(mo.b2)
-        boca.mouthImage.append(mo.b3)
-        boca.mouthColor = 0
+        boca.mouthImage=mo.shape
         self.mouth_pub.publish(boca)
 
     @cherrypy.expose
