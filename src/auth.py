@@ -258,9 +258,9 @@ class AuthController(object):
          <body>
             <form id="go" action="/auth/login">
             <div>
-                User name:  <input type="username" name="username" id="username"/><br />
-                User pass:  <input type="password" name="password" id="password"/><br />
-                Robot pass: <input type="password" name="robotpass" id="robotpass"/><br />
+                Robot username:  <input type="username" name="username" id="username"/><br />
+                Robot pass:  <input type="password" name="password" id="password"/><br />
+                Webi pass: <input type="password" name="robotpass" id="robotpass"/><br />
                 <input type="submit" value="Log in" />
             </div><br />
             </form>

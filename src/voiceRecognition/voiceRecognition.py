@@ -68,7 +68,7 @@ class VoiceRecognitionManager(TabClass):
         self.LMFileName="/sentences.conf"
         self.PhonemsFileName="/phonems"
         self.TiedlistFileName="/tiedlist"
-        test=u'Español'
+        test=u'Spanish'
         print test
         test=test.encode('utf-8')
         print test
