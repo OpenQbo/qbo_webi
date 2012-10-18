@@ -130,7 +130,7 @@ class cameraCheck(chekers):
             elif not self.stereoNode:
                 #Stereo node is not running. Check if calibration is done
                 self.failString='stereoNode'
-            return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc='/img/wrong.png', stepNumber=0)
+            return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc='/img/wrong.png', stepNumber=0, imgSrc='/image/noimage')
 
     def restart(self,params):
         self.leftWorks=None
@@ -177,7 +177,7 @@ class cameraCheck(chekers):
                     self.result='fail'
                     resultImgSrc='/img/wrong.png'
                     self.failString='leftNotWorks'
-                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc=resultImgSrc, stepNumber=stepNumber)
+                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc=resultImgSrc, stepNumber=stepNumber, imgSrc='/image/noimage')
             elif stepNumber==1:
                 #imgSrc=self.mjpegServer.getStreamSrc('rightEye','60','320','240')
                 imgSrc='/image/stream?topic=/stereo/right/image_raw&quality=60&t='+'%.2f' % (time.time())
@@ -187,7 +187,7 @@ class cameraCheck(chekers):
                     self.result='fail'
                     resultImgSrc='/img/wrong.png'
                     self.failString='leftWrong'
-                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc=resultImgSrc, stepNumber=stepNumber)
+                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc=resultImgSrc, stepNumber=stepNumber, imgSrc='/image/noimage')
             elif stepNumber==2:
                 #imgSrc=self.mjpegServer.getStreamSrc('rightEye','60','320','240')
                 imgSrc='/image/stream?topic=/stereo/right/image_raw&quality=60&t='+'%.2f' % (time.time())
@@ -198,7 +198,7 @@ class cameraCheck(chekers):
                     self.result='fail'
                     resultImgSrc='/img/wrong.png'
                     self.failString='rightNotWorks'
-                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc=resultImgSrc, stepNumber=stepNumber)
+                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc=resultImgSrc, stepNumber=stepNumber, imgSrc='/image/noimage')
             else:
                 checkText='works'
                 self.rightNotWrong=paramResult
@@ -206,11 +206,11 @@ class cameraCheck(chekers):
                     self.result='fail'
                     resultImgSrc='/img/wrong.png'
                     self.failString='rightWrong'
-                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc=resultImgSrc, stepNumber=stepNumber)
+                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraFailTemplate.html', lookup=self.templatelookup).render(language=self.language, failString=self.failString, camerasCount=self.camerasCount, resultImgSrc=resultImgSrc, stepNumber=stepNumber, imgSrc='/image/noimage')
                 if self.leftWorks and self.leftNotWrong and self.rightWorks and self.rightNotWrong:
                     imgSrc='/img/ok.png'
                     resultImgSrc='/img/ok.png'
-                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraOkTemplate.html', lookup=self.templatelookup).render(language=self.language, stepNumber=stepNumber+1)
+                    return Template(filename='sysChecks/chekers/'+self.name+'/templates/cameraOkTemplate.html', lookup=self.templatelookup).render(language=self.language, stepNumber=stepNumber+1, imgSrc='/image/noimage')
                 else:
                     resultImgSrc='/img/wrong.png'
                     imgSrc='/img/wrong.png'
