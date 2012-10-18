@@ -68,7 +68,7 @@ class VoiceRecognitionManager(TabClass):
         self.LMFileName="/sentences.conf"
         self.PhonemsFileName="/phonems"
         self.TiedlistFileName="/tiedlist"
-        self.languages_names={'en':'English','es':'Español','pt':'Português','de':'Deutsch','fr':'Français','it':'Italiano'}
+        self.languages_names={'en':'English','es':'Spanish','pt':'Português','de':'Deutsch','fr':'Français','it':'Italiano'}
         self.path = roslib.packages.get_pkg_dir("qbo_webi")+"/src/voiceRecognition/"
         self.lan = self.language["current_language"]
         self.mac = get_mac()
