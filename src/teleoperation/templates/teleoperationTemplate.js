@@ -69,6 +69,13 @@ var base_move_timer;
 var LINEAR_SPEED = 0.3;
 var ANGULAR_SPEED = 1.0;
 
+tabUnload = function(){
+    clearInterval(loop); 
+    imgSrc = jQuery("#iframeTeleoperation").attr("src");
+    stopCmd = imgSrc.replace("stream","stop");
+    jQuery.get(stopCmd);
+};
+
 function move_timer(line, ang)
 {
     input = {"line":line,"angu":ang};

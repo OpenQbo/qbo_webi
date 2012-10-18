@@ -55,6 +55,7 @@ jQuery('#sysCheckAccordion').accordion({
                 if(!(window.lastAcordeonCliked)) {
                     window.lastAcordeonCliked=clicked;
                 } else {
+                    tabUnload();
                     jQuery("#"+window.lastAcordeonCliked+"_content").html("");
                     window.lastAcordeonCliked=clicked;
                 }

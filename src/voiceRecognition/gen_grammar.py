@@ -29,7 +29,7 @@ import random
 
 #This function create the voca file
 LMdirectory="/opt/qbo/ros_stacks/qbo_apps/qbo_listen/config/LM/"
-AMdirectory="/opt/qbo/ros_stacks/qbo_apps/qbo_listen/config/AM/"
+AMdirectory="/usr/share/qbo-julius-model/"
 def getRandomwords(wFile,num):
     f=open(wFile,"r")
     count=0

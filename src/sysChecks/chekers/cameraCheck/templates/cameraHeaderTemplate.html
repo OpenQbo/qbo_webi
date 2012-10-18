@@ -7,6 +7,11 @@
 </div>
 
 <script>
+    tabUnload = function(){
+        imgSrc = "${imgSrc}";
+        stopCmd = imgSrc.replace("stream","stop");
+        jQuery.get(stopCmd);
+    };
     jQuery("#cameraCheckStepRadio${stepNumber}").attr("checked","checked");
     jQuery('input:radio[name=cameraCheckHeader]:not(:checked)').attr('disabled', true);
     jQuery("#cameraCheckHeader").buttonset();

@@ -3,7 +3,8 @@
 
     tabUnload = function(){
         clearInterval(loop); 
-        stopCmd = img.src.replace("snapshot","stop");
+        imgSrc = jQuery("#qboVision").attr("src");
+        stopCmd = imgSrc.replace("stream","stop");
         jQuery.get(stopCmd);
     };
 
