@@ -88,7 +88,7 @@ class LaunchersTabManager(TabClass):
     @cherrypy.expose
     def randommove(self):
         try:
-            cmd = "roslaunch qbo_random_move random_move_face_recog.launch"
+            cmd = "roslaunch qbo_random_move random_move_face_demo.launch"
             self.randommoveNode = subprocess.Popen(cmd.split())
 
         except:
