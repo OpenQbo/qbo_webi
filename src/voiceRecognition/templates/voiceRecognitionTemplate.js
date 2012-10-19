@@ -188,7 +188,7 @@ function startEverything(){
 
             jQuery("#Input").val(data);
 
-            alert(data+" ");
+            //alert(data+" ");
 
             botonesOn=true;
             
@@ -211,12 +211,12 @@ function startEverything(){
 
             value = jQuery("#Input").val();
 
-            alert(value);
+            //alert(value);
 
             value = value.replace("'","\\'");
 
 
-            alert(value);
+            //alert(value);
 
             var param = { transcripcion: value };
 

@@ -174,7 +174,6 @@ function getPosInPlayList(id){
     return -1;
 }
 
-
 function scheduled(){
 
     //If there is a song playing, we change its icon

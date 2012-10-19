@@ -249,7 +249,7 @@ class XMMS2Manager(TabClass):
     @cherrypy.tools.noBodyProcess()
     def upload(self, theFile=None):
 
-
+        print "uploading"
             
         """upload action
         
@@ -305,6 +305,7 @@ class XMMS2Manager(TabClass):
             except:
                 ''' file already exists, so we do nothing '''
 
+
 #        self.c.medialib_add_entry(self.songsPath+theFile.filename)
 #        print self.c.medialib_get_id(self.songsPath+theFile.filename)
         print type(theFile)
@@ -319,6 +320,5 @@ class XMMS2Manager(TabClass):
 #        self.c.playlist_add_url("file://"+self.songsPath+theFile.filename,"_active")
         return '<form id="Form" action="/" method="post"><input type="hidden" name="activeTab" value="5" /></form> <script>document.getElementById("Form").submit();</script>'
 
-
-
+     
 
