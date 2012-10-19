@@ -41,9 +41,9 @@ function startEverything(){
 
             array = data.split("::");
 
-            list="<option value='' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>${language['choose_model']}</option>";
+            list="<option value='' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style='display:block;'>${language['choose_model']}</option>";
             for(i=0;i<array.length;i++){
-                list = list+"<option value='"+array[i]+"' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only'>"+array[i]+"</option>";
+                list = list+"<option value='"+array[i]+"' class='ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only' style='display:block;'>"+array[i]+"</option>";
             }
 
             jQuery("#languageModel").html(list);
