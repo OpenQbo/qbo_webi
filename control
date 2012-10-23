@@ -1,6 +1,6 @@
 Package: qboros-electric-qbo-webi
 Source: qboros-electric-qbo-webi
-Version: 1.0-openqbo0
+Version: 1.0.1-openqbo0
 Priority: standard
 Architecture: amd64
 Section: OpenQbo
