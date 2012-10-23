@@ -10,7 +10,7 @@
 "object_recognition":"Reconocimiento de objetos",
 "training_botton":"Entrenate",
 "guessing_botton":"Adivina que es esto",
-"shareWithCloud":"Usa la nube de Q.bo",
+"shareWithCloud":"Usa la nube de Q.bo (beta)",
 "ok_botton":"Ok",
 "label_face_object_input":"Inserta el nombre de",
 "object":"objeto",

@@ -11,7 +11,7 @@
 "object_recognition": "Object Recognition",
 "training_botton": "Train yourself",
 "guessing_botton": "Guess what is this",
-"shareWithCloud": "Use Q.bo Cloud",
+"shareWithCloud": "Use Q.bo Cloud (beta)",
 "ok_botton": "Ok",
 "label_face_object_input": "Insert the name of the",
 "object": "object",
