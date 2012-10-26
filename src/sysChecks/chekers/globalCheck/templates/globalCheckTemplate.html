@@ -1,4 +1,19 @@
 <script>
+function unlock(wheel)
+{
+    if (wheel=="right")
+    {
+        jQuery.post('/checkers/index/globalCheck/unlockWheel/right',function(data) {
+        });
+    }
+    else if (wheel=="left")
+    {
+        jQuery.post('/checkers/index/globalCheck/unlockWheel/left',function(data) {
+        });
+    }
+}
+
+
 <%
     imgSrc="img/ok.png" if check_result['Total']==True else "img/wrong.png"
 %>
@@ -120,6 +135,7 @@
                 <img id="leftwheel_check" src=" img/ok.png">
 % else:
                 <img id="leftwheel_check" src=" img/wrong.png">
+                <img id="unlock_left_wheel" src=" img/lock_open.png" alt="Try to unlock" style="margin-left: 15px;" onclick="unlock('left');">
 % endif
             </td>
         </tr>
@@ -136,6 +152,7 @@
                 <img id="rightwheel_check" src=" img/ok.png">
 % else:
                 <img id="rightwheel_check" src=" img/wrong.png">
+                <img id="unlock_right_wheel" src=" img/lock_open.png" alt="Try to unlock" style="margin-left: 15px;" onclick="unlock('right');">
 % endif
             </td>
         </tr>

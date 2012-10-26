@@ -25,6 +25,7 @@
 #          Sergio Merino <s.merino@openqbo.com>;
 
 import cherrypy
+import os
 from mako.template import Template
 from sysChecks.chekers.chekers import chekers
 
@@ -46,6 +47,14 @@ class globalCheck(chekers):
         #print self.cssTmpl
         #print chekers.cssTmpl
         testDic=self.doTest()
+
+    def unlockWheel(self,src):
+        src=src[0]
+        if (src=="left"):
+            os.system("rosservice call /qbo_arduqbo/unlock_motors_stall")
+        elif (src=="right"):
+            os.system("rosservice call /qbo_arduqbo/unlock_motors_stall")
+        return "ok"
 
     def get_html_content(self):
         testDic=self.doTest()
