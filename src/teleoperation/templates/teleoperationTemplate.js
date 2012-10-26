@@ -444,9 +444,9 @@ function printKeys() {
           }else{
 
 		//paramos
-		input = {"line":0,"angu":0};
+/*		input = {"line":0,"angu":0};
                 jQuery.post('/teleoperation/move',input,function(data){
-                }); 	
+                }); 	*/
 	  }      
 }
 
