@@ -77,7 +77,7 @@ class TeleoperationManager(TabClass):
         #self.variablesTemplate = Template(filename='static/js/generalVariables.js')
         self.cmd_vel_pub=rospy.Publisher('/cmd_vel', Twist)
         self.cmd_joints_pub=rospy.Publisher('/cmd_joints', JointState)
-        self.client_speak = rospy.ServiceProxy("/qbo_talk/festival_say", Text2Speach)
+        self.client_speak = rospy.ServiceProxy("/qbo_talk/festival_say_no_wait", Text2Speach)
         self.mjpegServer = MjpegServerFunctions()
         self.image_size=[640,480]
         self.head_velocity_factor = 2.0
