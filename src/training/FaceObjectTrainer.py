@@ -69,7 +69,7 @@ class FaceObjectTrainer(TabClass):
         #self.variablesTemplate = Template(filename='static/js/generalVariables.js')
         self.exposed = True
     	self.faceON = False
-        self.cloudAddress = 'http://88.2.100.97:8800'
+        self.cloudAddress = 'http://qbocloud.openqbo.org:8800'
 
 
     @cherrypy.expose
