@@ -77,7 +77,7 @@ class TeleoperationManager(TabClass):
         #self.variablesTemplate = Template(filename='static/js/generalVariables.js')
         self.cmd_vel_pub=rospy.Publisher('/cmd_vel', Twist)
         self.cmd_joints_pub=rospy.Publisher('/cmd_joints', JointState)
-        self.client_speak = rospy.ServiceProxy("/qbo_talk/festival_say_no_wait", Text2Speach)
+        self.client_speak = rospy.ServiceProxy("/qbo_talk/festival_say", Text2Speach)
         self.mjpegServer = MjpegServerFunctions()
         self.image_size=[640,480]
         self.head_velocity_factor = 2.0
@@ -105,10 +105,10 @@ class TeleoperationManager(TabClass):
         self.vMouths.append(Mouth(15,"regular",69904));
         self.vMouths.append(Mouth(16,"tongue",283616));
 
-        self.changeLang = rospy.ServiceProxy("/qbo_talk/festival_language", Text2Speach)
+        #self.changeLang = rospy.ServiceProxy("/qbo_talk/festival_language", Text2Speach)
 
-        self.voice_SP = "JuntaDeAndalucia_es_sf_diphone"
-        self.voice_EN = "cmu_us_awb_arctic_clunits"
+        #self.voice_SP = "JuntaDeAndalucia_es_sf_diphone"
+        #self.voice_EN = "cmu_us_awb_arctic_clunits"
 
 	self.command = RunCmd()
 
@@ -122,7 +122,7 @@ class TeleoperationManager(TabClass):
     @cherrypy.expose
     def unload(self):
         #self.mjpegServer.stop("8081")
-        self.changeLang(self.voice_EN)
+        #self.changeLang(self.voice_EN)
 
 
 	print self.command.killProcess(self.processLinphone)
@@ -137,13 +137,14 @@ class TeleoperationManager(TabClass):
 
         #Set Festival language
         self.lang = self.language["current_language"]
+        '''
         if self.lang=="es":
             #Festival
             self.changeLang(self.voice_SP)
         else:
             #Festival
             self.changeLang(self.voice_EN)
-
+        '''
 	#Start SIP & RTMP services
 	#out = command.runCmd("python "+self.path2webi+"/src/teleoperation/sip2rtmp/rtmplite/siprtmp.py")
 	#print out[0]
