@@ -107,7 +107,7 @@ class LaunchersTabManager(TabClass):
     @cherrypy.expose
     def questions(self, lang):
         try:
-            cmd = "roslaunch qbo_questions qbo_questions_"+lang.upper()+".launch"
+            cmd = "roslaunch qbo_questions qbo_questions.launch"
             self.questionsNode = subprocess.Popen(cmd.split())
         except:
             return "false"
