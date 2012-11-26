@@ -67,7 +67,7 @@
 "saved_ok":"File was successfully saved",
 "test1_ok":"Ok, now you can try Test 2",
 "test2_ok":"Ok, now you can save the file",
-"test1_wrong":"Error: words in red are not include in the diccionary",
+"test1_wrong":"Error: words in red are not included in the dictionary",
 "test2_wrong":"Error: words in red do not have phonemes",
 "saved_wrong":"Error: file was not saved for some reason",
 "voiceRecog_trainAM_legend":"Acustic Model Training",
