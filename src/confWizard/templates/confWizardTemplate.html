@@ -173,12 +173,29 @@
 
 </div>
 
-
+% if autostopvalue:
+<div class="qbo_button_div">
+   <button id="auto_stop_button" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="qbo-button-text">${language['disable_auto_stop_but']}</span></button>
+</div>
+% else:
+<div class="qbo_button_div">
+   <button id="auto_stop_button" style="width:400px;" class="qbo-button ui-widget ui-state-default ui-corner-all ui-button-text-only"><span class="qbo-button-text">${language['enable_auto_stop_but']}</span></button>
+</div>
+% endif
 
 </div>
 
 
 <script>
+
+var autostopval = "false";
+% if autostopvalue:
+autostopval = "true";
+% endif
+
+var enable_str = "${language['enable_auto_stop_but']}";
+var disable_str = "${language['disable_auto_stop_but']}";
+
 
 function startEverything(){
 jQuery("#camera_calib_button").click(function(){
@@ -189,6 +206,8 @@ jQuery("#camera_calib_button").click(function(){
         }
     });
 });
+
+
 jQuery("#hand_gesture_calib_button").click(function(){
    jQuery.post("/confWizard/hand_gesture_calib",function(data){
        if (data!="true")
@@ -325,6 +344,50 @@ function printMessage(string,nature){
     jQuery("#output").fadeIn("slow");
     setTimeout('jQuery("#output").fadeOut("slow",function(){ jQuery("#output").html("");  });',1500);
 }
+
+
+jQuery("#auto_stop_button").click(function(data){
+
+    if(autostopval == "true")
+    {
+        //$("#auto_stop_button span").text(${language['enable_auto_stop_but']});
+        $("#auto_stop_button span").text(enable_str);
+
+        autostopval = "false";
+  
+        input = {"autostopval":"false"};
+        jQuery.post('/confWizard/set_auto_stop_srv',input,function(data) {
+        });
+
+    }
+    else
+    {    
+       // $("#auto_stop_button span").text(${language['disable_auto_stop_but']});
+       $("#auto_stop_button span").text(disable_str);
+
+        autostopval = "true";
+
+        input = {"autostopval":"true"};
+        jQuery.post('/confWizard/set_auto_stop_srv',input,function(data) {
+        });
+    }
+
+    /*
+    jQuery.post("/confWizard/create_user",param,function(data){
+        if(data==0){
+            printMessage('${language["config_everything_ok"].decode("utf-8")}',"info");
+            setUsersNamesToSelect();
+        }else if(data==-1){
+            printMessage('${language["config_user_already_exists"].decode("utf-8")}',"error");
+        }else if (data==-2){
+            printMessage('${language["config_pwd_not_equals"].decode("utf-8")}',"error");
+        }    
+    });
+
+   */
+
+});
+
 
 
 </script>

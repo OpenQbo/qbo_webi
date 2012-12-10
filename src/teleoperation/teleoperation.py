@@ -105,11 +105,6 @@ class TeleoperationManager(TabClass):
         self.vMouths.append(Mouth(15,"regular",69904));
         self.vMouths.append(Mouth(16,"tongue",283616));
 
-        #self.changeLang = rospy.ServiceProxy("/qbo_talk/festival_language", Text2Speach)
-
-        #self.voice_SP = "JuntaDeAndalucia_es_sf_diphone"
-        #self.voice_EN = "cmu_us_awb_arctic_clunits"
-
 	self.command = RunCmd()
 
 	self.chars = string.ascii_letters + string.digits
@@ -122,7 +117,6 @@ class TeleoperationManager(TabClass):
     @cherrypy.expose
     def unload(self):
         #self.mjpegServer.stop("8081")
-        #self.changeLang(self.voice_EN)
 
 
 	print self.command.killProcess(self.processLinphone)
@@ -134,23 +128,12 @@ class TeleoperationManager(TabClass):
     @cherrypy.expose
     def index(self):
 
-
         #Set Festival language
         self.lang = self.language["current_language"]
-        '''
-        if self.lang=="es":
-            #Festival
-            self.changeLang(self.voice_SP)
-        else:
-            #Festival
-            self.changeLang(self.voice_EN)
-        '''
-	#Start SIP & RTMP services
+	
+        #Start SIP & RTMP services
 	#out = command.runCmd("python "+self.path2webi+"/src/teleoperation/sip2rtmp/rtmplite/siprtmp.py")
 	#print out[0]
-
-
-
 
 
 	client=cherrypy.request.remote.ip

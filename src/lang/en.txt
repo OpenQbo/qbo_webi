@@ -109,6 +109,8 @@
 "robot_repeat_password":"Repeat the new robot password",
 "robot_save_password":"Save the new password",
 "change_robot_pass_ok":"Password changed",
-"change_robot_pass_wrong":"ERROR: Password not changed"
+"change_robot_pass_wrong":"ERROR: Password not changed",
+"disable_auto_stop_but":"Auto stop is enabled. Click to disable auto stop",
+"enable_auto_stop_but":"Auto stop is disabled. Click to enable auto stop"
 }
 

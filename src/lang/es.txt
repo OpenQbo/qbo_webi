@@ -108,6 +108,8 @@
 "robot_repeat_password":"Repite la nueva clave del robot",
 "robot_save_password":"Salvar la nueva clave",
 "change_robot_pass_ok":"Clave cambiada",
-"change_robot_pass_wrong":"ERROR: La clave no ha sido cambiada"
+"change_robot_pass_wrong":"ERROR: La clave no ha sido cambiada",
+"disable_auto_stop_but":"Auto stop esta habilitado. Haz click para desabilitar",
+"enable_auto_stop_but":"Auto stop esta desabilitado. Haz click para habilitar"
 }
 

@@ -24,8 +24,6 @@
 #          Arturo Bajuelos <arturo@openqbo.com>; 
 #          Sergio Merino <s.merino@openqbo.com>;
 
-
-
 #ROS stuff
 import roslib
 roslib.load_manifest('qbo_webi');
@@ -54,6 +52,8 @@ import os
 import sys
 import signal
 
+from std_msgs.msg import String
+
 from auth import AuthController, require, member_of, name_is
 
 pathh = '/'.join(os.path.abspath( __file__ ).split('/')[:-1])
@@ -74,18 +74,38 @@ class Root(object):
     def __init__(self):
         self.indexHtmlTemplate = Template(filename='templates/indexTemplate.html')
 
-
-        self.lang='en'
+        self.lang = rospy.get_param("/system_lang", "en")
+    
+        #self.lang='en'
         #Load default dict
         fp=open('lang/en.txt','r')
         self.language=json.load(fp,'utf-8')
         fp.close()
-        #Load specific dict
+        #Load specific dict if different to english
         if self.lang!='en':
-            fp=open('lang/'+self.lang+'.txt','r')
-            self.language.update(json.load(fp,'utf-8'))
-            fp.close()
+            try:
+                fp=open('lang/'+self.lang+'.txt','r')
+#            self.language.update(json.load(fp))
 
+                self.language.update(json.load(fp))
+                fp.close()
+            except IOError:
+                print "Language error"
+                self.lang = "en"
+
+        #Post the system lang to ROS and set the Param
+        if self.lang == "en" or self.lang == "es" :
+            rospy.set_param("/system_lang", self.lang)
+            lang_pub = rospy.Publisher('/system_lang', String)
+            lang_pub.publish(String(self.lang))
+            print "PUBLISHING NEW LANG: "+self.lang
+
+        '''
+        else: #If language is unknown, set the ROS system language as english
+            rospy.set_param("/system_lang", "en")
+            lang_pub = rospy.Publisher('/system_lang', String)
+            lang_pub.publish(String("en"))
+        '''
 
     def readLanFile(self):
         config=ConfigParser.ConfigParser()
@@ -117,13 +137,16 @@ class Root(object):
 
     @cherrypy.expose
     def index(self,new_lang="",activeTab=0):
+        print "NEW LANG CHANGE REQUEST: "+new_lang
+
         if new_lang!="":
             self.change_language(new_lang)
+        '''
         else:
             cookielang=self.readCookieLang()
             if cookielang!="":
                 self.change_language(cookielang)
-
+        '''
         return self.indexHtmlTemplate.render(language=self.language,tab=activeTab)
 
     #@cherrypy.expose
@@ -133,8 +156,9 @@ class Root(object):
     def change_language(self, new_lang):
         #Load specific dict
         #Load default dict
+        print "Comparing self.lang: "+self.lang+", new_lang: "+new_lang
         if self.lang!=new_lang:
-            self.setCookieLang(new_lang)
+            #self.setCookieLang(new_lang)
             fp=open('lang/en.txt','r')
             self.language=json.load(fp,'utf-8')
             fp.close()
@@ -146,6 +170,18 @@ class Root(object):
                 self.lang = new_lang
             except IOError:
                 print "Language error"
+
+            #Post the system lang to ROS and set the Param
+            if new_lang == "en" or new_lang == "es":
+                rospy.set_param("/system_lang", new_lang)
+                lang_pub = rospy.Publisher('/system_lang', String)                
+                lang_pub.publish(String(new_lang))
+                print "PUBLISHING NEW LANG: "+new_lang
+            else: #If language is unknown, set the ROS system language as english
+                rospy.set_param("/system_lang", "en")
+                lang_pub = rospy.Publisher('/system_lang', String)                
+                lang_pub.publish(String("en"))
+ 
         cherrypy.root.checkers.set_language(self.language)
         cherrypy.root.training.set_language(self.language)
         cherrypy.root.settings.set_language(self.language)
@@ -165,6 +201,11 @@ def SIGINT_handler(signal, frame):
     rospy.signal_shutdown("ROS Node kill was sent by exterior process")
     sys.exit(0)
 
+#Initialize ROS node associated with Q.bo Webi
+rospy.init_node(name="qbo_webi", argv=sys.argv, disable_signals=True)
+signal.signal(signal.SIGINT, SIGINT_handler)
+
+
 cherrypy.root = Root()
 cherrypy.root.checkers = sysChecksManager(cherrypy.root.language)
 cherrypy.root.training = FaceObjectTrainer(cherrypy.root.language)
@@ -180,11 +221,6 @@ cherrypy.root.qbo_questions = Qbo_questionsManager(cherrypy.root.language)
 cherrypy.root.recorder = RecorderManager(cherrypy.root.language)
 cherrypy.root.test = TestManager(cherrypy.root.language)
 
-
-
-#Initialize ROS node associated with Q.bo Webi
-rospy.init_node(name="qbo_webi", argv=sys.argv, disable_signals=True)
-signal.signal(signal.SIGINT, SIGINT_handler)
 
 
 

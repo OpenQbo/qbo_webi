@@ -88,9 +88,13 @@ class ConfWizardManager(TabClass):
                 islocal=False
         return islocal;
 
+    def getAutoStopValue(self):
+       AutoStopVal = rospy.get_param('/qbo_arduqbo/set_alarm', False)
+       return AutoStopVal
+
     @cherrypy.expose
     def index(self):
-        return self.htmlTemplate.render(language=self.language, localclient=self.localclient())
+        return self.htmlTemplate.render(language=self.language, localclient=self.localclient(), autostopvalue=self.getAutoStopValue())
 
     @cherrypy.expose
     def camera_calib(self):
@@ -115,7 +119,17 @@ class ConfWizardManager(TabClass):
         return "true"
 
 
+    @cherrypy.expose
+    def set_auto_stop_srv(self, autostopval):
 
+        if autostopval == "true":
+           rospy.set_param('/qbo_arduqbo/set_alarm', True)
+           rospy.loginfo("Autostop was set true")
+        else:
+           rospy.set_param('/qbo_arduqbo/set_alarm', False)
+           rospy.loginfo("Autostop was set false")
+
+        return "true"
 
     @cherrypy.expose
     def create_user(self,userName,newPassword1,newPassword2):
