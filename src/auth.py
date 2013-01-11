@@ -82,6 +82,9 @@ def verify_password(user, password):
     print '  user: '+user
     print '  pass: '+password
 
+    user = user.strip()
+    password = password.strip()
+
     passpath = roslib.packages.get_pkg_dir("qbo_webi")+'/src/robotpass'
     f = open(passpath, "r")
     robotpass = f.read().strip()
