@@ -131,20 +131,19 @@ class Qbo_questionsManager(TabClass):
         f = open(self.dialogue_path+'/config/dialogues_'+lang)
         for line in f.readlines():
             try:
-                line = line.replace("\n","")
-                parts = line.split(">>>")
-
-                dialogue_input = parts[0].upper()
-                dialogue_output = parts[1].upper()
-
+                line=line.strip()
+                if line!="":
+                    parts = line.split(">>>")
+                    dialogue_input = parts[0].upper()
+                    dialogue_output = parts[1].upper()
 
                 # we check wheter the input line alreayd exists, if so, we add to its own list
-                if dialogue_input in self.dialogue:
-                    self.dialogue[dialogue_input].append(dialogue_output)
-                    self.dialogue[dialogue_input].sort()
-                else:
+                    if dialogue_input in self.dialogue:
+                        self.dialogue[dialogue_input].append(dialogue_output)
+                        self.dialogue[dialogue_input].sort()
+                    else:
                     #self.dialogue_input does not exist
-                    self.dialogue[dialogue_input] = [dialogue_output]
+                        self.dialogue[dialogue_input] = [dialogue_output]
             except ValueError:
                 print "Error when creating dialog at qbo_questions tab "
                 pass
