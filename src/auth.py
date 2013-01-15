@@ -112,7 +112,7 @@ def verify_password(user, password):
         auth.acct_mgmt()
     except PAM.error, resp:
         print 'Go away! (%s)' % resp
-        res = False
+        res = False 
     except:
         print 'Internal error'
         res = False
@@ -283,6 +283,20 @@ class AuthController(object):
             cherrypy.session[SESSION_KEY] = cherrypy.request.login = username
             self.on_login(username)
             raise cherrypy.HTTPRedirect(from_page or "/")
+
+    @cherrypy.expose
+    def mobile_login(self, username=None, password=None, from_page="/"):
+        if username is None or password is None:
+            return "error"
+
+        error_msg = check_credentials(username, password)
+        if error_msg:
+            return "error"
+        else:
+            #cherrypy.session.regenerate()
+            cherrypy.session[SESSION_KEY] = cherrypy.request.login = username
+            self.on_login(username)
+	    return "ok"
 
     @cherrypy.expose
     def logout(self, from_page="/"):
