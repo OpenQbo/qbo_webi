@@ -47,6 +47,8 @@ import string
 import json
 import time
 import types
+import signal
+import os
 
 def numberToMouthArray(shapeNumber):
     #create shape array from string number
@@ -108,6 +110,21 @@ class TeleoperationManager(TabClass):
 	self.command = RunCmd()
 
 	self.chars = string.ascii_letters + string.digits
+
+
+        #Variables for android functions comming from Tornado(qbo_http_api_login)
+        self.linphoneRunning = False
+        self.auth = "notDefined"
+        self.authBot = "notDefined"
+        self.envi = ""
+
+        self.processSipd = ""
+        self.processSiprtmp = ""
+        self.processLinphone = ""
+        self.processAudioControl = ""
+
+	self.ecoCancelationId = "notDefined"
+
 
     def setMouth(self,mo):
         boca=Mouth_msg()
@@ -176,6 +193,8 @@ class TeleoperationManager(TabClass):
 	return json.dumps({"host": self.host, "auth": self.authBot})
 
 
+    ############# SIP functions ##############
+
     @cherrypy.expose
     def startSIPService(self):
 
@@ -206,9 +225,6 @@ class TeleoperationManager(TabClass):
         cmd = "roslaunch qbo_linphone launch_on_robot.launch"
         self.processLinphone = self.command.runCmdWithPidBack(cmd)
 
-
-
-
     @cherrypy.expose
     def stopSIPService(self):
 	self.auth = "notDefined"
@@ -217,6 +233,155 @@ class TeleoperationManager(TabClass):
         print self.command.killProcess(self.processLinphone)
         print self.command.killProcess(self.processSipd)
         print self.command.killProcess(self.processSiprtmp)
+
+
+    # SIP functions which have been migrated from qbo_http_api_login.
+    #
+    # We are trying to get rid off Tornado, and just using cherrypy, so all this changes are made in order to
+    # to make the Android Apk working as before. This is NOT the best way of doing things, the functions for starting
+    # and stoping the SIP server should be the same for website than for Android. However, due to downsizing
+    # in the company, this is pending.
+    @cherrypy.expose
+    def mobile_startSIPServer(self,ecoCancelation):
+        print "Start sip server"
+
+        path2webi = roslib.packages.get_pkg_dir("qbo_webi")
+
+        chars = string.ascii_letters + string.digits
+
+        self.envi = os.environ.copy()
+        path = self.envi["PYTHONPATH"]
+        self.envi["PYTHONPATH"] = "/opt/ros/electric/stacks/qbo_stack/qbo_webi/src/teleoperation/sip2rtmp/p2p-sip:/opt/ros/electric/stacks/qbo_stack/qbo_webi/src/teleoperation/sip2rtmp/p2p-sip/src:/opt/ros/electric/stacks/qbo_stack/qbo_webi/src/teleoperation/sip2rtmp/p2p-sip/src/app:/opt/ros/electric/stacks/qbo_stack/qbo_webi/src/teleoperation/sip2rtmp/p2p-sip/src/external:/opt/ros/electric/stacks/qbo_stack/qbo_webi/src/teleoperation/sip2rtmp/rtmplite:"+path
+
+
+        self.auth = "notDefined"
+        self.authBot = "notDefined"
+
+        self.auth = "".join(choice(chars) for x in range(randint(4, 4)))
+        self.authBot = "".join(choice(chars) for x in range(randint(4, 4)))
+
+
+        #we check if sipd is already active, if so, we close it        
+        cmd = "ps -aux | grep sipd"
+        out = self.command.runCmd(cmd)
+        out = out[0]
+
+
+        if "sipd.py" in out:
+            pid = out.split(" ")[2]
+            os.kill(int(pid), signal.SIGTERM)
+
+
+        # the same with siprtmp
+        cmd = "ps -aux | grep siprtmp"
+        out = self.command.runCmd(cmd)
+        out = out[0]
+
+        if "siprtmp.py" in out:
+            pid = out.split(" ")[2]
+            os.kill(int(pid), signal.SIGTERM)
+
+
+        #launch audio control with sip profile
+        cmd = "roslaunch qbo_audio_control audio_control_sip.launch"
+        self.processAudioControl = subprocess.Popen(cmd.split(),env=self.envi)
+
+        #launch sipd.py
+        cmd = "python "+path2webi+"/src/teleoperation/sip2rtmp/p2p-sip/src/app/sipd.py -u "+self.auth+" -b "+self.authBot
+        self.processSipd = subprocess.Popen(cmd.split(),env=self.envi)
+
+        #launch siprtmp.py
+        cmd = "python "+path2webi+"/src/teleoperation/sip2rtmp/rtmplite/siprtmp.py"
+        self.processSiprtmp = subprocess.Popen(cmd.split(),env=self.envi)
+
+        #we give them sometime to finish the job
+        time.sleep(0.5)
+
+        #data ready for the node qbo_linphone, but we still need to know the host
+        rospy.set_param("linphone_botName",self.authBot)
+        rospy.set_param("linphone_host","waiting for the mobile to know the IP")
+
+        #ECO cancelation on
+        if ecoCancelation:
+            cmd = "pactl load-module module-echo-cancel"
+            out = self.command.runCmd(cmd);
+            self.ecoCancelationId = out[0].replace("\n","")
+            print "ECO cancelation ON "+str(self.ecoCancelationId)
+
+    @cherrypy.expose
+    def mobile_stopSIPServer(self):
+        try:
+            self.processSiprtmp.send_signal(signal.SIGINT)
+        except Exception as e:
+            print "ERROR when killing a siprtmp. "+str(e)
+
+        try:
+            self.processLinphone.send_signal(signal.SIGINT)
+        except Exception as e:
+            print "ERROR when killing a linphone. "+str(e)
+
+        try:
+            self.processSipd.send_signal(signal.SIGINT)
+        except Exception as e:
+            print "ERROR when killing a sipd. "+str(e)
+
+
+
+        #We go back to the default audio control
+        cmd = "roslaunch qbo_audio_control audio_control_listener.launch"
+        try:
+            subprocess.Popen(cmd.split(),env=self.envi)
+        except:
+            print "ERROR when launching audio_control_listener.launch"+str(e)
+
+        #ECO cancelation off
+        if self.ecoCancelationId != "notDefined":
+            print "ECO Cancelation off "+str(self.ecoCancelationId)
+            cmd = "pactl unload-module "+self.ecoCancelationId
+            out = self.command.runCmd(cmd)
+            #print "salida "+str(out)
+            print "Done"
+
+    @cherrypy.expose
+    def mobile_setIpSip(self,ip):
+        if self.linphoneRunning:
+            try:
+                self.processLinphone.send_signal(signal.SIGINT)
+                self.linphoneRunning = False
+            except Exception as e:
+                print "ERROR when killing a proccess. "+str(e)
+
+            #we give them sometime to finish the job
+            time.sleep(1)
+
+
+        rospy.set_param("linphone_host",ip)
+
+        #now we know the IP, we can launch the linphone in the robot
+        cmd = "roslaunch qbo_linphone launch_on_robot.launch"
+        self.processLinphone = subprocess.Popen(cmd.split(),env=self.envi)
+
+        rospy.wait_for_service('autocaller')
+
+        self.linphoneRunning = True
+
+    @cherrypy.expose
+    def mobile_getUserSipId(self):
+        return self.auth
+
+    @cherrypy.expose
+    def mobile_getBotSipId(self):
+        return self.authBot
+
+    @cherrypy.expose
+    def mobile_endCall(self):
+        cmd = "linphonecsh hangup"
+        subprocess.Popen(cmd.split(),env=self.envi)
+        print "END CALL"
+
+
+    ############# End of SIP functions ##############
+
 
     @cherrypy.expose
     def teleoperationJs(self, parameters=None):
@@ -228,14 +393,10 @@ class TeleoperationManager(TabClass):
 
     @cherrypy.expose
     def move(self,line,angu):
-        print 'line: ',line,' angu: ',angu
-        #line='0.0'
-        #angu='0.0'
         self.sendSpeed(float(line),float(angu))
 
     @cherrypy.expose
     def head(self,yaw,pitch):
-        print 'yaw: ',yaw,' pitch: ',pitch
         if self.head_move_type==1:
             self.headMoveType1(yaw, pitch)
         else:  
@@ -296,6 +457,15 @@ class TeleoperationManager(TabClass):
         print "Message to speak: "+str(message_encoded)
         self.client_speak(message_encoded)
         return "true"
+
+
+    @cherrypy.expose
+    def activate_3d(self, activate):
+	if activate=="on":
+		cmd="rosrun stereo_anaglyph red_cyan_anaglyph.py __name:=stereo_anaglyph -c /stereo -d 20 -s"
+            	self.processthreeD = subprocess.Popen(cmd.split())
+        else:
+		self.processthreeD.send_signal(signal.SIGINT)
 
 
     def sendSpeed(self,line,angu):
