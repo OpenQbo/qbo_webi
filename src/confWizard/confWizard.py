@@ -89,7 +89,7 @@ class ConfWizardManager(TabClass):
         return islocal;
 
     def getAutoStopValue(self):
-       AutoStopVal = rospy.get_param('/qbo_arduqbo/set_alarm', False)
+       AutoStopVal = rospy.get_param('/qbo_arduqbo/autostop', False)
        return AutoStopVal
 
     @cherrypy.expose
@@ -123,10 +123,10 @@ class ConfWizardManager(TabClass):
     def set_auto_stop_srv(self, autostopval):
 
         if autostopval == "true":
-           rospy.set_param('/qbo_arduqbo/set_alarm', True)
+           rospy.set_param('/qbo_arduqbo/autostop', True)
            rospy.loginfo("Autostop was set true")
         else:
-           rospy.set_param('/qbo_arduqbo/set_alarm', False)
+           rospy.set_param('/qbo_arduqbo/autostop', False)
            rospy.loginfo("Autostop was set false")
 
         return "true"
